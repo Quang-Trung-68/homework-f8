@@ -14,7 +14,6 @@ const EmployeeDialog = ({
   isOpenDialog,
   setIsOpenDialog,
   curEmployee,
-  setCurEmployee,
   employees,
   action,
   setEmployees,
