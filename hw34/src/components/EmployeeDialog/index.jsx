@@ -187,7 +187,11 @@ const EmployeeDialog = ({
                 : handleAdd(tempEmployee);
             }}
           >
-            Yes
+            {action == "edit"
+              ? "Update"
+              : action == "delete"
+              ? "Delete"
+              : "Add"}
           </Button>
         </DialogActions>
       </Dialog>
