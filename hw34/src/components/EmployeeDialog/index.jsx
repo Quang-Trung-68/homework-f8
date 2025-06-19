@@ -9,7 +9,7 @@ import {
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const EmployeeDialog = ({
   isOpenDialog,
@@ -18,10 +18,6 @@ const EmployeeDialog = ({
   employees,
   action,
   setEmployees,
-  tempEmployee,
-  setTempEmployee,
-  tempEmployees,
-  setTempEmployees,
 }) => {
   // let tempEmployee = { ...curEmployee };
   // let tempEmployees = [];
@@ -29,10 +25,27 @@ const EmployeeDialog = ({
   // setTempEmployee(curEmployee);
   // setTempEmployees([]);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    address: "",
+  });
+
   useEffect(() => {
-    setTempEmployee(curEmployee);
-    setTempEmployees(employees);
-  }, [curEmployee]);
+    if (curEmployee && Object.keys(curEmployee).length > 0) {
+      setFormData({
+        name: curEmployee.name || "",
+        age: curEmployee.age || "",
+        address: curEmployee.address || "",
+      });
+    } else {
+      setFormData({
+        name: "",
+        age: "",
+        address: "",
+      });
+    }
+  }, [curEmployee, isOpenDialog]);
 
   // validate input user
 
@@ -88,35 +101,70 @@ const EmployeeDialog = ({
 
     return errors.length > 0 ? errors.join(" ") : null;
   }
-  const handleEdit = (tempEmployee, curEmployee) => {
-    if (!validateUser(tempEmployee)) {
-      curEmployee.name = tempEmployee.name;
-      curEmployee.age = tempEmployee.age;
-      curEmployee.address = tempEmployee.address;
-      toast("Edited " + tempEmployee.name);
+
+  const handleSubmit = () => {
+    const dataToValidate = { ...formData };
+    const validation = validateUser(dataToValidate);
+    if (!validation) {
+      switch (action) {
+        case "edit": {
+          const updatedEmployees = [...employees].map((emp) =>
+            emp.id === curEmployee.id ? { ...emp, ...dataToValidate } : emp
+          );
+          setEmployees(updatedEmployees);
+          toast.success("Edited " + dataToValidate.name);
+          setFormData({
+            name: "",
+            age: "",
+            address: "",
+          });
+          break;
+        }
+
+        case "delete": {
+          const updatedEmployees = [...employees].filter(
+            (emp) => emp.id !== curEmployee.id
+          );
+          setEmployees(updatedEmployees);
+          toast.warn("Deleted " + dataToValidate.name);
+          setFormData({
+            name: "",
+            age: "",
+            address: "",
+          });
+          break;
+        }
+        case "add": {
+          const updatedEmployee = {
+            ...dataToValidate,
+            id: uuidv4(),
+          };
+          setEmployees([...employees, updatedEmployee]);
+          break;
+        }
+        default:
+          break;
+      }
+
       setIsOpenDialog(false);
+    } else {
+      toast.error(validation);
     }
-    if (validateUser(tempEmployee)) toast.error(validateUser(tempEmployee));
-    console.log(employees);
   };
 
-  const handleDelete = (curEmployee) => {
-    tempEmployees = tempEmployees.filter((elp) => elp.id != curEmployee.id);
-    setEmployees(tempEmployees);
-    toast.warning("Deleted " + tempEmployee.name);
-    setIsOpenDialog(false);
-    console.log(employees);
+  const handleDelete = () => {
+    console.log("delete");
   };
 
-  const handleAdd = (tempEmployee) => {
-    if (!validateUser(tempEmployee)) {
-      tempEmployee.id = uuidv4();
-      setEmployees([...employees, tempEmployee]);
-      toast.info("Added " + tempEmployee.name);
-      setIsOpenDialog(false);
-    }
-    if (validateUser(tempEmployee)) toast.error(validateUser(tempEmployee));
-    console.log(employees);
+  const handleClose = () => {
+    console.log("close");
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   return (
@@ -151,7 +199,7 @@ const EmployeeDialog = ({
             variant="standard"
             defaultValue={curEmployee.name}
             onChange={(e) => {
-              tempEmployee.name = e.target.value.trim();
+              handleInputChange("name", e.target.value);
             }}
           />
           <TextField
@@ -161,7 +209,7 @@ const EmployeeDialog = ({
             variant="standard"
             defaultValue={curEmployee.age}
             onChange={(e) => {
-              tempEmployee.age = Number(e.target.value.trim());
+              handleInputChange("age", Number(e.target.value));
             }}
           />
           <TextField
@@ -171,33 +219,15 @@ const EmployeeDialog = ({
             variant="standard"
             defaultValue={curEmployee.address}
             onChange={(e) => {
-              tempEmployee.address = e.target.value.trim();
+              handleInputChange("address", e.target.value);
             }}
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            color={"error"}
-            variant={"outlined"}
-            onClick={() => {
-              setIsOpenDialog(false);
-            }}
-          >
+          <Button color={"error"} variant={"outlined"} onClick={handleClose}>
             Cancel
           </Button>
-          <Button
-            color={"info"}
-            variant={"outlined"}
-            onClick={() => {
-              setTempEmployee(curEmployee);
-              console.log(tempEmployee);
-              action == "edit"
-                ? handleEdit(tempEmployee, curEmployee)
-                : action == "delete"
-                ? handleDelete(curEmployee)
-                : handleAdd(tempEmployee);
-            }}
-          >
+          <Button color={"info"} variant={"outlined"} onClick={handleSubmit}>
             {action == "edit"
               ? "Update"
               : action == "delete"

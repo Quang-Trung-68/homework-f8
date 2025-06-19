@@ -96,9 +96,6 @@ function App() {
     },
   ]);
 
-  const [tempEmployee, setTempEmployee] = useState({});
-
-  const [tempEmployees, setTempEmployees] = useState([]);
 
   return (
     <>
@@ -121,10 +118,6 @@ function App() {
         employees={employees}
         action={action}
         setEmployees={setEmployees}
-        tempEmployee={tempEmployee}
-        setTempEmployee={setTempEmployee}
-        tempEmployees={tempEmployees}
-        setTempEmployees={setTempEmployees}
       />
       <FTable
         columns={columns}
