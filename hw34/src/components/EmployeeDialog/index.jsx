@@ -9,6 +9,7 @@ import {
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { v4 as uuidv4 } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
 
 const EmployeeDialog = ({
   isOpenDialog,
@@ -17,9 +18,21 @@ const EmployeeDialog = ({
   employees,
   action,
   setEmployees,
+  tempEmployee,
+  setTempEmployee,
+  tempEmployees,
+  setTempEmployees,
 }) => {
-  let tempEmployee = { ...curEmployee };
-  let tempEmployees = [];
+  // let tempEmployee = { ...curEmployee };
+  // let tempEmployees = [];
+
+  // setTempEmployee(curEmployee);
+  // setTempEmployees([]);
+
+  useEffect(() => {
+    setTempEmployee(curEmployee);
+    setTempEmployees(employees);
+  }, [curEmployee]);
 
   // validate input user
 
@@ -84,17 +97,14 @@ const EmployeeDialog = ({
       setIsOpenDialog(false);
     }
     if (validateUser(tempEmployee)) toast.error(validateUser(tempEmployee));
-
     console.log(employees);
   };
 
   const handleDelete = (curEmployee) => {
-    tempEmployees = [...employees];
     tempEmployees = tempEmployees.filter((elp) => elp.id != curEmployee.id);
     setEmployees(tempEmployees);
     toast.warning("Deleted " + tempEmployee.name);
     setIsOpenDialog(false);
-
     console.log(employees);
   };
 
@@ -106,7 +116,6 @@ const EmployeeDialog = ({
       setIsOpenDialog(false);
     }
     if (validateUser(tempEmployee)) toast.error(validateUser(tempEmployee));
-
     console.log(employees);
   };
 
@@ -180,6 +189,8 @@ const EmployeeDialog = ({
             color={"info"}
             variant={"outlined"}
             onClick={() => {
+              setTempEmployee(curEmployee);
+              console.log(tempEmployee);
               action == "edit"
                 ? handleEdit(tempEmployee, curEmployee)
                 : action == "delete"
