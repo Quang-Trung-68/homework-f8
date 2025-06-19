@@ -64,7 +64,7 @@ const Row = ({ row }) => {
   );
 };
 
-export default function ({
+export default function FTable({
   columns,
   rows,
   setIsOpenDialog,

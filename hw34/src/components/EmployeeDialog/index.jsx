@@ -19,12 +19,6 @@ const EmployeeDialog = ({
   action,
   setEmployees,
 }) => {
-  // let tempEmployee = { ...curEmployee };
-  // let tempEmployees = [];
-
-  // setTempEmployee(curEmployee);
-  // setTempEmployees([]);
-
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -150,10 +144,6 @@ const EmployeeDialog = ({
     } else {
       toast.error(validation);
     }
-  };
-
-  const handleDelete = () => {
-    console.log("delete");
   };
 
   const handleClose = () => {
