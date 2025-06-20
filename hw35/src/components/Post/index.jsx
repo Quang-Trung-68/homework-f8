@@ -40,6 +40,12 @@ const Post = () => {
     }
   };
 
+  const logOut = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    navigate("/");
+  };
+
   // Main func load posts
   const loadPosts = async () => {
     try {
@@ -56,6 +62,7 @@ const Post = () => {
         // Checking refreshToken is found or not
         if (!refreshToken) {
           navigate("/");
+          console.log("No refresh token found. Please login again.");
           throw new Error("No refresh token found. Please login again.");
         }
 
@@ -84,6 +91,7 @@ const Post = () => {
       try {
         const postsData = await fetchPosts(accessToken);
         setPosts(postsData);
+        console.log(postsData);
         console.log("Successfully fetched posts");
       } catch (fetchError) {
         // if fetch fail, try refresh again
@@ -99,7 +107,7 @@ const Post = () => {
               localStorage.setItem("access_token", tokenResponse.access);
               accessToken = tokenResponse.access;
 
-              // Try re-fetch with new token 
+              // Try re-fetch with new token
               const postsData = await fetchPosts(accessToken);
               setPosts(postsData);
               console.log("Successfully refreshed token and fetched posts");
@@ -148,6 +156,7 @@ const Post = () => {
     <div>
       <h1>Welcome to the Post Page!</h1>
       <button onClick={loadPosts}>Refresh Posts</button>
+      <button onClick={logOut}>Log out</button>
       {posts && posts.length > 0 ? (
         <div>
           <h2>Posts ({posts.length})</h2>

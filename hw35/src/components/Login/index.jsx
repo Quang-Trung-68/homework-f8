@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { post } from "../../utils/index.js";
 import { useNavigate } from "react-router-dom";
+ import { ToastContainer, toast } from 'react-toastify';
 
 const styles = {
   body: {
@@ -100,36 +101,41 @@ const Login = () => {
           },
         }
       );
-      console.log(response);
       if (response?.access && response?.refresh) {
         localStorage.setItem("access_token", response.access);
         localStorage.setItem("refresh_token", response.refresh);
-        navigate("/post");
+          navigate("/post");
+        
       }
     } catch (error) {
-      console.log("Đã xảy ra lỗi khi đăng nhập.");
-      console.log("Vui lòng kiểm tra lại tài khoản hoặc mật khẩu.");
+      console.log(
+        "There is an error when you are login process. Please check your email and password."
+      );
+      toast.error("There is an error when you are login process. Please check your email and password.")
       console.log(error);
     }
   };
   return (
     <div style={styles.body}>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <p>admin@gmail.com 12345678</p>
         <h2 style={styles.title}>Welcome, User!</h2>
         <p style={styles.paragraph}>Please log in</p>
         <input
-          type="text"
+          type="email"
+          required
           placeholder="User Name"
           style={styles.input}
           value={username}
+          autoComplete="off"
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
+          required
           placeholder="Password"
           style={styles.input}
           value={password}
+          autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" style={styles.button}>
@@ -144,6 +150,7 @@ const Login = () => {
           </a>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };

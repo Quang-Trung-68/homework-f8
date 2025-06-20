@@ -7,9 +7,8 @@ const get = async (endpoint, headers) => {
   } catch (e) {
     console.log(e);
     console.log(e.response.data.detail);
+    throw new Error("There is an error when attempt fetch get api...");
   }
-
-  return null;
 };
 
 const post = async (endpoint, body, headers) => {
@@ -19,9 +18,8 @@ const post = async (endpoint, body, headers) => {
   } catch (e) {
     console.log(e);
     console.log(e.response.data.detail);
+    throw new Error("There is an error when attempt fetch post api...");
   }
-
-  return null;
 };
 
 export { get, post };
