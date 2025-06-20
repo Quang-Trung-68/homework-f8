@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { post } from "../../utils/index.js";
 import { useNavigate } from "react-router-dom";
- import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 const styles = {
   body: {
@@ -104,14 +104,15 @@ const Login = () => {
       if (response?.access && response?.refresh) {
         localStorage.setItem("access_token", response.access);
         localStorage.setItem("refresh_token", response.refresh);
-          navigate("/post");
-        
+        navigate("/post");
       }
     } catch (error) {
       console.log(
         "There is an error when you are login process. Please check your email and password."
       );
-      toast.error("There is an error when you are login process. Please check your email and password.")
+      toast.error(
+        "There is an error when you are login process. Please check your email and password."
+      );
       console.log(error);
     }
   };
