@@ -54,6 +54,5 @@ const onGetNewToken = async () => {
 };
 
 onMount();
-// onPost()
 console.log(refresh_token);
 console.log(access_token);

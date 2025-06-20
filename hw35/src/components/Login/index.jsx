@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { get, post } from "../../utils/index.js";
+import { useEffect, useState } from "react";
+import { post } from "../../utils/index.js";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   body: {
@@ -77,6 +78,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+  //Auto Set account to input field to test
   useEffect(() => {
     setUsername("admin@gmail.com");
     setPassword("12345678");
@@ -101,12 +104,11 @@ const Login = () => {
       if (response?.access && response?.refresh) {
         localStorage.setItem("access_token", response.access);
         localStorage.setItem("refresh_token", response.refresh);
-
-        window.location.href = "../../public/post.html";
-        
+        navigate("/post");
       }
     } catch (error) {
       console.log("Đã xảy ra lỗi khi đăng nhập.");
+      console.log("Vui lòng kiểm tra lại tài khoản hoặc mật khẩu.");
       console.log(error);
     }
   };

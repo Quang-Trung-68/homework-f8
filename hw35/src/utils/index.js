@@ -6,7 +6,7 @@ const get = async (endpoint, headers) => {
     return data;
   } catch (e) {
     console.log(e);
-    // toast the error
+    console.log(e.response.data.detail);
   }
 
   return null;
@@ -18,7 +18,7 @@ const post = async (endpoint, body, headers) => {
     return data;
   } catch (e) {
     console.log(e);
-    // toast the error
+    console.log(e.response.data.detail);
   }
 
   return null;
