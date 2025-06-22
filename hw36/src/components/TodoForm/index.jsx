@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import { LoadingButton } from "../LoadingComponents";
+
 function TodoForm({
   onCreate,
   onMount,
@@ -7,6 +9,8 @@ function TodoForm({
   setFormTodo,
   onEdit,
   curTodo,
+  isCreating = false,
+  isEditing = false
 }) {
   const inputRef = useRef(null);
 
@@ -24,6 +28,8 @@ function TodoForm({
     console.log(response);
   };
 
+  const isLoading = isCreating || isEditing;
+
   return (
     <div className="add-todo">
       <input
@@ -34,22 +40,39 @@ function TodoForm({
         required
         value={formTodo}
         ref={inputRef}
+        disabled={isLoading}
         onChange={(e) => {
           console.log(formTodo);
           setFormTodo(e.target.value);
         }}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter' && !isLoading) {
+            if (!isEdit) {
+              handleCreate(formTodo);
+            } else {
+              handleEdit(curTodo);
+            }
+            setFormTodo("");
+          }
+        }}
       />
-      <button
+      
+      <LoadingButton
         type="button"
         className="add-btn"
         id="add-todo-btn"
+        isLoading={isLoading}
         onClick={() => {
-          !isEdit ? handleCreate(formTodo) : handleEdit(curTodo);
+          if (!isEdit) {
+            handleCreate(formTodo);
+          } else {
+            handleEdit(curTodo);
+          }
           setFormTodo("");
         }}
       >
         {isEdit ? "Save Task" : "Add Task"}
-      </button>
+      </LoadingButton>
     </div>
   );
 }

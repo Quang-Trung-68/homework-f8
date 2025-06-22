@@ -94,3 +94,130 @@ h1 {
   text-decoration-color: black;
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* ============= */
+/* Spinner Loading */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #8758ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(26, 26, 64, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.loading-text {
+  color: #ffffff;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(90deg, #2a2a50 25%, #3a3a60 50%, #2a2a50 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-todo-item {
+  background-color: #2a2a50;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  height: 48px;
+}
+
+.skeleton-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #2a2a50 25%, #3a3a60 50%, #2a2a50 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.skeleton-text {
+  height: 16px;
+  border-radius: 4px;
+  flex: 1;
+  margin: 0 16px;
+  background: linear-gradient(90deg, #2a2a50 25%, #3a3a60 50%, #2a2a50 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.skeleton-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.skeleton-button {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #2a2a50 25%, #3a3a60 50%, #2a2a50 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* Container position relative for overlay */
+.container {
+  position: relative;
+}
+
+/* Button loading state */
+.button-loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+.button-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
