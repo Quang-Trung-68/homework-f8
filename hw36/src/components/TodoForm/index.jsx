@@ -1,17 +1,27 @@
-import React, { useState, useRef } from "react";
-
-function TodoForm({ onCreate, onMount, isEdit, formTodo,  setFormTodo }) {
-  
+import { useRef } from "react";
+function TodoForm({
+  onCreate,
+  onMount,
+  isEdit,
+  formTodo,
+  setFormTodo,
+  onEdit,
+  curTodo,
+}) {
   const inputRef = useRef(null);
 
   const handleCreate = async (todo) => {
     const response = await onCreate(todo);
     await onMount();
+    inputRef.current.focus();
     console.log(response);
   };
 
-  const handleEdit = async (id) => {
-    console.log(id);
+  const handleEdit = async (curTodo) => {
+    const response = await onEdit(curTodo.id, formTodo);
+    await onMount();
+    inputRef.current.focus();
+    console.log(response);
   };
 
   return (
@@ -34,12 +44,11 @@ function TodoForm({ onCreate, onMount, isEdit, formTodo,  setFormTodo }) {
         className="add-btn"
         id="add-todo-btn"
         onClick={() => {
-          !isEdit ? handleCreate(formTodo) : handleEdit();
+          !isEdit ? handleCreate(formTodo) : handleEdit(curTodo);
           setFormTodo("");
-          inputRef.current.focus();
         }}
       >
-        {isEdit ? "Save task" : "Add Task"}
+        {isEdit ? "Save Task" : "Add Task"}
       </button>
     </div>
   );

@@ -7,7 +7,7 @@ const getTodos = async (endpoint) => {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Has error when get all todos");
+    throw new Error("There are a error when get all todos");
   }
 };
 
@@ -18,7 +18,7 @@ const postTodos = async (endpoint, body) => {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Has error when post a todo");
+    throw new Error("There are a error when post a todo");
   }
 };
 
@@ -29,7 +29,7 @@ const putTodos = async (endpoint, body) => {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Has error when put a todo");
+    throw new Error("There are a error when update a todo");
   }
 };
 
@@ -40,7 +40,7 @@ const deleteTodos = async (endpoint, body) => {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("Has error when put a todo");
+    throw new Error("There are a error when delete a todo");
   }
 };
 
