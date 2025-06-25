@@ -9,7 +9,7 @@ const ShowFilter = ({ products }) => {
 
   return (
     <>
-      {(products.length != 0) ? (products.map(product => (
+      {(products.length > 0) ? (products.map(product => (
         <p key={product.id}>
           {`${product.name} - ${formatPrice(product.price)} - ${product.category} - ${product.brand}`}
         </p>

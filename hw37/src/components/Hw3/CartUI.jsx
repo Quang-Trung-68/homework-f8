@@ -30,13 +30,13 @@ function CartUI() {
 
   const onRemove = useCallback((id) => {
     console.log("Remove component ",id);
-    setDataCarts((prevCart) => [...prevCart].filter((item) => item.id != id));
+    setDataCarts((prevCart) => [...prevCart].filter((item) => item.id !== id));
   }, []);
 
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", padding: 20 }}>
       <h2 style={{ textAlign: "center" }}>🛒 Giỏ hàng</h2>
-      {dataCarts.length != 0 ? dataCarts.map((item) => (
+      {dataCarts.length > 0 ? dataCarts.map((item) => (
         <CartItem
           key={item.id}
           item={item}
