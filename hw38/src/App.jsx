@@ -1,7 +1,7 @@
 import { EditableTable } from "./components";
 import TableContext from "./components/EditableTable/TableContext";
 import "./App.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const columns = [
   { name: "product" },
@@ -21,7 +21,8 @@ const defaultCursor = {
 };
 
 function App() {
-  const [cursor, setCursor] = useState({...defaultCursor});
+  const cellSelectionRef = useRef(null);
+  const [cursor, setCursor] = useState({ ...defaultCursor });
 
   const [rows, setRows] = useState([
     {
@@ -42,8 +43,8 @@ function App() {
     },
   ]);
 
-  const provider = { rows, columns, cursor, setCursor };
-  console.log(cursor);
+  const provider = { rows, columns, cursor, setCursor, cellSelectionRef };
+  console.log(cursor, cellSelectionRef.current);
   return (
     <TableContext.Provider value={provider}>
       <EditableTable />

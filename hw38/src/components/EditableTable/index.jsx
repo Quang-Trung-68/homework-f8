@@ -19,9 +19,9 @@ export default function EditableTable() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => {
+            {rows.map((row,rowIndex) => {
               return (
-                <Row key={row.id} row={row}/>
+                <Row key={row.id} row={row} rowIndex={rowIndex} />
               );
             })}
           </tbody>

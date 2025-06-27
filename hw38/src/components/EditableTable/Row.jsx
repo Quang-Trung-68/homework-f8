@@ -2,7 +2,7 @@ import { useContext } from "react";
 import TableContext from "./TableContext";
 import Cell from "./Cell";
 
-export default function Row({ row }) {
+export default function Row({ row, rowIndex }) {
   
   const injector = useContext(TableContext);
   const { columns } = injector;
@@ -10,8 +10,8 @@ export default function Row({ row }) {
   return (
     <>
       <tr>
-        {columns.map((column) => {
-          return <Cell key={row[column.name]} row={row} column={column} />;
+        {columns.map((column, columnIndex) => {
+          return <Cell key={row[column.name]} row={row} column={column} rowIndex={rowIndex} columnIndex={columnIndex} />;
         })}
       </tr>
     </>
