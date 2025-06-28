@@ -1,0 +1,33 @@
+.editable-table
+  width: 100%
+  border-spacing: 0
+  position: relative
+
+  thead tr
+    background-color: #F5F5F5
+    height: 36px
+
+    th
+      font-size: 0.9em
+      color: rgba(0, 0, 0, 0.54)
+      text-align: center
+      border-top: 1px solid rgba(0, 0, 0, 0.12)
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+      padding: 8px
+
+  thead tr th, tbody tr td
+    border-left: 1px solid rgba(0, 0, 0, 0.12)
+
+    &:last-child
+      border-right: 1px solid rgba(0, 0, 0, 0.12)
+
+  tbody tr
+    height: 36px
+
+    &:hover td
+      background-color: rgba(0, 0, 0, 0.02)
+
+    td
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+      padding: 8px
+      position: relative

@@ -1,0 +1,1 @@
+export {default as EditableTable} from "./index.jsx"
