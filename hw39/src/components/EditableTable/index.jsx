@@ -50,7 +50,7 @@ export default function EditableTable({ columns, rows: initialRows }) {
           <thead>
             <tr>
               {columns.map((column) => {
-                return <th key={column.name}>{column.name}</th>;
+                return <th style={{width: column.width }} key={column.name}>{column.name}</th>;
               })}
             </tr>
           </thead>

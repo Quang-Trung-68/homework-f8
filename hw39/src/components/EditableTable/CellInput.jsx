@@ -3,7 +3,7 @@ import { TableContext } from "./const";
 
 export default function CellInput() {
   const injector = useContext(TableContext);
-  const { cursor, rows, columns, isEditing, setIsEditing, updateCell } = injector;
+  const { cursor,setCursor, rows, columns, isEditing, setIsEditing, updateCell } = injector;
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
 
