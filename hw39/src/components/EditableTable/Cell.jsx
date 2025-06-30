@@ -11,9 +11,10 @@ export default function Cell ({row, column, rowIndex, columnIndex}) {
 
   const updateCursor = () => {
     if (cellRef.current) {
-      // Sử dụng getBoundingClientRect để tính toán chính xác
+      // Use getBoundingClientRect to calculate
       const cellRect = cellRef.current.getBoundingClientRect();
-      const tableContainer = cellRef.current.closest('div'); // div chứa table
+      // div include table
+      const tableContainer = cellRef.current.closest('div'); 
       const containerRect = tableContainer.getBoundingClientRect();
       
       const width = cellRef.current.offsetWidth;
@@ -29,11 +30,11 @@ export default function Cell ({row, column, rowIndex, columnIndex}) {
 
   const onClick = () => {
     updateCursor();
-    // Nếu click vào ô đã được chọn, bắt đầu edit
+    // if clicking to cell that is selected, start editing
     if (cursor.rowIndex === rowIndex && cursor.columnIndex === columnIndex) {
       setIsEditing(true);
     } else {
-      // Nếu đang edit ô khác, thoát edit mode trước
+      // if click to another cell, exiting editing
       if (isEditing) {
         setIsEditing(false);
       }

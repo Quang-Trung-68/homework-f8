@@ -5,7 +5,6 @@ export default function CellSelection() {
   const injector = useContext(TableContext);
   const { cursor, isEditing } = injector;
   
-  // Không hiển thị selection khi đang edit
   if (isEditing) return null;
   
   return (

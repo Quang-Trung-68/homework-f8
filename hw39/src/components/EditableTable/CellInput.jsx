@@ -7,7 +7,7 @@ export default function CellInput() {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
 
-  // Lấy giá trị hiện tại của ô khi bắt đầu edit
+  // Get current value of cell when start editing
   useEffect(() => {
     if (isEditing && cursor.rowIndex !== undefined && cursor.columnIndex !== undefined) {
       const currentRow = rows[cursor.rowIndex];
@@ -15,7 +15,7 @@ export default function CellInput() {
       const cellValue = currentRow[currentColumn.name];
       setInputValue(cellValue || "");
       
-      // Focus vào input và select all text
+      // Focus in input and select all text
       setTimeout(() => {
         if (inputRef.current) {
           inputRef.current.focus();
@@ -27,16 +27,16 @@ export default function CellInput() {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      // Lưu giá trị và thoát edit mode
+      // Save value and exit editing mode
       saveValue();
     } else if (e.key === "Escape") {
-      // Hủy edit và thoát edit mode
+      // Cancel edit and exit editing mode
       setIsEditing(false);
     }
   };
 
   const handleBlur = () => {
-    // Lưu giá trị khi click ra ngoài
+    // Save value when clicking to another place
     saveValue();
   };
 
@@ -49,7 +49,7 @@ export default function CellInput() {
   };
 
   const onClick = (e) => {
-    // Ngăn không cho click event bubble up
+    // Stop click event bubble up
     e.stopPropagation();
   };
 

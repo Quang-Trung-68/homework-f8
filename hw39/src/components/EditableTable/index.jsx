@@ -19,7 +19,7 @@ export default function EditableTable({ columns, rows: initialRows }) {
   const [isEditing, setIsEditing] = useState(false);
   const [rows, setRows] = useState(initialRows);
 
-  // Function để update giá trị ô
+  // Function to update value cell
   const updateCell = (rowIndex, columnName, newValue) => {
     setRows(prevRows => {
       const newRows = [...prevRows];
