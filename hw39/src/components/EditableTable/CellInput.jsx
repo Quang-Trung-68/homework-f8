@@ -29,6 +29,7 @@ export default function CellInput() {
     if (e.key === "Enter") {
       // Save value and exit editing mode
       saveValue();
+      console.log(cursor);
     } else if (e.key === "Escape") {
       // Cancel edit and exit editing mode
       setIsEditing(false);
