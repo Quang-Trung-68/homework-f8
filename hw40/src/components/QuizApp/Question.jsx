@@ -1,16 +1,13 @@
-import { useContext } from "react"
-import { QuizContext } from "./QuizContext"
+import { useContext } from "react";
+import { QuizContext } from "./QuizContext";
 
-export default function Question({currentQ, result}){
+export default function Question() {
+  const injector = useContext(QuizContext);
+  const { state, dispatch, currentQ, result } = injector;
 
-     const injector = useContext(QuizContext)
-
-    const {state, dispatch} = injector
-    console.log(state);
-
-    return(
-        <>
-         <p>Cau : {currentQ.id}</p>
+  return (
+    <>
+      <p>Cau : {currentQ.id}</p>
       <p>Question: {currentQ.question} </p>
       <p>Thoi gian: 30s </p>
       <p>DIEM HIEN TAI: {result} / 10 </p>
@@ -25,16 +22,12 @@ export default function Question({currentQ, result}){
 
         // Logic styling
         if (curr === state.answerCurrent && state.isChecked === true) {
-          // Đã chọn và đã kiểm tra - hiển thị kết quả
           buttonStyle.background = curr === currentQ.answer ? "lightgreen" : "";
         } else if (curr === state.answerCurrent && state.isChecked === false) {
-          // Đã chọn và đã kiểm tra ra sai - hiển thị kết quả
           buttonStyle.background = curr !== currentQ.answer ? "red" : "";
         } else if (curr === state.answerCurrent && state.isChecked === null) {
-          // Đang chọn nhưng chưa kiểm tra
           buttonStyle.background = "lightblue";
         } else if (state.isChecked === true && curr === currentQ.answer) {
-          // Hiển thị đáp án đúng sau khi check
           buttonStyle.background = "lightgreen";
         }
 
@@ -54,7 +47,6 @@ export default function Question({currentQ, result}){
           </button>
         );
       })}
-
-        </>
-    )
+    </>
+  );
 }
