@@ -1,8 +1,5 @@
-
 import './App.css'
 import {QuizApp} from './components/QuizApp/'
-
-
 
 function App() {
 
