@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import ProductList from "./components/ProductList";
-import ProductForm from "./components/ProductForm";
+import ProductModal from "./components/ProductModal";
+import Button from "@mui/material/Button";
+import AddIcon from '@mui/icons-material/Add';
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
     // TODO: Set editingProduct và mở form
     setIsFormOpen(true);
     setEditingProduct(product)
+    console.log(editingProduct);
   };
 
   const handleCloseForm = ()=>{
@@ -30,20 +33,23 @@ function App() {
   return (
     <Provider store={store}>
       <div className="p-6 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Product Management</h1>
+       <div style={{display: "flex", justifyContent: "space-between"}}>
+          <h1 className="text-3xl font-bold mb-6">Product Management</h1>
+          <Button
+            onClick={handleAddProduct}
+            className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+            startIcon = {<AddIcon/>}
+          >
+            Add Product
+          </Button>
+       </div>
 
-        <button
-          onClick={handleAddProduct}
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        >
-          Add Product
-        </button>
-
-        {/* 🔥 BẠN LÀM: Conditional render ProductForm */}
+        {/*  BẠN LÀM: Conditional render ProductForm */}
         {
           /* TODO: Hiển thị ProductForm khi isFormOpen = true */
-
-          isFormOpen && <ProductForm productToEdit={editingProduct} onCancel={handleCloseForm} />
+        }
+        {
+          isFormOpen && <ProductModal isFormOpen={isFormOpen}  setIsFormOpen={setIsFormOpen} productToEdit={editingProduct} onCancel={handleCloseForm} />
         }
 
         <ProductList onEdit={handleEditProduct} />
