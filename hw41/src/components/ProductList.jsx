@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 
-const ProductList = ({ onEdit }) => {
-  // Get products from Redux store
-
-  const products = useSelector((state) => state.products);
+const ProductList = ({ onEdit, products }) => {
 
   return (
     <div>
