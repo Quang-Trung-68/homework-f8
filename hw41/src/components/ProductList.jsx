@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 
 const ProductList = ({ onEdit }) => {
-  // ✅ VÍ DỤ MẪU - Lấy products từ Redux store
+  // Get products from Redux store
+
   const products = useSelector((state) => state.products);
 
   return (
@@ -15,16 +16,17 @@ const ProductList = ({ onEdit }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá bán (VNĐ)</th>
-            <th>Số lượng</th>
-            <th>Đơn vị</th>
-            <th>Hành động</th>
+            <th>Name</th>
+            <th>Price (USD)</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Stock</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
-            // TODO: Render ProductItem với props phù hợp
+            // Render ProductItem
             <ProductItem key={product.id} product={product} onEdit={onEdit} />
           ))}
         </tbody>

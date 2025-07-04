@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 const ProductForm = ({ productToEdit, onCancel }) => {
   const dispatch = useDispatch();
 
-  // ✅ VÍ DỤ MẪU - Form state
+  // Form state
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -23,29 +23,29 @@ const ProductForm = ({ productToEdit, onCancel }) => {
   const validateForm = () => {
     const newErrors = {};
     console.log(formData);
-    // Kiểm tra tên sản phẩm
+    // Check name
     if (!formData.name.trim()) {
       newErrors.name = "Tên sản phẩm là bắt buộc";
     }
 
-    // Kiểm tra giá
+    // Check price
     if (!formData.price.toString().trim()) {
       newErrors.price = "Giá là bắt buộc";
     } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
       newErrors.price = "Giá phải là số dương";
     }
 
-    // Kiểm tra danh mục
+    // Check category
     if (!formData.category.trim()) {
       newErrors.category = "Danh mục là bắt buộc";
     }
 
-    // Kiểm tra mô tả
+    // Check desc
     if (!formData.description.trim()) {
       newErrors.description = "Mô tả là bắt buộc";
     }
 
-    // Kiểm tra số lượng tồn kho
+    // Check stock
     if (!formData.stock.toString().trim()) {
       newErrors.stock = "Số lượng tồn kho là bắt buộc";
     } else if (isNaN(formData.stock) || parseInt(formData.stock) < 0) {
@@ -56,7 +56,7 @@ const ProductForm = ({ productToEdit, onCancel }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ✅ VÍ DỤ MẪU - Load dữ liệu khi edit
+  // Load product to form when editing a product
   useEffect(() => {
     if (productToEdit) {
       setFormData({
@@ -70,7 +70,7 @@ const ProductForm = ({ productToEdit, onCancel }) => {
     console.log(productToEdit);
   }, [productToEdit]);
 
-  // ✅ VÍ DỤ MẪU - Handle input change
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -82,26 +82,13 @@ const ProductForm = ({ productToEdit, onCancel }) => {
     console.log(formData);
   };
 
-  // 🔥 BẠN LÀM: Handle form submit
+  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // TODO: Validate form data
-    // TODO: Dispatch action tương ứng (add hoặc update)
-    // TODO: Reset form và gọi onCancel
-
     if (productToEdit && validateForm()) {
-      // TODO: Dispatch updateProduct với { ...formData, id: productToEdit.id }
-      //   dispatch({
-      //     type: UPDATE_PRODUCT,
-      //     payload: { ...formData, id: productToEdit.id },
-      //   });
-
       dispatch(updateProduct({ id: productToEdit.id, ...formData }));
       onCancel();
     } else if (validateForm()) {
-      // TODO: Dispatch addProduct với formData
-      //   dispatch({ type: ADD_PRODUCT, payload: { id: v7(), ...formData } });
       dispatch(addProduct({ ...formData, id: v7() }));
       onCancel();
     } else {
@@ -110,6 +97,7 @@ const ProductForm = ({ productToEdit, onCancel }) => {
   };
 
   return (
+    
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">
@@ -117,10 +105,6 @@ const ProductForm = ({ productToEdit, onCancel }) => {
         </h2>
 
         <form onSubmit={handleSubmit}>
-          {/* 🔥 BẠN LÀM: Tạo các input fields */}
-          {/* TODO: Input cho name, price, category, description, stock */}
-          {/* TODO: Mỗi input cần có name, value, onChange */}
-
           <TextField
             name="name"
             sx={{ margin: "10px" }}

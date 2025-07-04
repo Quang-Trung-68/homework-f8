@@ -5,18 +5,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 const ProductItem = ({ product, onEdit }) => {
+  // Get dispatch
   const dispatch = useDispatch();
 
-  // ✅ VÍ DỤ MẪU - Handler xóa product
+  // Handler delete product
   const handleDelete = () => {
     if (window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
       dispatch(deleteProduct(product.id));
     }
   };
 
-  // 🔥 BẠN LÀM: Handler cho edit
+  // Handler edit
   const handleEdit = () => {
-    // TODO: Gọi onEdit với product
+    // Call onEdit func with product
     console.log(product);
     onEdit(product);
   };
@@ -27,6 +28,7 @@ const ProductItem = ({ product, onEdit }) => {
       <td>{product.name}</td>
       <td>{product.price}</td>
       <td>{product.category}</td>
+      <td>{product.description}</td>
       <td>{product.stock}</td>
       <td>
         <Button startIcon={<EditIcon />} onClick={handleEdit}>

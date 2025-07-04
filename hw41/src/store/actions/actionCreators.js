@@ -1,31 +1,33 @@
-import { ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_PRODUCTS } from "./actionTypes.js";
+import {
+  ADD_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
+  GET_PRODUCTS,
+} from "./actionTypes.js";
+import { v7 } from "uuid";
 
-// ✅ VÍ DỤ MẪU - Action Creator cho ADD
+//  Action Creator ADD
 export const addProduct = (product) => ({
   type: ADD_PRODUCT,
   payload: {
     ...product,
-    id: Date.now(), // Tự động tạo ID
-    createdAt: new Date().toISOString(),
+    id: v7(),
   },
 });
 
-// 🔥 BẠN LÀM: Tạo action creators tương tự cho:
+// action creators update
 export const updateProduct = (product) => ({
-  // TODO: Return object với type UPDATE_PRODUCT và payload là product
   type: UPDATE_PRODUCT,
   payload: product,
 });
-
+// delete
 export const deleteProduct = (id) => ({
-  // TODO: Return object với type DELETE_PRODUCT và payload là id
   type: DELETE_PRODUCT,
   payload: {
     id,
   },
 });
-
+// get all
 export const getProducts = () => ({
-  // TODO: Return object với type GET_PRODUCTS (không cần payload)
   type: GET_PRODUCTS,
 });
