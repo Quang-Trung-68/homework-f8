@@ -20,7 +20,6 @@ function App() {
   const handleEditProduct = (product) => {
     setIsFormOpen(true);
     setEditingProduct(product);
-    console.log(editingProduct);
   };
 
   const handleCloseForm = () => {

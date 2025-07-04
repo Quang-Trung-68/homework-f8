@@ -18,7 +18,6 @@ const ProductItem = ({ product, onEdit }) => {
   // Handler edit
   const handleEdit = () => {
     // Call onEdit func with product
-    console.log(product);
     onEdit(product);
   };
 
@@ -30,6 +29,7 @@ const ProductItem = ({ product, onEdit }) => {
       <td>{product.category}</td>
       <td>{product.description}</td>
       <td>{product.stock}</td>
+      <td>{product.unit}</td>
       <td>
         <Button startIcon={<EditIcon />} onClick={handleEdit}>
           Edit

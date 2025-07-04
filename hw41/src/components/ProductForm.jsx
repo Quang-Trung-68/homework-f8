@@ -16,13 +16,13 @@ const ProductForm = ({ productToEdit, onCancel }) => {
     category: "",
     description: "",
     stock: "",
+    unit: "",
   });
   // errors of validation form
   const [errors, setErrors] = useState({});
   // Validation function
   const validateForm = () => {
     const newErrors = {};
-    console.log(formData);
     // Check name
     if (!formData.name.trim()) {
       newErrors.name = "Tên sản phẩm là bắt buộc";
@@ -52,6 +52,10 @@ const ProductForm = ({ productToEdit, onCancel }) => {
       newErrors.stock = "Số lượng phải là số không âm";
     }
 
+    // Check unit
+    if (!formData.unit.trim()) {
+      newErrors.unit = "Đơn vị là bắt buộc";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -65,9 +69,9 @@ const ProductForm = ({ productToEdit, onCancel }) => {
         category: productToEdit.category,
         description: productToEdit.description,
         stock: productToEdit.stock,
+        unit: productToEdit.unit,
       });
     }
-    console.log(productToEdit);
   }, [productToEdit]);
 
   // Handle input change
@@ -79,7 +83,6 @@ const ProductForm = ({ productToEdit, onCancel }) => {
       [name]: value,
     }));
     setErrors({});
-    console.log(formData);
   };
 
   // Handle form submit
@@ -91,13 +94,10 @@ const ProductForm = ({ productToEdit, onCancel }) => {
     } else if (validateForm()) {
       dispatch(addProduct({ ...formData, id: v7() }));
       onCancel();
-    } else {
-      console.log(errors);
     }
   };
 
   return (
-    
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">
@@ -159,6 +159,17 @@ const ProductForm = ({ productToEdit, onCancel }) => {
             onChange={handleChange}
             error={!!errors.stock}
             helperText={errors.stock}
+          />
+          <TextField
+            name="unit"
+            sx={{ margin: "10px" }}
+            id="unit-outlined"
+            label="Unit"
+            variant="outlined"
+            value={formData.unit}
+            onChange={handleChange}
+            error={!!errors.unit}
+            helperText={errors.unit}
           />
 
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>

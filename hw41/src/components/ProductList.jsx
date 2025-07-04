@@ -21,6 +21,7 @@ const ProductList = ({ onEdit }) => {
             <th>Category</th>
             <th>Description</th>
             <th>Stock</th>
+            <th>Unit</th>
             <th>Action</th>
           </tr>
         </thead>
