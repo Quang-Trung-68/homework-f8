@@ -61,6 +61,7 @@ const contactsSlice = createSlice({
   initialState: {
     contacts: [],
     isLoading: false,
+    isLoadingError: false,
   },
   extraReducers: (builder) => {
     // get
@@ -73,6 +74,12 @@ const contactsSlice = createSlice({
       console.log("get ok");
       state.contacts = action.payload;
     });
+    builder.addCase(getContacts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isLoadingError = true;
+      console.log("reject get");
+      state.contacts = action.payload;
+    });
     // post
     builder.addCase(postContacts.pending, (state, action) => {
       state.isLoading = true;
@@ -82,6 +89,12 @@ const contactsSlice = createSlice({
     builder.addCase(postContacts.fulfilled, (state, action) => {
       state.isLoading = false;
       console.log("post ok");
+    });
+
+    builder.addCase(postContacts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isLoadingError = true;
+      console.log("reject post");
     });
     // delete
     builder.addCase(deleteContact.pending, (state, action) => {
@@ -93,6 +106,11 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       console.log("delete ok");
     });
+    builder.addCase(deleteContact.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isLoadingError = true;
+      console.log("reject delete");
+    });
     // put
     builder.addCase(putContact.pending, (state, action) => {
       state.isLoading = true;
@@ -101,6 +119,11 @@ const contactsSlice = createSlice({
     builder.addCase(putContact.fulfilled, (state, action) => {
       state.isLoading = false;
       console.log("put ok");
+    });
+    builder.addCase(putContact.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isLoadingError = true;
+      console.log("reject put");
     });
   },
 });

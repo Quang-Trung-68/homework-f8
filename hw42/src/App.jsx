@@ -17,7 +17,9 @@ function App() {
     image: "",
   });
   const [isEditing, setIsEditing] = useState();
-  const { contacts, isLoading } = useSelector((state) => state.contacts);
+  const { contacts, isLoading, isLoadingError } = useSelector(
+    (state) => state.contacts
+  );
 
   const dispatch = useDispatch();
 
@@ -48,9 +50,11 @@ function App() {
     padding: "20px",
   };
 
+  if (isLoadingError) return <LoadingOverlay isLoading={isLoading} isLoadingError={isLoadingError} />
+
   return (
     <>
-      <LoadingOverlay isLoading={isLoading} />
+      <LoadingOverlay isLoading={isLoading} isLoadingError={isLoadingError} />
 
       <TextField
         variant="outlined"
@@ -66,9 +70,8 @@ function App() {
         isEditing={isEditing}
         setIsEditing={setIsEditing}
       />
-      {contactsRender.length === 0 && <div>Can not find data...</div>}
-
-      {contactsRender.length !== 0 && (
+      {contactsRender.length === 0 && <div style={{fontSize:"20px"}}>Can not find any contact...</div>}
+      {!isLoadingError && (
         <div style={containerStyle}>
           {contactsRender.map((contact) => {
             return (
