@@ -4,7 +4,6 @@ import { deleteContact, getContacts } from "../../store/Contacts";
 
 const ContactCard = ({
   userData,
-  isEditing,
   setIsEditing,
   setFormData,
   setOpen

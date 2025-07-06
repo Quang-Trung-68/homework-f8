@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { putContact, postContacts, getContacts } from "../../store/Contacts";
 import UpLoad from "../UpLoad";
 
@@ -21,7 +21,10 @@ const contactSchema = z.object({
     .min(9, "Số quá ngắn")
     .max(11, "Số quá dài"),
   email: z.string().nonempty("Vui lòng nhập email").email("Email không hợp lệ"),
-  image: z.string().url("URL ảnh không hợp lệ").optional().or(z.literal("")),
+  image: z
+    .string()
+    .nonempty("Vui lòng nhập URL ảnh")
+    .url("URL ảnh không hợp lệ"),
 });
 
 const style = {
@@ -64,18 +67,21 @@ export default function ContactModal({
 
   const onChange = (value, name) => {
     setFormData({ ...formData, [name]: value });
-    setErrors({});
   };
+
+  React.useEffect(() => {
+    setErrors({});
+  }, [formData]);
 
   const onSave = async () => {
     const result = contactSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors;
+      console.log(fieldErrors);
       setErrors(fieldErrors);
       return;
     }
-
     handleClose();
     await dispatch(postContacts(formData));
     await dispatch(getContacts());
@@ -114,7 +120,7 @@ export default function ContactModal({
         <Box sx={style}>
           <Typography
             id="modal-modal-description"
-            sx={{ mt: 1, mb: 3, fontSize: "24px",fontWeight:"bold" }}
+            sx={{ mt: 1, mb: 3, fontSize: "24px", fontWeight: "bold" }}
           >
             {!isEditing ? "Add " : "Edit "}
             Contact
@@ -171,8 +177,8 @@ export default function ContactModal({
             id="outlined-image"
             label="Image"
             variant="outlined"
-            disabled
             sx={{ m: 1 }}
+            disabled
             value={formData.image}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.image}

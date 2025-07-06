@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
 export default function UpLoad({ formData, setFormData }) {
   const [base64, setBase64] = useState("");

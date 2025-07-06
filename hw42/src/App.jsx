@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { getContacts } from "./store/Contacts/index.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import ContactCard from "./components/ContactCard/index.jsx";
 import ContactModal from "./components/ContactCard/ContactModal.jsx";
 import LoadingOverlay from "./components/LoadingOverlay.jsx";
@@ -17,6 +17,8 @@ function App() {
     image: "",
   });
   const [isEditing, setIsEditing] = useState();
+  const [searchValue, setSearchValue] = useState("");
+
   const { contacts, isLoading, isLoadingError } = useSelector(
     (state) => state.contacts
   );
@@ -27,20 +29,21 @@ function App() {
     dispatch(getContacts());
   }, [dispatch]);
 
-  useEffect(() => {
-    setContactRender(contacts);
-  }, [contacts]);
+  const contactsRender = useMemo(() => {
+    if (!searchValue) return contacts;
 
-  const [contactsRender, setContactRender] = useState(contacts);
-  const onSearchContact = (value) => {
-    setContactRender(
-      contacts.filter((contact) =>
-        (contact.firstName + " " + contact.lastName + " " + contact.email)
-          .toLowerCase()
-          .includes(value)
-      )
+    return contacts.filter((contact) =>
+      (contact.firstName + " " + contact.lastName + " " + contact.email)
+        .toLowerCase()
+        .includes(searchValue.toLowerCase())
     );
-  };
+  }, [contacts, searchValue]);
+
+  const onSearchContact = useCallback((value) => {
+    setSearchValue(value);
+  }, []);
+
+  console.log("App render");
 
   const containerStyle = {
     display: "flex",
@@ -50,7 +53,10 @@ function App() {
     padding: "20px",
   };
 
-  if (isLoadingError) return <LoadingOverlay isLoading={isLoading} isLoadingError={isLoadingError} />
+  if (isLoadingError)
+    return (
+      <LoadingOverlay isLoading={isLoading} isLoadingError={isLoadingError} />
+    );
 
   return (
     <>
@@ -60,7 +66,7 @@ function App() {
         variant="outlined"
         name="searchContact"
         label={"Search by Name, Email..."}
-        onChange={(e) => onSearchContact(e.target.value.toLowerCase())}
+        onChange={(e) => onSearchContact(e.target.value)}
       />
       <ContactModal
         open={open}
@@ -70,7 +76,9 @@ function App() {
         isEditing={isEditing}
         setIsEditing={setIsEditing}
       />
-      {contactsRender.length === 0 && <div style={{fontSize:"20px"}}>Can not find any contact...</div>}
+      {contactsRender.length === 0 && (
+        <div style={{ fontSize: "20px" }}>Can not find any contact...</div>
+      )}
       {!isLoadingError && (
         <div style={containerStyle}>
           {contactsRender.map((contact) => {
