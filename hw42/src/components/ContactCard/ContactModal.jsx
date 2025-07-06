@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { putContact, postContacts, getContacts } from "../../store/Contacts";
+import UpLoad from "../UpLoad";
 
 import { z } from "zod";
 
@@ -43,7 +44,6 @@ export default function ContactModal({
   setFormData,
   isEditing,
   setIsEditing,
-  setIsLoading,
 }) {
   const dispatch = useDispatch();
   const handleOpen = () => setOpen(true);
@@ -76,11 +76,9 @@ export default function ContactModal({
       return;
     }
 
-    setIsLoading(true);
     handleClose();
     await dispatch(postContacts(formData));
     await dispatch(getContacts());
-    setIsLoading(false);
   };
 
   const onSaveEdit = async () => {
@@ -91,11 +89,9 @@ export default function ContactModal({
       setErrors(fieldErrors);
       return;
     }
-    setIsLoading(true);
     handleClose();
     await dispatch(putContact(formData));
     await dispatch(getContacts());
-    setIsLoading(false);
   };
 
   const onCancel = () => {
@@ -104,9 +100,11 @@ export default function ContactModal({
 
   return (
     <div>
-      <Button sx={{ float: "right" }} onClick={handleOpen}>
-        ADD CONTACT
-      </Button>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <Button variant="contained" onClick={handleOpen}>
+          ADD CONTACT
+        </Button>
+      </div>
       <Modal
         open={open}
         onClose={handleClose}
@@ -114,15 +112,19 @@ export default function ContactModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2, mb: 4 }}>
-            ADD A CONTACT
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 1, mb: 3, fontSize: "24px",fontWeight:"bold" }}
+          >
+            {!isEditing ? "Add " : "Edit "}
+            Contact
           </Typography>
           <TextField
             id="outlined-firstName"
             label="First Name"
             variant="outlined"
             name="firstName"
-            sx={{ m: 2 }}
+            sx={{ m: 1 }}
             value={formData.firstName}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.firstName}
@@ -133,7 +135,7 @@ export default function ContactModal({
             id="outlined-lastName"
             label="Last Name"
             variant="outlined"
-            sx={{ m: 2 }}
+            sx={{ m: 1 }}
             value={formData.lastName}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.lastName}
@@ -144,7 +146,7 @@ export default function ContactModal({
             id="outlined-email"
             label="Email"
             variant="outlined"
-            sx={{ m: 2 }}
+            sx={{ m: 1 }}
             value={formData.email}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.email}
@@ -155,31 +157,42 @@ export default function ContactModal({
             id="outlined-phone"
             label="Phone"
             variant="outlined"
-            sx={{ m: 2 }}
+            sx={{ m: 1 }}
             value={formData.phone}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.phone}
             helperText={errors.phone?.join(", ")}
           />
+
+          {/* test upload */}
+          <UpLoad formData={formData} setFormData={setFormData} />
           <TextField
             name="image"
             id="outlined-image"
             label="Image"
             variant="outlined"
-            sx={{ m: 2 }}
+            disabled
+            sx={{ m: 1 }}
             value={formData.image}
             onChange={(e) => onChange(e.target.value, e.target.name)}
             error={errors.image}
             helperText={errors.image?.join(", ")}
           />
+
           <Box>
             <Button
+              variant="contained"
               sx={{ float: "left" }}
               onClick={!isEditing ? onSave : onSaveEdit}
             >
               SAVE
             </Button>
-            <Button sx={{ float: "right" }} onClick={onCancel} color="error">
+            <Button
+              variant="outlined"
+              sx={{ float: "right" }}
+              onClick={onCancel}
+              color="error"
+            >
               CANCEL
             </Button>
           </Box>

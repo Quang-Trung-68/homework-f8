@@ -10,6 +10,7 @@ const overlayStyle = {
   height: "100vh",
   backgroundColor: "rgba(255, 255, 255, 0.7)",
   display: "flex",
+  flexDirection:"column",
   justifyContent: "center",
   alignItems: "center",
   zIndex: 9999
@@ -20,6 +21,7 @@ const LoadingOverlay = ({ isLoading }) => {
 
   return (
     <div style={overlayStyle}>
+      <div style={{fontSize:"30px"}}>Loading...</div>
       <CircularProgress size={60} />
     </div>
   );

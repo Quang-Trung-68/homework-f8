@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ContactCard from "./components/ContactCard/index.jsx";
 import ContactModal from "./components/ContactCard/ContactModal.jsx";
 import LoadingOverlay from "./components/LoadingOverlay.jsx";
+import { TextField } from "@mui/material";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -16,26 +17,47 @@ function App() {
     image: "",
   });
   const [isEditing, setIsEditing] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const state = useSelector((state) => state.contacts);
+  const { contacts, isLoading } = useSelector((state) => state.contacts);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getContacts());
   }, [dispatch]);
-  // console.log(state);
+
+  useEffect(() => {
+    setContactRender(contacts);
+  }, [contacts]);
+
+  const [contactsRender, setContactRender] = useState(contacts);
+  const onSearchContact = (value) => {
+    setContactRender(
+      contacts.filter((contact) =>
+        (contact.firstName + " " + contact.lastName + " " + contact.email)
+          .toLowerCase()
+          .includes(value)
+      )
+    );
+  };
 
   const containerStyle = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    gap: "30px",
-    padding: "40px",
+    gap: "10px",
+    padding: "20px",
   };
 
   return (
     <>
       <LoadingOverlay isLoading={isLoading} />
+
+      <TextField
+        variant="outlined"
+        name="searchContact"
+        label={"Search by Name, Email..."}
+        onChange={(e) => onSearchContact(e.target.value.toLowerCase())}
+      />
       <ContactModal
         open={open}
         setOpen={setOpen}
@@ -43,23 +65,25 @@ function App() {
         setFormData={setFormData}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
-        setIsLoading={setIsLoading}
       />
-      <div style={containerStyle}>
-        {state.contacts.map((contact) => {
-          return (
-            <ContactCard
-              key={contact.id}
-              setFormData={setFormData}
-              setOpen={setOpen}
-              userData={contact}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              setIsLoading={setIsLoading}
-            />
-          );
-        })}
-      </div>
+      {contactsRender.length === 0 && <div>Can not find data...</div>}
+
+      {contactsRender.length !== 0 && (
+        <div style={containerStyle}>
+          {contactsRender.map((contact) => {
+            return (
+              <ContactCard
+                key={contact.id}
+                setFormData={setFormData}
+                setOpen={setOpen}
+                userData={contact}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+              />
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }

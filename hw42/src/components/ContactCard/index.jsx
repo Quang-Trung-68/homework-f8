@@ -7,8 +7,7 @@ const ContactCard = ({
   isEditing,
   setIsEditing,
   setFormData,
-  setOpen,
-  setIsLoading,
+  setOpen
 }) => {
   const cardStyle = {
     width: "320px",
@@ -129,10 +128,8 @@ const ContactCard = ({
       `Bạn có chắc chắn muốn xoá liên hệ "${userData.firstName} ${userData.lastName} - ${userData.phone}" này không?`
     );
     if (!confirmDelete) return;
-    setIsLoading(true);
     await dispatch(deleteContact(userData.id));
     await dispatch(getContacts());
-    setIsLoading(false);
   };
 
   const onEdit = () => {

@@ -60,31 +60,47 @@ const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
     contacts: [],
+    isLoading: false,
   },
   extraReducers: (builder) => {
+    // get
+    builder.addCase(getContacts.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("pending get ok");
+    });
     builder.addCase(getContacts.fulfilled, (state, action) => {
+      state.isLoading = false;
       console.log("get ok");
-      console.log(action.payload);
       state.contacts = action.payload;
-      console.log(action);
+    });
+    // post
+    builder.addCase(postContacts.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("pending post ok");
     });
 
     builder.addCase(postContacts.fulfilled, (state, action) => {
+      state.isLoading = false;
       console.log("post ok");
-      console.log(state);
-      console.log(action);
+    });
+    // delete
+    builder.addCase(deleteContact.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("pending delete ok");
     });
 
     builder.addCase(deleteContact.fulfilled, (state, action) => {
+      state.isLoading = false;
       console.log("delete ok");
-      console.log(state);
-      console.log(action);
     });
-
+    // put
+    builder.addCase(putContact.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("pending put ok");
+    });
     builder.addCase(putContact.fulfilled, (state, action) => {
+      state.isLoading = false;
       console.log("put ok");
-      console.log(state);
-      console.log(action);
     });
   },
 });
