@@ -1,4 +1,3 @@
-import React, { use } from "react";
 import { useDispatch } from "react-redux";
 import { deleteContact, getContacts } from "../../store/Contacts";
 
@@ -142,10 +141,10 @@ const ContactCard = ({
       <div style={headerStyle}>
         <div style={buttonContainerStyle}>
           <button style={editButton} onClick={() => onEdit()}>
-            ✏️ Sửa
+            ✏️ Edit
           </button>
           <button onClick={() => onDelete()} style={deleteButton}>
-            🗑️ Xoá
+            🗑️ Delete
           </button>
         </div>
         <img style={avatarStyle} src={userData.image} alt="Sophie Mitchell" />
