@@ -1,0 +1,56 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Clothes"
+    },
+    {
+      "id": 2,
+      "name": "Phone"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "name": "t-shirt",
+      "orderNum": 1
+    },
+    {
+      "id": 2,
+      "categoryId": 1,
+      "name": "jeans",
+      "orderNum": 2
+    },
+    {
+      "id": 3,
+      "categoryId": 2,
+      "name": "iphone 16",
+      "orderNum": 1
+    },
+    {
+      "id": "3a43",
+      "name": "ttt",
+      "categoryId": 1,
+      "orderNum": "033"
+    },
+    {
+      "id": "4a21f7f9-b6ad-464a-b4b3-715b2b9974e3",
+      "name": "t-shirtttt",
+      "categoryId": 1,
+      "orderNum": 1
+    },
+    {
+      "id": "49b189aa-e6b0-4011-ab4a-e0063cbffab5",
+      "name": "t-shirttt",
+      "categoryId": 1,
+      "orderNum": 1
+    },
+    {
+      "id": "216e3d23-e983-42ad-8ea9-98555dfec1a7",
+      "name": "ttt",
+      "categoryId": 1,
+      "orderNum": "0tt"
+    }
+  ]
+}
