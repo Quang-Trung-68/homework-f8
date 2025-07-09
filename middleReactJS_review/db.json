@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Clothes"
+    },
+    {
+      "id": 2,
+      "name": "Phone"
+    }
+  ],
+  "products": [
+    {
+      "id": "3",
+      "categoryId": 2,
+      "name": "iphone 16",
+      "orderNum": 1
+    },
+    {
+      "id": "3a43",
+      "name": "ttt",
+      "categoryId": 1,
+      "orderNum": "033"
+    },
+    {
+      "id": "7ff7",
+      "name": "sp2",
+      "categoryId": 1,
+      "orderNum": "0222"
+    }
+  ]
+}
