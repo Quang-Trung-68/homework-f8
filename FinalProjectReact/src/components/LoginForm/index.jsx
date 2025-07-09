@@ -1,4 +1,5 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Box, Typography, Container, InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff, Email, Lock, School } from "@mui/icons-material";
 import homeImage from "../../assets/imgs/home.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -6,14 +7,15 @@ import { postFormLogin } from "../../fetchApis";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const goToRegister = () => {
     navigate("/register");
   };
 
-  const goToClasses = ()=>{
-    navigate("/classes")
-  }
+  const goToClasses = () => {
+    navigate("/classes");
+  };
 
   const [formLogin, setFormLogin] = useState({
     email: "",
@@ -28,11 +30,11 @@ export const LoginForm = () => {
   const postForm = async () => {
     try {
       const data = await postFormLogin(formLogin);
-      if(data?.access && data?.refresh){
+      if (data?.access && data?.refresh) {
         console.log(data);
-        localStorage.setItem("accessToken", data.access)
-        localStorage.setItem("refreshToken", data.refresh)
-        goToClasses()
+        localStorage.setItem("accessToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+        goToClasses();
       }
       return data;
     } catch (error) {
@@ -40,95 +42,186 @@ export const LoginForm = () => {
     }
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
-    <>
-      <div
-        className="body"
-        style={{
-          margin: "100px 200px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+    <Container 
+      maxWidth="lg" 
+      sx={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        py: 4
+      }}
+    >
+      <Box 
+        sx={{ 
+          display: 'flex', 
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          overflow: 'hidden',
+          maxWidth: '900px',
+          width: '100%'
         }}
       >
-        <div
-          className="body-image"
-          style={{
-            width: "50vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#3182ce",
-            padding: 20,
-            borderRadius: "10px 0 0 10px",
+        {/* Image Section */}
+        <Box 
+          sx={{ 
+            width: '50%', 
+            backgroundColor: '#1976d2',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 4
           }}
         >
-          <img
-            src={homeImage}
+          <img 
+            src={homeImage} 
+            alt="Home"
             style={{
-              width: "60%",
-              borderRadius: "20px",
-              height: "100%",
+              width: '80%',
+              maxWidth: '300px',
+              borderRadius: '8px'
             }}
           />
-        </div>
-        <div
-          style={{
-            width: "50vw",
-            padding: 40,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-          className="body-content"
-        >
-          <h1 style={{ color: "blue" }}>BK Classroom</h1>
-          <p style={{ fontSize: 26, fontWeight: "bold" }}>Đăng Nhập</p>
-          <p>Cung cấp giải pháp toàn diện cho lớp học thông minh</p>
+        </Box>
 
+        {/* Form Section */}
+        <Box 
+          sx={{ 
+            width: '50%',
+            p: 5,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}
+        >
+          {/* Logo */}
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <School sx={{ color: '#1976d2', fontSize: '2rem', mr: 1 }} />
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontWeight: 700, 
+                color: '#1976d2'
+              }}
+            >
+              BK Classroom
+            </Typography>
+          </Box>
+
+          {/* Title */}
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              fontWeight: 600, 
+              color: '#2c3e50',
+              mb: 1
+            }}
+          >
+            Đăng Nhập
+          </Typography>
+
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: '#7f8c8d',
+              mb: 3
+            }}
+          >
+            Cung cấp giải pháp toàn diện cho lớp học thông minh
+          </Typography>
+
+          {/* Form */}
           <TextField
-            id="outlined-email"
             label="Nhập email"
             name="email"
             variant="outlined"
-            sx={{ width: "70%", mt: 3 }}
+            type="email"
+            fullWidth
             value={formLogin.email}
             onChange={(e) => onChange(e.target.name, e.target.value)}
+            sx={{ mb: 2 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email sx={{ color: '#1976d2' }} />
+                </InputAdornment>
+              ),
+            }}
           />
+
           <TextField
-            id="outlined-password"
             label="Nhập password"
             name="password"
             variant="outlined"
-            sx={{ width: "70%", mt: 2 }}
+            type={showPassword ? 'text' : 'password'}
+            fullWidth
             value={formLogin.password}
             onChange={(e) => onChange(e.target.name, e.target.value)}
+            sx={{ mb: 3 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock sx={{ color: '#1976d2' }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                    size="small"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           <Button
             onClick={postForm}
-            sx={{
-              fontWeight: "bold",
-              m: 1,
-              width: "70%",
-              mt: 4,
-              height: "50px",
-            }}
             variant="contained"
+            size="large"
+            fullWidth
+            sx={{
+              height: '48px',
+              fontSize: '16px',
+              fontWeight: 600,
+              mb: 2,
+              borderRadius: '8px'
+            }}
           >
             Đăng nhập
           </Button>
 
-          <div>
-            <Button onClick={goToRegister} sx={{ m: 1 }} variant="text">
+          <Box sx={{ textAlign: 'center' }}>
+            <Button 
+              onClick={goToRegister}
+              variant="text"
+              sx={{ 
+                color: '#1976d2',
+                fontWeight: 500,
+                mr: 1
+              }}
+            >
               Đăng ký
             </Button>
-            <span>tài khoản cho học viên</span>
-          </div>
-        </div>
-      </div>
-    </>
+            <Typography 
+              variant="body2" 
+              component="span" 
+              sx={{ color: '#7f8c8d' }}
+            >
+              tài khoản cho học viên
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    </Container>
   );
 };
