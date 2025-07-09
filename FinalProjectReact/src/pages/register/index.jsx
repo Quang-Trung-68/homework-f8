@@ -10,7 +10,6 @@ export default function Register() {
     navigate("/");
   };
 
-
   return (
     <>
       <div

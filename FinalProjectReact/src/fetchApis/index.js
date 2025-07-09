@@ -6,9 +6,32 @@ const postFormRegister = async (value) => {
     return data;
   } catch (error) {
     console.log(error);
-    console.log("Error to fetch post");
+    console.log("Error to fetch post register api");
   }
 };
 
+const postFormLogin = async (value) => {
+  try {
+    const { data } = await api.post("login/", value);
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log("Error to fetch post login api");
+  }
+};
 
-export { postFormRegister}
+const getClass = async (accessToken) => {
+  try {
+    const { data } = await api.get("master/class/", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log("Error to fetch get classes api");
+  }
+};
+
+export { postFormRegister, postFormLogin, getClass };

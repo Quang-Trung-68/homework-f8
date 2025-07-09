@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -14,7 +13,7 @@ const style = {
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
-  borderRadius:"10px",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 2,
 };
@@ -25,9 +24,9 @@ function Popup({ open, setOpen }) {
 
   const navigate = useNavigate();
 
-  const goToLogin = ()=>{
-    navigate("/login")
-  }
+  const goToLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -43,7 +42,9 @@ function Popup({ open, setOpen }) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Đăng ký thành công.
           </Typography>
-          <Button sx={{m:2}} variant="contained" onClick={goToLogin}>Quay lại trang đăng nhập</Button>
+          <Button sx={{ m: 2 }} variant="contained" onClick={goToLogin}>
+            Quay lại trang đăng nhập
+          </Button>
         </Box>
       </Modal>
     </div>

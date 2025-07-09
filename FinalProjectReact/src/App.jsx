@@ -3,7 +3,6 @@ import logo from "./assets/imgs/logo.png";
 import homeImage from "./assets/imgs/home.png";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 function App() {
   const navigate = useNavigate();
