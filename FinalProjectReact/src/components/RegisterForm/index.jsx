@@ -4,6 +4,7 @@ import { postFormRegister } from "../../fetchApis";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
 
 const style = {
   position: "absolute",
@@ -51,6 +52,19 @@ function Popup({ open, setOpen }) {
   );
 }
 
+// Define Zod schema
+const schema = z
+  .object({
+    name: z.string().min(3, "Tên phải có ít nhất 3 ký tự"),
+    email: z.string().email("Email không đúng định dạng"),
+    password: z.string().min(6, "Mật khẩu phải gồm tối thiểu 6 ký tự"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Mật khẩu xác nhận không khớp",
+    path: ["confirmPassword"], // attach error to confirmPassword
+  });
+
 export const RegisterForm = ({ goToHome }) => {
   const [formRegister, setFormRegister] = useState({
     name: "",
@@ -60,6 +74,7 @@ export const RegisterForm = ({ goToHome }) => {
     role: "student",
     status: "confirmed",
   });
+  const [errors, setErrors] = useState({});
 
   const [open, setOpen] = useState(false);
 
@@ -68,7 +83,25 @@ export const RegisterForm = ({ goToHome }) => {
     console.log(formRegister);
   };
 
+  // const postForm = async () => {
+  //   try {
+  //     const data = await postFormRegister({ ...formRegister });
+  //     console.log(data);
+  //     setOpen(true);
+  //     console.log(open);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const postForm = async () => {
+    const result = schema.safeParse(formRegister);
+
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors(fieldErrors);
+      return;
+    }
     try {
       const data = await postFormRegister({ ...formRegister });
       console.log(data);
@@ -77,6 +110,9 @@ export const RegisterForm = ({ goToHome }) => {
     } catch (error) {
       console.log(error);
     }
+    setErrors({});
+    alert("Form submitted!");
+    console.log("Form data:", formRegister);
   };
 
   return (
@@ -90,7 +126,10 @@ export const RegisterForm = ({ goToHome }) => {
           label="Nhập tên"
           variant="outlined"
           fullWidth
+          error={!!errors.name}
+          helperText={errors.name?.[0]}
           onChange={(e) => onChange(e.target.name, e.target.value)}
+          onFocus={()=> setErrors({})}
         />
       </Box>
       <Box>
@@ -101,7 +140,10 @@ export const RegisterForm = ({ goToHome }) => {
           label="Nhập email"
           variant="outlined"
           fullWidth
+          error={!!errors.email}
+          helperText={errors.email?.[0]}
           onChange={(e) => onChange(e.target.name, e.target.value)}
+          onFocus={()=> setErrors({})}
         />
       </Box>
       <Box>
@@ -113,7 +155,10 @@ export const RegisterForm = ({ goToHome }) => {
           variant="outlined"
           fullWidth
           type="password"
+          error={!!errors.password}
+          helperText={errors.password?.[0]}
           onChange={(e) => onChange(e.target.name, e.target.value)}
+          onFocus={()=> setErrors({})}
         />
       </Box>
       <Box>
@@ -125,7 +170,10 @@ export const RegisterForm = ({ goToHome }) => {
           variant="outlined"
           fullWidth
           type="password"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.[0]}
           onChange={(e) => onChange(e.target.name, e.target.value)}
+          onFocus={()=> setErrors({})}
         />
       </Box>
       <div

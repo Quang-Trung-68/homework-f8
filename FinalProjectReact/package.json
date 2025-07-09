@@ -24,7 +24,8 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
     "styled-components": "^6.1.19",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
