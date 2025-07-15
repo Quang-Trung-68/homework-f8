@@ -5,7 +5,11 @@ import { Home } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const Header: React.FC = () => {
   return (
-    <header style={{ background: '#eee', padding: '1rem' }}>
+    <header
+    
+    style={{ background: '#eee', padding: '1rem', paddingLeft: "260px" }}
+    
+    >
       <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
         <Box>
           Test Lop Thu A
