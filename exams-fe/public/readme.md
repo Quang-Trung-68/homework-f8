@@ -147,6 +147,17 @@ src/
 └── setupTests.ts
 ```
 
+```
+Zustand-edit
+
+src/store/
+├── authStore.ts      # Thay thế authSlice
+├── classStore.ts     # Thay thế classSlice  
+├── examStore.ts      # Thay thế examSlice
+├── questionStore.ts  # Thay thế questionSlice
+└── userStore.ts      # Thay thế userSlice
+
+
 ## 2. Router Structure (React Router DOM)
 
 ### 2.1 Route Configuration
