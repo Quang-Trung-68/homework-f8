@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../components/common/Layout/Layout';
+import AuthLayout from '../components/common/Layout/AuthLayout';
 import Dashboard from '../pages/dashboard/Dashboard';
 import Login from '../pages/auth/Login/Login';
 import Register from '../pages/auth/Register/Register';
@@ -16,12 +17,15 @@ const AppRouter: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Layout bao ngoài các trang */}
+        {/* Auth pages */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        {/* Layout pages */}
         <Route element={<Layout />}>
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/classlist" element={<ClassList />} />
           <Route path="/createclass" element={<CreateClass />} />
           <Route path="/classdetail" element={<ClassDetail />} />

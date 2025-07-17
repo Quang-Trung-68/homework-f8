@@ -58,14 +58,14 @@ const Login: React.FC = () => {
             <Grid container sx={{ alignItems: "stretch", justifyContent: "center" }}>
                 <Grid size={3} >
                 </Grid>
-                <Grid container direction={"column"} spacing={"50px"} sx={{ alignItems: "center", justifyContent: "space-between", padding: "50px 20px", background: "#3182ce", borderEndStartRadius: "10px", borderTopLeftRadius: "10px" }} size={3} >
-                    <Box><img width={"100%"} style={{ objectFit: "cover" }} src={image} /></Box>
+                <Grid container direction={"column"} spacing={"50px"} sx={{ alignItems: "center", justifyContent: "space-between", padding: "50px 20px", background: "#3182ce", borderEndStartRadius: "10px", borderTopLeftRadius: "10px",display: { xs: 'none', md: 'flex' } ,  boxShadow: "0 0 6px #000"}} size={3} >
+                    <Box ><img width={"100%"} style={{ objectFit: "cover" }} src={image} /></Box>
                     <Box>
                         <Box sx={{ fontWeight: "bold", fontSize: "20px", alignSelf: "start", color: "#fff" }}>GIEO MẦM SÁNG TẠO...</Box>
                         <Box sx={{ fontWeight: "bold", fontSize: "20px", alignSelf: "end", color: "#fff" }}>...DẪN HƯỚNG ĐAM MÊ</Box>
                     </Box>
                 </Grid>
-                <Grid container spacing={"15px"} direction={"column"} sx={{ alignItems: "center", justifyContent: "center" }} size={3} padding={"20px"} >
+                <Grid container spacing={"15px"} direction={"column"} sx={{ alignItems: "center", justifyContent: "center", borderRadius:"10px" , borderTopLeftRadius:{md:0},borderBottomLeftRadius:{md:0},  boxShadow: "0 0 6px #000", background:"#fff" }} size={{ md:3}} padding={"20px"} >
                     <img width={100} height={100} src={logo} />
                     <Box sx={{ fontWeight: "bold", fontSize: "26px" }}>Đăng Nhập</Box>
                     <Box sx={{ textAlign: "center" }}>Cung cấp giải pháp toàn diện cho lớp học thông minh</Box>

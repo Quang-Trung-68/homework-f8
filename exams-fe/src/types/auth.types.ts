@@ -17,8 +17,8 @@ export interface AuthLoginResponse {
 export interface RegisterData {
   name: string;
   email: string;
-  role: "student" | null;
-  status: "confirming" | null;
+  role: "student" | null | string;
+  status: "confirming" | null | string;
   password: string;
 }
 

@@ -72,19 +72,36 @@ const Register: React.FC = () => {
     }
     return (
         <>
+            <Grid size={12} container sx={{ alignItems: "stretch", flexDirection: "row" }}>
+                <Grid size={{ md: 4, sm: 2, xs: 2 }}> {/* Responsive */}
+                    {/* Empty grid */}
 
-            <Grid container>
-                <Grid size={4} ></Grid>
-                <Grid size={4} sx={{ display: "flex", flexDirection: "column", gap: "30px", boxShadow: "0 0 4px #000", borderRadius: "10px" }} p={"20px"}>
+                </Grid>
+                <Grid container
+                    size={{ md: 4, sm: 8, xs: 8 }}
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "30px",
+                        boxShadow: "0 0 4px #000",
+                        borderRadius: "10px",
+                        padding: "20px"
+                    }}
+                >
                     <img width={50} height={50} style={{ alignSelf: "center" }} src={image} />
-                    <Box sx={{ fontSize: "26px", fontWeight: "bold", textAlign: "center" }} >ĐĂNG KÝ HỌC VIÊN </Box>
+                    <Box sx={{ fontSize: "26px", fontWeight: "bold", textAlign: "center" }}>
+                        ĐĂNG KÝ HỌC VIÊN
+                    </Box>
                     <RegisterForm onChange={onChange} formFields={formFields} formErrors={formErrors} />
                     <Box sx={{ display: "flex", gap: "20px" }}>
                         <Button variant="outlined" color="error">HỦY</Button>
                         <Button onClick={onSubmit} variant="contained">ĐĂNG KÝ</Button>
-                    </Box></Grid>
-                <Grid size={4} ></Grid>
+                    </Box>
+                </Grid>
+                <Grid size={{ md: 4, sm: 2, xs: 2 }}>
+                    {/* Empty grid */}
 
+                </Grid>
             </Grid>
         </>
     );
