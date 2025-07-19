@@ -1,0 +1,611 @@
+{
+  "exams": [
+    {
+      "id": 1,
+      "title": "Tes Sat 1",
+      "description": "",
+      "details": [
+        {
+          "id": 5,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 1,
+            "type": "multiple_choice",
+            "optionA": "immense",
+            "optionB": "unknown",
+            "optionC": "ordinary",
+            "optionD": "limited",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "The American continents are home to a huge diversity of languages, from Mayo found in places like Mexico in North America, to Koreguaje, found in places like Colombia in South America. Much like the continents themselves, the variety of native languages in the Americas is ______."
+          }
+        },
+        {
+          "id": 8,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 2,
+            "type": "multiple_choice",
+            "optionA": "impractical",
+            "optionB": "presumptuous",
+            "optionC": "ambiguous",
+            "optionD": "customary",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "The minor planet 1065 Tulipa was named after the plant genus that includes tulips, but given the sheer number of minor planets that have been discovered (more than 500,000 so far), most are only an identification number. Because any name given to a minor planet needs to be unique to that body, naming each would be ______."
+          }
+        },
+        {
+          "id": 9,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 4,
+            "type": "multiple_choice",
+            "optionA": "bestowed on",
+            "optionB": "wrought by",
+            "optionC": "allocated to",
+            "optionD": "concealed from",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "Though few critics consider Vasily Grossman's novel Stalingrad—which focuses on the experience of the Soviet Union in the early years of World War II—to be as well written as his later book Everything Flows, some compliment it despite the damage ______ Soviet censors: Gary Saul Morson in The New York Review of Books called the novel \"remarkably bold.\""
+          }
+        },
+        {
+          "id": 10,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 3,
+            "type": "multiple_choice",
+            "optionA": "cited in",
+            "optionB": "apprised of",
+            "optionC": "unsympathetic to",
+            "optionD": "placated by",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "Drivers who strongly believe that the toll they must pay to use the San Luis Pass-Vacek Toll Bridge, which spans the San Luis Pass in Texas, is currently too high are likely to be ______ arguments for increasing the toll. Advocates for a higher toll are likely to have more success if they instead direct their arguments toward a more persuadable segment of the population."
+          }
+        },
+        {
+          "id": 11,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 5,
+            "type": "multiple_choice",
+            "optionA": "To discuss the political system of Italy",
+            "optionB": "To present a recent archaeological discovery",
+            "optionC": "To describe a region's climate",
+            "optionD": "To compare ancient artworks with modern ones",
+            "question": "Which choice best states the main purpose of the text?",
+            "description": "Archaeologists studying the ancient city of Pompeii in Italy recently discovered a well-preserved food shop known as a thermopolium. The site contains food remains, artworks, and decorations. These items give researchers a better understanding of what daily life in Pompeii may have been like. For example, the archaeologists found a ceramic jar that they believe likely contained a meat and seafood stew."
+          }
+        },
+        {
+          "id": 12,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 6,
+            "type": "multiple_choice",
+            "optionA": "To explain why historians of capitalism and Africanist scholars disagree about which activities are features of capitalism",
+            "optionB": "To present and account for a potentially misleading characteristic of the work of historians of capitalism",
+            "optionC": "To describe and evaluate a method used by Africanist scholars that distinguishes their work from that of historians of capitalism",
+            "optionD": "To summarize a debate between historians of capitalism and Africanist scholars about how to interpret longitudinal economic data from archival records",
+            "question": "Which choice best describes the main purpose of the text?",
+            "description": "Karl Polanyi and other historians of capitalism rarely discuss domestic capitalism in Africa before the period of European colonization, implicitly presenting capitalism as external to and imposed on Africa. Mariangela Candido and other Africanist scholars have shown, however, that in parts of Africa, centrally administered industrial production, the legal treatment of land as private property, and other features of capitalism predated colonization. One reason for this discrepancy is that historians of capitalism tend to focus on longitudinal economic data drawn from archival records, which do not exist for much of precolonial Africa."
+          }
+        },
+        {
+          "id": 13,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 7,
+            "type": "multiple_choice",
+            "optionA": "To offer commentary on a human foible that may account for why the people of Milby view the Countess Czerlaski as they do",
+            "optionB": "To speculate on the circumstances under which the unfavorable opinion of the Countess Czerlaski that is held by the people of Milby could be improved",
+            "optionC": "To explain why the people of Milby are somewhat correct to reproach the Countess Czerlaski for her misdeeds",
+            "optionD": "To engage the reader's compassion for both the Countess Czerlaski and the people of Milby by detailing their different viewpoints",
+            "question": "Which choice best states the main purpose of the text?",
+            "description": "The following text is adapted from George Eliot's 1857 short story \"The Sad Fortunes of the Rev. Amos Barton.\" The Countess Czerlaski is a newcomer to the town of Milby. I am by no means sure that if the good people of Milby had known the truth about the Countess Czerlaski, they would not have been considerably disappointed to find that it was very far from being as bad as they imagined. Nice distinctions are troublesome. It is so much easier to make up your mind that your neighbour is good for nothing, to enter into all the circumstances that would oblige you to modify that opinion."
+          }
+        },
+        {
+          "id": 14,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 8,
+            "type": "multiple_choice",
+            "optionA": "She is frustrated because she needs assistance elsewhere in the house, but Salome is unavailable while entertaining the guests.",
+            "optionB": "She is anxious for the gathering to disperse so that she can ready the space for her own needs.",
+            "optionC": "She is impatient to share her plans to start a new school with the guests and hopes they will support her.",
+            "optionD": "She finds the guests to be dull and is eager to find a way to leave the salon.",
+            "question": "Based on the text, what most likely motivates Tia Ana's behavior during Salome's salon?",
+            "description": "The following text is from Julia Alvarez's 2000 novel In the Name of Salome. Salome, a poet, is hosting guests in the front parlor of her family home, and Ramona is her sister. A salon is a social gathering for the exploration of intellectual ideas. It was evening when the two men got up to leave. Tia Ana had already come into the room several times to see if these guests had departed yet. The front parlor had always been her special province, as she used it for her little school. Now, every evening, it turned into Salome's salon, as Ramona called it, and it was never in order for its transformation back to a classroom the following morning."
+          }
+        },
+        {
+          "id": 15,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 9,
+            "type": "multiple_choice",
+            "optionA": "Companies involved in petroleum extraction are not affected by the demand for petroleum.",
+            "optionB": "The societal preference for low-carbon energy sources is a factor in the demand for petroleum.",
+            "optionC": "The demand for petroleum follows a predictable annual cycle.",
+            "optionD": "Companies involved in petroleum extraction can benefit from a decline in the demand for petroleum.",
+            "question": "What claim does the text make about the demand for petroleum?",
+            "description": "Companies involved in petroleum extraction include drilling equipment among their assets. But petroleum extraction is a very carbon-intensive industry, so as social attitudes increasingly favor using less carbon-intensive sources of energy, demand for petroleum falls and the drilling equipment will eventually, or even suddenly, become a liability as reduced petroleum prices make it more difficult to recover the expense of maintaining such equipment."
+          }
+        },
+        {
+          "id": 16,
+          "module": 1,
+          "section": 1,
+          "question": {
+            "id": 10,
+            "type": "multiple_choice",
+            "optionA": "The shape of the flat-headed cat's larynx",
+            "optionB": "The ligament attaching the hyoid bone to the flat-headed cat's skull",
+            "optionC": "The flat-headed cat's rigid hyoid bone",
+            "optionD": "The relative size of the flat-headed cat's body and throat",
+            "question": "According to the text, which trait do researchers think may contribute to a flat-headed cat's ability to purr?",
+            "description": "Why do flat-headed cats purr but jaguars roar? Researchers hypothesize that this difference between the two feline species may be partly due to a U-shaped bone in their throats called the hyoid. Flat-headed cats, which are much smaller than jaguars, have a rigid hyoid that rumbles when the cat's larynx vibrates, resulting in a purr. By contrast, jaguars have a somewhat flexible hyoid, and the bone is attached to the skull with a stretchy ligament that flat-headed cats lack. These traits allow jaguars and most other species of big cats to produce powerful roars. The same traits may also prevent most big cats from purring."
+          }
+        },
+        {
+          "id": 17,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 11,
+            "type": "multiple_choice",
+            "optionA": "37.26 square miles.",
+            "optionB": "3.61 square miles.",
+            "optionC": "23.57 square miles.",
+            "optionD": "15.99 square miles.",
+            "question": "Which choice most effectively uses data from the table to complete the example?",
+            "description": "Hawaiian home lands are areas of public land in the state of Hawaii that have been reserved for use by the Kanaka Maoli, or the Native Hawaiian people. The largest of the home lands, Homulula-Upper Piihonua, covers nearly 100 square miles on the island of Hawaii. Most of the home lands are much smaller. For example, the total area of Kamoku-Kapulena is 7.47 square miles, and the total area of Nanakuli is ______"
+          }
+        },
+        {
+          "id": 18,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 12,
+            "type": "multiple_choice",
+            "optionA": "“[May] dropped her eyes to the immense bouquet of lilies-of-the-valley on her knee, and Newland Archer saw her white-gloved finger-tips touch the flowers softly.”",
+            "optionB": "“Newland Archer, leaning against the wall at the back of the club box [where his seat was], turned his eyes from the stage and scanned the opposite side of the house.”",
+            "optionC": "“Though there was already talk…of a new Opera House which should compete in costliness and splendour with those of the great European capitals, the world of fashion was still content to reassemble every winter in the shabby red and gold boxes of the sociable old Academy [of Music].”",
+            "optionD": "“Already [Newland's] imagination, leaping ahead of the engagement ring, the betrothal kiss and the [wedding] march from Lohengrin, pictured [May] at his side.”",
+            "question": "Which quotation from The Age of Innocence best illustrates the claim?",
+            "description": "The Age of Innocence is a 1920 novel by Edith Wharton set in New York City in the 1870s. In the novel, Newland Archer attends an opera; in the audience is May Welland, with whom he is romantically involved. Newland visualizes the details of a future with May:"
+          }
+        },
+        {
+          "id": 19,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 14,
+            "type": "multiple_choice",
+            "optionA": "Zambia, which has a low density, with Benin, which has a similar density despite both countries having different geographic sizes.",
+            "optionB": "the geographic size of Mali (1,240,000 square kilometers) with its relatively high population of 17,600,000 inhabitants.",
+            "optionC": "Mali, which has a high population of 17,600,000 inhabitants and a relatively low density of 14.2 inhabitants/square kilometer, with Lesotho, which has much lower population and a higher density.",
+            "optionD": "the populations of both Lesotho and Benin in 2015 with their populations in 2010.",
+            "question": "Which choice most effectively uses data from the table to complete the example?",
+            "description": "As the second-most populous continent in the world, Africa was home to an estimated 1.186 billion people in 2015. In a paper for a social studies class, a student nonetheless notes that countries with very large populations may be less densely populated than are countries with much smaller populations, as can be seen by comparing ______"
+          }
+        },
+        {
+          "id": 20,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 13,
+            "type": "multiple_choice",
+            "optionA": "A study using obstructions that created large vortices in low-visibility conditions found that the devil catfish (Bagarius bagarius), which has a relatively wide head, bumped into more than half of the obstructions.",
+            "optionB": "A study using obstructions that created large vortices in low-visibility conditions found that the wide-headed devil catfish (Bagarius bagarius) bumped into the obstructions more often than the intermediate-headed rainbow trout (Oncorhynchus mykiss) did.",
+            "optionC": "A study using obstructions that created large vortices in low-visibility conditions found that the intermediate-headed rainbow trout (Oncorhynchus mykiss) bumped into the obstructions just as often as the wide-headed devil catfish (Bagarius bagarius) did.",
+            "optionD": "A study using obstructions that created large vortices in low-visibility conditions found that some specimens of the intermediate-headed rainbow trout (Oncorhynchus mykiss) bumped into the obstructions more often than other specimens of the same fish did.",
+            "question": "Which finding, if true, would most directly support the second research team's hypothesis?",
+            "description": "Water flowing around an obstruction creates vortices (patterns of swirls) of varying size; by detecting the vortices, fish can determine the size and position of the obstruction. Testing by Yuzo R. Yanagisuru, Otar Akanyeti, and James C. Liao using models of three head shapes—narrow (low ratio of width to length), intermediate, and wide (high ratio of width to length)—showed that for large vortices, fish with intermediate heads would be better able than wide-headed fish to distinguish between vortices and general turbulence in the water. A second research team has therefore hypothesized that in low-visibility conditions, intermediate-headed fish will be more likely than wide-headed fish to detect obstructions that create vortices."
+          }
+        },
+        {
+          "id": 21,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 15,
+            "type": "multiple_choice",
+            "optionA": "the apparent difference between the two studies' results may be partly attributable to the 1976 study using a different standard to determine handedness than the 1999 study did.",
+            "optionB": "the right-handedness exhibited by the captive chimpanzees and capuchin monkeys might be, in part, an effect of extended contact with humans.",
+            "optionC": "the number of individuals in the study of captive chimpanzees and capuchin monkeys is likely too small to support the claim that the animals tend toward right-handedness.",
+            "optionD": "the number of individuals in the study of wild chimpanzees is probably too small to support the claim that no tendency toward right-handedness was found in that population.",
+            "question": "Which choice most logically completes the text?",
+            "description": "Humans have a very strong bias toward right-handedness, with approximately 85-90% having right as their dominant hand. Among studies of nonhuman primates, James Welles' 1976 study of captive chimpanzees and capuchin reported more right-handed individuals than left-handed ones, but William C. McGrew and colleagues' 1999 study of wild chimpanzees did not find a tendency toward right-handedness. It's important to note, however, that captive animals spend significantly more time with humans than wild animals do, and therefore ______"
+          }
+        },
+        {
+          "id": 22,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 16,
+            "type": "multiple_choice",
+            "optionA": "cosmetic chemists,",
+            "optionB": "cosmetic chemist's,",
+            "optionC": "cosmetic's chemists,",
+            "optionD": "cosmetic chemist's,",
+            "question": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+            "description": "Used in everything from food to cleaning products, emulsifiers are compounds that serve to stabilize an emulsion—a mixture of two or more liquids that otherwise would not easily blend together. The emulsifiers used by ______ like oleic acid, allow these scientists to blend oil and water in homogeneous formulations such as lotions and perfumes."
+          }
+        },
+        {
+          "id": 23,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 17,
+            "type": "multiple_choice",
+            "optionA": "century,",
+            "optionB": "century that",
+            "optionC": "century",
+            "optionD": "century, but",
+            "question": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+            "description": "Many mechanical calculators were powered by a notched-cylinder mechanism called the Leibniz wheel. Leibniz wheel calculators were popular in the first half of the twentieth ______ these ingenious devices were eventually replaced by electronic calculators."
+          }
+        },
+        {
+          "id": 24,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 19,
+            "type": "multiple_choice",
+            "optionA": "they're",
+            "optionB": "their",
+            "optionC": "it's",
+            "optionD": "its",
+            "question": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+            "description": "The constitution of Australia, enacted in 1901, enshrines 11 total rights across 17,318 words of text. According to constitutional scholar George Tsebelis, who examines the implications of constitutional length on civil rights, ______ 102nd in the global ranking of the shortest constitutions."
+          }
+        },
+        {
+          "id": 25,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 18,
+            "type": "multiple_choice",
+            "optionA": "Smith:",
+            "optionB": "Smith,",
+            "optionC": "Smith",
+            "optionD": "Smith-",
+            "question": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+            "description": "Nigerian American artist Toyin Ojih Odutola uses black-ink pens to create highly detailed drawings of human figures. Her portrait of novelist Zadie ______ is displayed in the National Portrait Gallery in London."
+          }
+        },
+        {
+          "id": 26,
+          "module": 2,
+          "section": 1,
+          "question": {
+            "id": 20,
+            "type": "multiple_choice",
+            "optionA": "surface, however;",
+            "optionB": "surface, however,",
+            "optionC": "surface; however,",
+            "optionD": "surface. However,",
+            "question": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+            "description": "Between June 22 and July 2 each year, particles shed by comet 7P/Pons-Winnecke enter Earth's atmosphere at a velocity of 18 kilometers per second. Relatively few of these particles are likely to reach Earth's ______ since the meteoroids' compression of the air surrounding them causes the vast majority to burn up in the mesosphere, producing the June Boötid meteor shower."
+          }
+        },
+        {
+          "id": 27,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 21,
+            "type": "multiple_choice",
+            "optionA": "At that time,",
+            "optionB": "For example,",
+            "optionC": "In other words,",
+            "optionD": "However,",
+            "question": "Which choice completes the text with the most logical transition?",
+            "description": "While most animals prefer the safety of nighttime migration, many poisonous amphibians—a category that includes the red-bellied newt and the fire salamander—safely engage in migratory behavior during the day. ______ with the sun in the sky, the amphibians' striking color patterns deter visually oriented daytime predators by serving as a warning of toxicity."
+          }
+        },
+        {
+          "id": 28,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 22,
+            "type": "multiple_choice",
+            "optionA": "For this reason,",
+            "optionB": "However,",
+            "optionC": "For example,",
+            "optionD": "Alternatively,",
+            "question": "Which choice completes the text with the most logical transition?",
+            "description": "Residents of Cairo, Egypt, rely on its rapid transit system, the Cairo Metro, for millions of trips each year. ______ city officials strive to maintain the system's 71 stations to ensure each of these journeys is as smooth as possible."
+          }
+        },
+        {
+          "id": 29,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 23,
+            "type": "multiple_choice",
+            "optionA": "consequently,",
+            "optionB": "similarly,",
+            "optionC": "in sum,",
+            "optionD": "however,",
+            "question": "Which choice completes the text with the most logical transition?",
+            "description": "Box modeling, used by digital artists to develop 3D assets for video games, yields objects with precise mathematical proportions. Granted, as they are formed from perfect geometric shapes, such 3D elements lack organic realism; ______ post-modeling processes such as UV surface mapping are needed to achieve the level of verisimilitude gamers expect."
+          }
+        },
+        {
+          "id": 30,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 24,
+            "type": "multiple_choice",
+            "optionA": "As the lighthouse keeper at Point Fermin Light, Thelma Austin helped watercraft navigate at night.",
+            "optionB": "From 1862 to 1880, the nighttime waters of Maine were made more navigable thanks to Betsy Morrow Humphrey.",
+            "optionC": "Betsy Morrow Humphrey worked as a lighthouse keeper in an earlier century than did Thelma Austin.",
+            "optionD": "Betsy Morrow Humphrey and Thelma Austin both played crucial roles in ensuring safe navigation for watercraft in past centuries.",
+            "question": "Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+            "description": "Lighthouses send out crucial light signals to help ships and other watercraft navigate at night. Before automation, lighthouses were run by lighthouse keepers. Betsy Morrow Humphrey was the lighthouse keeper at Monhegan Island Light in Maine. She held this position from 1862 to 1880. Thelma Austin was the lighthouse keeper at Point Fermin Light in California. She held this position from 1925 to 1941. The student wants to emphasize a difference between the two lighthouse keepers."
+          }
+        },
+        {
+          "id": 31,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 25,
+            "type": "multiple_choice",
+            "optionA": "According to researchers' simulations, debris from Saturn's rings would likely have caused Chrysalis a large moon orbiting Saturn-to break apart around 160 million years ago.",
+            "optionB": "In a 2022 study, researchers proposed that Saturn was once orbited by a large moon that broke apart.",
+            "optionC": "Around 160 million years ago, a large moon (Chrysalis) may have come close enough to Saturn that tidal forces broke the moon apart; its debris then formed the planet's rings.",
+            "optionD": "If a moon orbiting a planet (like Saturn) comes close enough to that planet, tidal forces can cause the moon to break apart.",
+            "question": "Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+            "description": "If a moon orbiting a planet comes close enough to that planet, tidal forces can cause the moon to break apart. In a 2022 study, researchers proposed that Saturn was once orbited by a large moon they named Chrysalis. Their simulations indicated that Chrysalis would likely have come very close to Saturn around 160 million years ago. At that distance, Chrysalis would have been broken apart by tidal forces. The researchers hypothesized that the resulting debris formed Saturn's rings. The student wants to recount the sequence of events proposed by the researchers."
+          }
+        },
+        {
+          "id": 32,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 26,
+            "type": "multiple_choice",
+            "optionA": "Birds of Northern South America is an expertly compiled guidebook by ornithologists Robin Restall, Clemencia Rodner, and Miguel Lentino.",
+            "optionB": "Though they share several traits in common, the green-throated mango is larger than the horned sungem.",
+            "optionC": "While each exhibits unique traits of its own, the green-throated mango and the horned sungem both have black bills.",
+            "optionD": "The horned sungem is a medium-sized hummingbird identifiable by its distinctive multicolored, tufted crown and its short, black, straight bill.",
+            "question": "Which choice most effectively uses information from the given sentences to emphasize a similarity between the two birds?",
+            "description": "Birds of Northern South America is an identification guidebook by ornithologists Robin Restall, Clemencia Rodner, and Miguel Lentino. It lists the thirty-five hummingbird species found in Suriname. The green-throated mango is a large hummingbird found in Suriname. It is identifiable by its green throat and its long, black, curved bill. The horned sungem is a medium-sized hummingbird found in Suriname. It is identifiable by its distinctive multicolored, tufted crown and its short, black, straight bill."
+          }
+        },
+        {
+          "id": 33,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 27,
+            "type": "multiple_choice",
+            "optionA": "Thanks to his depiction in over a hundred pieces of media, Wong Fei-hung was locally known as a successful physician and Hung Ga Kung Fu master.",
+            "optionB": "Wong Fei-hung's abilities as a kung fu master are depicted in many media, including the 1991 film Once Upon a Time in China.",
+            "optionC": "Various media have depicted Wong Fei-hung, the successful physician and kung fu master who became an internationally known folk hero.",
+            "optionD": "Though he was known locally during his lifetime, Wong Fei-hung's later depiction in television, film, and other media has made him into an internationally known folk hero.",
+            "question": "Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+            "description": "Little is known about the life of Wong Fei-hung (1847-1925). He was born near Foshan, China, and gained local recognition as a physician and Hung Ga (also known as Hung Gar) Kung Fu master. He achieved many incredible martial arts feats—some confirmed and some rumored. He has become an internationally known folk hero thanks to his depiction in over a hundred films, television shows, and other media. In the 1991 film Once Upon a Time in China, actor Jet Li portrays Wong Fei-hung using superhuman kung fu abilities to save his community. The student wants to emphasize the effect media had on building Wong Fei-hung's legacy."
+          }
+        },
+        {
+          "id": 34,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 28,
+            "type": "multiple_choice",
+            "optionA": "breadth of",
+            "optionB": "controversy over",
+            "optionC": "confusion about",
+            "optionD": "apathy toward",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "Possessing an outstanding collection of public art, Chicago has everything from monumental mosaics like Marc Chagall's Four Seasons at street sites like Chase Tower to innovative street art like Kashnik's mural Be The Change You Wish To See located on South Wabash Avenue. The ______ public art on display in the city can thus satisfy any art lover."
+          }
+        },
+        {
+          "id": 35,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 29,
+            "type": "multiple_choice",
+            "optionA": "ambivalence",
+            "optionB": "acclaim",
+            "optionC": "foresight",
+            "optionD": "impartiality",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "In a 2018 article about films depicting the experiences of Black Americans, critics for the New York Times praise Madeline Anderson's 1970 film I Am Somebody as \"galvanizing\" and Carl Franklin's 1995 film Devil in a Blue Dress as \"picture-perfect.\" Fans of the two films hope that such ______ will attract new audiences to these works."
+          }
+        },
+        {
+          "id": 36,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 31,
+            "type": "multiple_choice",
+            "optionA": "It discusses several recent innovations in product manufacturing and then suggests some potential applications of those innovations.",
+            "optionB": "It describes a company's recent success with new products and then explains multiple factors that may have contributed to that success.",
+            "optionC": "It presents two contrasting product-marketing techniques and then provides examples of one of those techniques.",
+            "optionD": "It introduces a trend in consumer products and then explains how the trend both benefits and poses a challenge to companies.",
+            "question": "Which choice best describes the overall structure of the text?",
+            "description": "Companies are providing consumers with more opportunities to purchase customized products than ever before. Whether buying customized sneakers, jewelry, or clothing, consumers can participate in the design of products to meet their specific needs and tastes. In turn, companies profit too—studies have shown that consumers are willing to pay more and wait longer for a customized product. Still, it can be difficult for companies to offer customization while keeping costs low, as the standard methods of mass production may not be able to accommodate making a unique product each time."
+          }
+        },
+        {
+          "id": 37,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 32,
+            "type": "multiple_choice",
+            "optionA": "It presents a reason most critics think the Aubrey/Maturin series should have the literary renown of similar works like In Search of Lost Time.",
+            "optionB": "It explains why many critics find the Aubrey/Maturin novels to be entertaining despite flaws in the novels' structures.",
+            "optionC": "It argues that the unusual structure that O'Brian uses for The Hundred Days makes it one of his most entertaining books.",
+            "optionD": "It summarizes a positive assessment of a particular characteristic of the Aubrey/Maturin novels.",
+            "question": "Which choice best describes the function of the underlined portion in the text as a whole?",
+            "description": "The Hundred Days, first published in 1998, is a novel in Patrick O'Brian's Aubrey/Maturin series, which includes twenty completed books. Some critics have found fault with the abrupt endings of The Hundred Days and other books in the series, saying that they do not finish conclusively but arbitrarily stop. But other critics argue that the books should not be thought of as discrete texts with traditional beginnings and endings but as a single incredibly long work, similar to other multivolume stories, such as Marcel Proust's In Search of Lost Time."
+          }
+        },
+        {
+          "id": 38,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 33,
+            "type": "multiple_choice",
+            "optionA": "It indicates a distinction between the mechanisms of two kinds of biological processes.",
+            "optionB": "It contrasts the frequency with which a biological phenomenon has been detected in two categories of organisms.",
+            "optionC": "It explains why a common perception of a biological process is flawed.",
+            "optionD": "It argues that two biological phenomena are more similar than they may initially appear to be.",
+            "question": "Which choice best describes the function of the underlined sentence in the text as a whole?",
+            "description": "Vertical gene transfer involves the transmission of genetic material from a parent to offspring; horizontal gene transfer, on the other hand, involves the exchange of genetic material between organisms not in a parent-offspring relationship. While horizontal gene transfer is common among prokaryotes—single-celled organisms, such as the bacteria Brevibacillus borstelensis and Lactococcus lactis it has rarely been observed among eukaryotes (multicellular organisms). However, new studies suggest that horizontal gene transfer is more common in eukaryotes than originally thought."
+          }
+        },
+        {
+          "id": 39,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 34,
+            "type": "multiple_choice",
+            "optionA": "The barriers used in Meding and Zasoski's study effectively excluded root-to-root transmission of nutrients.",
+            "optionB": "A barrier that is impervious to both roots and fungal strands is necessary to evaluate nutrient transfer via a CMN.",
+            "optionC": "Excluding root-to-root transfer of nutrients between plants is sufficient to ensure that any observed nutrient transfer must involve a CMN.",
+            "optionD": "He and colleagues' study did not find convincing evidence of nutrient transfer between individual plants.",
+            "question": "Based on the texts, the author of Text 1 and the author of Text 2 would most likely agree with which statement?",
+            "description": "Text 1: In separate studies, Stephen Meding and Robert J. Zasoski and Kinhua He and colleagues examined whether plants transfer nutrients to one another using a common mycorrhizal network (CMN)—a lattice of fungal strands in the soil. Meding and Zasoski excluded all pathways other than the CMN by using barriers to keep the plants' root systems separate while allowing mycorrhizal strands through—a crucial step He and colleagues' study did not take. Text 2: Meding and Zasoski took the necessary precaution of separating the plants' root systems (thereby excluding root-to-root transmission). However, any barrier used must allow the thread-like hyphae of a CMN to pass through, and this permeability would also allow liquids through. Thus, the researchers' experimental design cannot ensure that any nutrient transfer observed can be attributed to a CMN and not to some other pathway."
+          }
+        },
+        {
+          "id": 40,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 35,
+            "type": "multiple_choice",
+            "optionA": "Increased lunar intensity is more beneficial for mongoose lemurs than it is for Arizona pocket mice.",
+            "optionB": "As lunar intensity increases, mongoose lemurs increase their foraging activity.",
+            "optionC": "During periods of high lunar intensity, mongoose lemurs increase their reliance on vision.",
+            "optionD": "As lunar intensity increases, Arizona pocket mice reduce their foraging activity.",
+            "question": "Which choice best describes the finding made by Curtis and colleagues, as presented in the text?",
+            "description": "Optimal foraging theory (OFT) holds that animals' foraging behaviors reflect cost-benefit trade-offs that vary by species and with dynamic ecological circumstances. One such circumstance is lunar intensity, which Joel Brown and colleagues found to be negatively associated with foraging by Arizona pocket mice but Deborah J. Curtis and colleagues found to be positively associated with foraging by mongoose lemurs. This discrepancy is explicable in terms of OFT: the lemurs' greater reliance on vision means the higher lunar intensity benefits them more than it benefits the mice."
+          }
+        },
+        {
+          "id": 41,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 36,
+            "type": "multiple_choice",
+            "optionA": "Weather conditions but not butterfly color",
+            "optionB": "Butterfly color but not weather conditions",
+            "optionC": "Neither butterfly color nor weather conditions",
+            "optionD": "Both butterfly color and weather conditions",
+            "question": "According to the text, which factors seemed to be linked to the behavior of butterflies in Grace Herzel and colleagues' study?",
+            "description": "Biologist Grace Herzel and colleagues conducted a study of how butterfly color and weather conditions relate to butterfly behavior, which wouldn't have been possible without data gathered by students and other amateur science enthusiasts in the community. Considering over three years' worth of data, the researchers found that white butterflies were observed on green flowers more often than any other butterflies were, and that butterflies were observed to feed more often on cloudy days than on other days."
+          }
+        },
+        {
+          "id": 42,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 37,
+            "type": "multiple_choice",
+            "optionA": "Other bird species than M. barbatus also showed a tendency to freeze in place or scatter into vegetation when Martinez and colleagues played T. caesius alarm calls.",
+            "optionB": "Martinez and colleagues played alarm calls from different T. caesius individuals and observed no significant variation in the responses of M. barbatus.",
+            "optionC": "In some instances, M. barbatus froze in place or scattered into vegetation when Martinez and colleagues approached but before they began playing sounds.",
+            "optionD": "When Martinez and colleagues played control sounds of random noise in the vicinity of M. barbatus, the birds displayed no reaction.",
+            "question": "Which finding, if true, would most directly support Martinez and colleagues' conclusion?",
+            "description": "The bird species Myiobius barbatus (the bearded flycatcher) shares some territory in French Guiana with Thamnomanes caesius (the cinereous antshrike), which emits a loud alarm call when it detects predators. Biologist Ari Martinez and colleagues recorded T. caesius alarm calls and played them in the vicinity of wild M. barbatus. Finding that the birds often froze in place or scattered into vegetation upon hearing the calls, they concluded that M. barbatus associates T. caesius alarm calls with danger."
+          }
+        },
+        {
+          "id": 43,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 38,
+            "type": "multiple_choice",
+            "optionA": "David M. Choate et al. reported a density range of 4.65 individuals per 100 square kilometers despite the use of helicopter surveying.",
+            "optionB": "Rahel Sollmann et al. reported a density range that was substantially smaller than that reported by David M. Choate et al.",
+            "optionC": "Gregory A. Davidson et al. reported a density range greater than that reported by some studies that used other methods.",
+            "optionD": "Gregory A. Davidson et al. reported a maximum density of 5.50 individuals per 100 square kilometers, which differed from that reported by some studies that used other methods.",
+            "question": "Which choice best describes data from the table that weakens the student's claim?",
+            "description": "Researchers have used several different methods to determine the population density of cougars (Puma concolor). A student claims that the use of scat-detecting dogs produces the most precise results, with the smallest difference between minimum and maximum densities."
+          }
+        },
+        {
+          "id": 44,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 41,
+            "type": "multiple_choice",
+            "optionA": "P7's ratings for impressionist and color-field paintings would differ from one another.",
+            "optionB": "P7 would derive more aesthetic pleasure from impressionist paintings than from color-field paintings.",
+            "optionC": "P7's ratings for impressionist and color-field paintings would equal one another.",
+            "optionD": "P7 would derive less aesthetic pleasure from impressionist paintings than from color-field paintings.",
+            "question": "Which choice most effectively uses data from the graph to complete the statement?",
+            "description": "Neuroscientist Kiyohito ligaya and colleagues developed a computational model to predict how much a person will enjoy a particular work of art on a scale from 1 (not at all) to 4 (very much). They then recruited participants to use the same scale to rate several sets of paintings in various styles and calculated the correlation between the ratings predicted by the model and those reported by the participants. Assuming participant P7 gave equal ratings to the impressionist and color-field paintings, the data in the graph suggest that the model predicted that ______"
+          }
+        },
+        {
+          "id": 45,
+          "module": 2,
+          "section": 2,
+          "question": {
+            "id": 42,
+            "type": "multiple_choice",
+            "optionA": "when a version of an Arthurian legend contradicted the version in History, Malory preferred to include Geoffrey of Monmouth's version in Le Morte d'Arthur.",
+            "optionB": "Le Morte d'Arthur is more historically accurate than History, because Tom a Lincoln had not been written when Geoffrey of Monmouth was writing his work.",
+            "optionC": "Geoffrey of Monmouth's accounts of Arthurian legends in History are more similar overall in content to the accounts in Tom a Lincoln than they are to the accounts in Le Morte d'Arthur.",
+            "optionD": "Malory encountered the Round Table in a source that Geoffrey of Monmouth was not familiar with when writing his History.",
+            "question": "Which choice most logically completes the text?",
+            "description": "Arthurian legends (tales related to the character of King Arthur) derive from many, often contradictory sources, such as Annales Cambriae, composed around 970, and Tom a Lincoln from around 1607. Sir Thomas Malory's 15th-century text Le Morte d'Arthur was an attempt to compile these stories into a cohesive narrative. Many of Malory's sources derive from Geoffrey of Monmouth's History of the Kings of Britain, written in the 1130s. While neither History nor any works that predate it mention Arthur's famous Round Table at which his knights assembled, Le Morte d'Arthur does, suggesting that ______"
+          }
+        },
+        {
+          "id": 46,
+          "module": 1,
+          "section": 2,
+          "question": {
+            "id": 30,
+            "type": "multiple_choice",
+            "optionA": "exploit",
+            "optionB": "yield",
+            "optionC": "prioritize",
+            "optionD": "discern",
+            "question": "Which choice completes the text with the most logical and precise word or phrase?",
+            "description": "The fossil remains of the individual known as Misliya-1, discovered in Israel in 2002, can help paleoanthropologists not only ______ steps in the evolution of hominids but also illuminate the Pleistocene epoch generally, revealing important details about the time in which Misliya-1 lived."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+.mainColor
+  color: rgb(25, 118, 210)
+
+.main
+  height: calc(100vh - 64px - 64px)
+  > div
+    height: 100%
+    p
+      padding: 10px 10px 10px 0
+      font-size: 18px
+
+    > div:nth-of-type(1)
+      border-right: 1px solid #ccc
+
+    > div:last-child
+      padding-left: 10px
+
+.toolBar
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 48px
+
+  .numberOfQuestion
+    background-color: rgb(25, 118, 210)
+    color: white
+    border-radius: 50%
+    padding: 5px
+    font-weight: 600
+
+  > div
+    display: flex
+
+    > div
+      padding: 5px 10px
+      display: flex
+      align-items: center
+      cursor: pointer
+
+      &:last-child
+        background-color: #cbedfd
+        text-decoration: line-through
+        border-radius: 5px
+
+.footer
+  height: 64px
+  background-color: #cbedfd
+  //display: flex
+  position: relative
+
+  .viewQuestionsBtn
+    position: absolute
+    display: flex
+    margin: auto
+    padding: 10px 20px
+    border-radius: 5px
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+
+  .navigation
+    position: absolute
+    right: 5%
+    display: inline-block
+    top: 50%
+    transform: translateY(-50%)
+
+    button
+      margin: 5px
+
+.memu
+  width: 1000px
+  height: 200px
+  left: calc(50% - 250px)
+
+  h2
+    text-align: center
+
+  > div
+    display: flex
+    height: 48px
+    justify-content: space-around
+
+    > div
+      display: flex
+      align-items: center
+
+    > button
+      margin-top: 10px
+      justify-content: center
