@@ -9,7 +9,7 @@ export default function () {
 
   const [key, setKey] = useState(0);
 
-  const onChange = (e)=>{
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     question.answer = e.target.value;
     setKey(key + 1)
   }

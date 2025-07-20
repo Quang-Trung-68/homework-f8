@@ -52,7 +52,7 @@ export default function () {
           horizontal: 'center',
         }}
       >
-        <Box sx={{ padding: 2 }} className={style.memu}>
+        <Box sx={{ padding: 2, display:"flex", flexDirection:"column", alignItems:"stretch", gap:"30px" }} className={style.memu}>
           <h2>Section {detail[questionIndex].section} - Module {detail[questionIndex].module}</h2>
           <Box>
             <Box>
@@ -69,7 +69,7 @@ export default function () {
             </Box>
           </Box>
 
-          <ReviewQuestions onCloseMenu = {setAnchorEl} />
+         <Box> <ReviewQuestions onCloseMenu = {setAnchorEl} /></Box>
 
           <Box>
             <Button variant={'outlined'}>Go to review page</Button>
