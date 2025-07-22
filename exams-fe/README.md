@@ -533,13 +533,3 @@ export const sidebarItems: SidebarItem[] = [
   },
 ];
 ```
-
-Cấu trúc này sẽ giúp bạn:
-
-- Tổ chức code một cách khoa học và dễ bảo trì
-- Quản lý routing hiệu quả với React Router DOM
-- Sử dụng Redux Toolkit cho state management
-- Tích hợp MUI components một cách tối ưu
-- Xây dựng authentication và authorization system
-
-Bạn có muốn tôi giải thích chi tiết về bất kỳ phần nào hoặc tạo code cụ thể cho các component chính không?
