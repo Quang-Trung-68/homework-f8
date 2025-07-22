@@ -8,7 +8,6 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 const Sidebar = () => {
   return (
     <aside
-
       style={{
         width: '240px',           // Cố định chiều rộng
         minWidth: '240px',        // Đảm bảo không co lại
@@ -25,7 +24,6 @@ const Sidebar = () => {
         flexDirection:"column",
         justifyContent:"space-between",
       }}
-
     >
       <Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", mb: "50px" }}>
