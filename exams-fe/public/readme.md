@@ -102,15 +102,13 @@ src/
 │   ├── useClass.ts
 │   ├── useQuestion.ts
 │   └── useLocalStorage.ts
-├── store/
-│   ├── index.ts
-│   ├── store.ts
-│   └── slices/
-│       ├── authSlice.ts
-│       ├── classSlice.ts
-│       ├── examSlice.ts
-│       ├── questionSlice.ts
-│       └── userSlice.ts
+├── stores/
+│   ├── authStore.ts
+│   ├── classStore.ts
+│   ├── examStore.ts
+│   ├── questionStore.ts
+│   ├── userStore.ts
+│   └── index.ts
 ├── services/
 │   ├── api.ts
 │   ├── authService.ts
@@ -130,10 +128,6 @@ src/
 │   ├── helpers.ts
 │   ├── validation.ts
 │   └── dateUtils.ts
-├── contexts/
-│   ├── AuthContext.tsx
-│   ├── ExamContext.tsx
-│   └── ThemeContext.tsx
 ├── styles/
 │   ├── theme.ts
 │   ├── globalStyles.ts
@@ -147,12 +141,12 @@ src/
 └── setupTests.ts
 ```
 
-```
+````
 Zustand-edit
 
 src/store/
 ├── authStore.ts      # Thay thế authSlice
-├── classStore.ts     # Thay thế classSlice  
+├── classStore.ts     # Thay thế classSlice
 ├── examStore.ts      # Thay thế examSlice
 ├── questionStore.ts  # Thay thế questionSlice
 └── userStore.ts      # Thay thế userSlice
@@ -205,51 +199,51 @@ export const PRIVATE_ROUTES = [
   ROUTES.MEMBER_DETAIL,
   ROUTES.PROFILE
 ];
-```
+````
 
 ### 2.2 Main Router Component
 
 ```typescript
 // src/router/AppRouter.tsx
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { ROUTES } from './routes';
-import ProtectedRoute from '../components/common/ProtectedRoute/ProtectedRoute';
-import Layout from '../components/common/Layout/Layout';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { ROUTES } from "./routes";
+import ProtectedRoute from "../components/common/ProtectedRoute/ProtectedRoute";
+import Layout from "../components/common/Layout/Layout";
 
 // Auth Pages
-import Login from '../pages/auth/Login/Login';
-import Register from '../pages/auth/Register/Register';
+import Login from "../pages/auth/Login/Login";
+import Register from "../pages/auth/Register/Register";
 
 // Dashboard
-import Dashboard from '../pages/dashboard/Dashboard';
+import Dashboard from "../pages/dashboard/Dashboard";
 
 // Classes
-import ClassList from '../pages/classes/ClassList/ClassList';
-import ClassDetail from '../pages/classes/ClassDetail/ClassDetail';
-import CreateClass from '../pages/classes/CreateClass/CreateClass';
+import ClassList from "../pages/classes/ClassList/ClassList";
+import ClassDetail from "../pages/classes/ClassDetail/ClassDetail";
+import CreateClass from "../pages/classes/CreateClass/CreateClass";
 
 // Exams
-import ExamList from '../pages/exams/ExamList/ExamList';
-import ExamDetail from '../pages/exams/ExamDetail/ExamDetail';
-import CreateExam from '../pages/exams/CreateExam/CreateExam';
-import TakeExam from '../pages/exams/TakeExam/TakeExam';
+import ExamList from "../pages/exams/ExamList/ExamList";
+import ExamDetail from "../pages/exams/ExamDetail/ExamDetail";
+import CreateExam from "../pages/exams/CreateExam/CreateExam";
+import TakeExam from "../pages/exams/TakeExam/TakeExam";
 
 // Questions
-import QuestionBank from '../pages/questions/QuestionBank/QuestionBank';
-import CreateQuestion from '../pages/questions/CreateQuestion/CreateQuestion';
+import QuestionBank from "../pages/questions/QuestionBank/QuestionBank";
+import CreateQuestion from "../pages/questions/CreateQuestion/CreateQuestion";
 
 // Members
-import MemberList from '../pages/members/MemberList/MemberList';
-import MemberDetail from '../pages/members/MemberDetail/MemberDetail';
+import MemberList from "../pages/members/MemberList/MemberList";
+import MemberDetail from "../pages/members/MemberDetail/MemberDetail";
 
 // Profile
-import Profile from '../pages/profile/Profile';
+import Profile from "../pages/profile/Profile";
 
 // Not Found
-import NotFound from '../pages/NotFound/NotFound';
+import NotFound from "../pages/NotFound/NotFound";
 
 const AppRouter: React.FC = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -258,51 +252,54 @@ const AppRouter: React.FC = () => {
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-        <Route 
-          path={ROUTES.LOGIN} 
+        <Route
+          path={ROUTES.LOGIN}
           element={
             isAuthenticated ? <Navigate to={ROUTES.DASHBOARD} /> : <Login />
-          } 
+          }
         />
-        <Route 
-          path={ROUTES.REGISTER} 
+        <Route
+          path={ROUTES.REGISTER}
           element={
             isAuthenticated ? <Navigate to={ROUTES.DASHBOARD} /> : <Register />
-          } 
+          }
         />
-        
+
         {/* Protected Routes with Layout */}
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
-            <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.DASHBOARD} />} />
+            <Route
+              path={ROUTES.HOME}
+              element={<Navigate to={ROUTES.DASHBOARD} />}
+            />
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-            
+
             {/* Classes Routes */}
             <Route path={ROUTES.CLASSES} element={<ClassList />} />
             <Route path={ROUTES.CLASS_DETAIL} element={<ClassDetail />} />
             <Route path={ROUTES.CREATE_CLASS} element={<CreateClass />} />
-            
+
             {/* Exams Routes */}
             <Route path={ROUTES.EXAMS} element={<ExamList />} />
             <Route path={ROUTES.EXAM_DETAIL} element={<ExamDetail />} />
             <Route path={ROUTES.CREATE_EXAM} element={<CreateExam />} />
-            
+
             {/* Questions Routes */}
             <Route path={ROUTES.QUESTIONS} element={<QuestionBank />} />
             <Route path={ROUTES.CREATE_QUESTION} element={<CreateQuestion />} />
-            
+
             {/* Members Routes */}
             <Route path={ROUTES.MEMBERS} element={<MemberList />} />
             <Route path={ROUTES.MEMBER_DETAIL} element={<MemberDetail />} />
-            
+
             {/* Profile Route */}
             <Route path={ROUTES.PROFILE} element={<Profile />} />
           </Route>
-          
+
           {/* Take Exam Route (Full Screen) */}
           <Route path={ROUTES.TAKE_EXAM} element={<TakeExam />} />
         </Route>
-        
+
         {/* Not Found Route */}
         <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Routes>
@@ -319,17 +316,17 @@ export default AppRouter;
 
 ```typescript
 // src/components/common/Layout/Layout.tsx
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { Box } from '@mui/material';
-import Header from '../Header/Header';
-import Sidebar from '../Sidebar/Sidebar';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Box } from "@mui/material";
+import Header from "../Header/Header";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Layout: React.FC = () => {
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar />
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
         <Header />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Outlet />
@@ -346,15 +343,17 @@ export default Layout;
 
 ```typescript
 // src/components/common/ProtectedRoute/ProtectedRoute.tsx
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
-import { ROUTES } from '../../../router/routes';
-import Loading from '../Loading/Loading';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { ROUTES } from "../../../router/routes";
+import Loading from "../Loading/Loading";
 
 const ProtectedRoute: React.FC = () => {
-  const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   if (loading) {
     return <Loading />;
@@ -372,12 +371,12 @@ export default ProtectedRoute;
 
 ```typescript
 // src/store/store.ts
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import classReducer from './slices/classSlice';
-import examReducer from './slices/examSlice';
-import questionReducer from './slices/questionSlice';
-import userReducer from './slices/userSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import classReducer from "./slices/classSlice";
+import examReducer from "./slices/examSlice";
+import questionReducer from "./slices/questionSlice";
+import userReducer from "./slices/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -390,7 +389,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST'],
+        ignoredActions: ["persist/PERSIST"],
       },
     }),
 });
@@ -403,9 +402,9 @@ export type AppDispatch = typeof store.dispatch;
 
 ```typescript
 // src/store/slices/authSlice.ts
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { User, LoginCredentials, RegisterData } from '../../types/auth.types';
-import { authService } from '../../services/authService';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { User, LoginCredentials, RegisterData } from "../../types/auth.types";
+import { authService } from "../../services/authService";
 
 interface AuthState {
   user: User | null;
@@ -417,14 +416,14 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
+  isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   error: null,
 };
 
 export const loginAsync = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (credentials: LoginCredentials) => {
     const response = await authService.login(credentials);
     return response.data;
@@ -432,7 +431,7 @@ export const loginAsync = createAsyncThunk(
 );
 
 export const registerAsync = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userData: RegisterData) => {
     const response = await authService.register(userData);
     return response.data;
@@ -440,14 +439,14 @@ export const registerAsync = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     },
     clearError: (state) => {
       state.error = null;
@@ -464,11 +463,11 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
-        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Login failed';
+        state.error = action.error.message || "Login failed";
       });
   },
 });
@@ -483,15 +482,15 @@ export default authSlice.reducer;
 
 ```typescript
 // src/components/common/Sidebar/sidebarConfig.ts
-import { 
-  Dashboard, 
-  Class, 
-  Quiz, 
-  QuestionAnswer, 
-  People, 
-  Person 
-} from '@mui/icons-material';
-import { ROUTES } from '../../../router/routes';
+import {
+  Dashboard,
+  Class,
+  Quiz,
+  QuestionAnswer,
+  People,
+  Person,
+} from "@mui/icons-material";
+import { ROUTES } from "../../../router/routes";
 
 export interface SidebarItem {
   title: string;
@@ -502,33 +501,33 @@ export interface SidebarItem {
 
 export const sidebarItems: SidebarItem[] = [
   {
-    title: 'Dashboard',
+    title: "Dashboard",
     path: ROUTES.DASHBOARD,
     icon: Dashboard,
   },
   {
-    title: 'Lớp học',
+    title: "Lớp học",
     path: ROUTES.CLASSES,
     icon: Class,
   },
   {
-    title: 'Bài thi',
+    title: "Bài thi",
     path: ROUTES.EXAMS,
     icon: Quiz,
   },
   {
-    title: 'Ngân hàng câu hỏi',
+    title: "Ngân hàng câu hỏi",
     path: ROUTES.QUESTIONS,
     icon: QuestionAnswer,
-    roles: ['teacher', 'admin'],
+    roles: ["teacher", "admin"],
   },
   {
-    title: 'Thành viên',
+    title: "Thành viên",
     path: ROUTES.MEMBERS,
     icon: People,
   },
   {
-    title: 'Hồ sơ',
+    title: "Hồ sơ",
     path: ROUTES.PROFILE,
     icon: Person,
   },
@@ -536,6 +535,7 @@ export const sidebarItems: SidebarItem[] = [
 ```
 
 Cấu trúc này sẽ giúp bạn:
+
 - Tổ chức code một cách khoa học và dễ bảo trì
 - Quản lý routing hiệu quả với React Router DOM
 - Sử dụng Redux Toolkit cho state management
