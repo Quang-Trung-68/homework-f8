@@ -2,6 +2,7 @@ import { Button, Grid, InputAdornment, TextField } from "@mui/material";
 import ClassCard from "../../../components/cards/ClassCard/ClassCard";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
+import { Outlet } from "react-router-dom";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -28,6 +29,7 @@ const ClassList: React.FC = () => {
                     })
                 }
             </Grid>
+            <Outlet/>
         </>
     )
 }

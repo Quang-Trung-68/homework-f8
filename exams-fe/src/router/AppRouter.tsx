@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+// AppRouter.tsx
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from 'react-router-dom';
+
 import Layout from '../components/common/Layout/Layout';
 import AuthLayout from '../components/common/Layout/AuthLayout';
 import LandingPage from '../pages/landing/LandingPage';
@@ -13,31 +19,33 @@ import CreateExam from '../pages/exams/CreateExam/CreateExam';
 import Profile from '../pages/profile/Profile';
 import MemberList from '../pages/members/MemberList/MemberList';
 
+const router = createBrowserRouter([
+  {
+    element: <AuthLayout />,
+    children: [
+      { path: '/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
+      { path: '/', element: <Navigate to="/landing" /> },
+      { path: '/landing', element: <LandingPage /> },
+    ],
+  },
+  {
+    element: <Layout />,
+    children: [
+      { path: '/classes', element: <ClassList /> },
+      { path: '/classes/create', element: <CreateClass /> },
+      { path: '/classes/:id', element: <ClassDetail /> },
+      { path: '/exams', element: <ExamList /> },
+      { path: '/exams/:id', element: <ExamDetail /> },
+      { path: '/exams/create', element: <CreateExam /> },
+      { path: '/profile', element: <Profile /> },
+      { path: '/members', element: <MemberList /> },
+    ],
+  },
+]);
+
 const AppRouter: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Auth pages */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Navigate to="/landing" />} />
-          <Route path="/landing" element={<LandingPage />} />
-        </Route>
-        {/* Layout pages */}
-        <Route element={<Layout />}>
-          <Route path="/classlist" element={<ClassList />} />
-          <Route path="/createclass" element={<CreateClass />} />
-          <Route path="/classdetail" element={<ClassDetail />} />
-          <Route path="/examlist" element={<ExamList />} />
-          <Route path="/examdetail" element={<ExamDetail />} />
-          <Route path="/createexam" element={<CreateExam />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/memberlist" element={<MemberList />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default AppRouter;

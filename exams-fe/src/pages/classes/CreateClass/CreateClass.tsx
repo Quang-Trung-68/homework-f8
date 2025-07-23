@@ -1,7 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import CreateClassForm from "../../../components/forms/CreateClassForm/CreateClassForm";
 
-const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const CreateClass: React.FC = () => {
 
