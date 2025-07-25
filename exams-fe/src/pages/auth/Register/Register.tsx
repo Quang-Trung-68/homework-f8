@@ -7,8 +7,12 @@ import { useState } from "react";
 import type { RegisterData } from "../../../types/auth.types";
 import { registerSchema } from "../../../utils/validation";
 import type { RegisterFields } from "../../../utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
+
+    const navigate = useNavigate()
+
     // form send to backend
     const [formData, setFormData] = useState<RegisterData>({
         name: "",
@@ -94,7 +98,7 @@ const Register: React.FC = () => {
                     </Box>
                     <RegisterForm onChange={onChange} formFields={formFields} formErrors={formErrors} />
                     <Box sx={{ display: "flex", gap: "20px" }}>
-                        <Button variant="outlined" color="error">HỦY</Button>
+                        <Button onClick={()=> navigate("/")} variant="outlined" color="error">HỦY</Button>
                         <Button onClick={onSubmit} variant="contained">ĐĂNG KÝ</Button>
                     </Box>
                 </Grid>

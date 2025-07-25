@@ -4,6 +4,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { DataGrid } from '@mui/x-data-grid';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import { useParams } from "react-router-dom";
 
 const columns = [
   { field: 'id', headerName: 'NO.', width: 70 },
@@ -58,6 +59,9 @@ function DataTable() {
 }
 
 const ClassDetail: React.FC = () => {
+
+  const { id } = useParams()
+  console.log(id)
 
   return (
     <>
@@ -121,3 +125,7 @@ const ClassDetail: React.FC = () => {
 }
 
 export default ClassDetail;
+
+function useLoaderData(): { id: string; } {
+  throw new Error("Function not implemented.");
+}

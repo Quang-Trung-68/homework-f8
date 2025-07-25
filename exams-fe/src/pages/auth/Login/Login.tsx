@@ -10,8 +10,11 @@ import { useAuthStore } from "../../../stores/authStore";
 import type { LoginData } from "../../../utils/validation";
 
 import { loginSchema } from "../../../utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+
+    const navigate = useNavigate()
 
     const { login } = useAuthStore()
 
@@ -73,7 +76,7 @@ const Login: React.FC = () => {
                     <Link sx={{ alignSelf: "end", cursor: "pointer" }}>Quên mật khẩu ?</Link>
                     <FormControlLabel sx={{ alignSelf: "start" }} control={<Checkbox defaultChecked />} label="Ghi nhớ tôi" />
                     <Button onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
-                    <Button fullWidth variant="text">Đăng ký tài khoản học viên</Button>
+                    <Button onClick={()=> navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
                 </Grid>
                 <Grid size={3} >
                 </Grid>

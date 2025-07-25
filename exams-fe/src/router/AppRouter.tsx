@@ -34,7 +34,9 @@ const router = createBrowserRouter([
     children: [
       { path: '/classes', element: <ClassList /> },
       { path: '/classes/create', element: <CreateClass /> },
-      { path: '/classes/:id', element: <ClassDetail /> },
+      {
+        path: '/classes/:id', element: <ClassDetail />
+      },
       { path: '/exams', element: <ExamList /> },
       { path: '/exams/:id', element: <ExamDetail /> },
       { path: '/exams/create', element: <CreateExam /> },

@@ -1,11 +1,13 @@
-import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import QuestionCard from "../../../components/cards/QuestionCard/QuestionCard";
 import AssignmentCard from "../../../components/cards/AssignmentCard/AssignmentCard";
+import { useParams } from "react-router-dom";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const ExamDetail: React.FC = () => {
+
 
     return (
         <>
