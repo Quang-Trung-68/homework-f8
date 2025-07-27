@@ -3,10 +3,19 @@ import ClassCard from "../../../components/cards/ClassCard/ClassCard";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
+import { useClassState } from "../../../stores/classStore";
+import { useEffect } from "react";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const ClassList: React.FC = () => {
+
+    const { classes, getClasses } = useClassState();
+    useEffect(() => {
+        getClasses();
+    }, []);
+    console.log(classes);
+    
 
     return (
         <>
@@ -29,7 +38,7 @@ const ClassList: React.FC = () => {
                     })
                 }
             </Grid>
-            <Outlet/>
+            <Outlet />
         </>
     )
 }

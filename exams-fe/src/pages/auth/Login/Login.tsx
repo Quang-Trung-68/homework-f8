@@ -49,7 +49,12 @@ const Login: React.FC = () => {
             // Gửi dữ liệu lên server tại đây nếu cần
             try {
                 const response = await login(formData);
-                console.log(localStorage);
+                const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
+                const accessToken = authData?.state?.access;
+                const refreshToken = authData?.state?.refresh;
+                console.log(accessToken);
+                navigate("/classes")
+
             } catch (error) {
                 console.log(error);
             }
@@ -61,14 +66,14 @@ const Login: React.FC = () => {
             <Grid container sx={{ alignItems: "stretch", justifyContent: "center" }}>
                 <Grid size={3} >
                 </Grid>
-                <Grid container direction={"column"} spacing={"50px"} sx={{ alignItems: "center", justifyContent: "space-between", padding: "50px 20px", background: "#3182ce", borderEndStartRadius: "10px", borderTopLeftRadius: "10px",display: { xs: 'none', md: 'flex' } ,  boxShadow: "0 0 6px #000"}} size={3} >
+                <Grid container direction={"column"} spacing={"50px"} sx={{ alignItems: "center", justifyContent: "space-between", padding: "50px 20px", background: "#3182ce", borderEndStartRadius: "10px", borderTopLeftRadius: "10px", display: { xs: 'none', md: 'flex' }, boxShadow: "0 0 6px #000" }} size={3} >
                     <Box ><img width={"100%"} style={{ objectFit: "cover" }} src={image} /></Box>
                     <Box>
                         <Box sx={{ fontWeight: "bold", fontSize: "20px", alignSelf: "start", color: "#fff" }}>GIEO MẦM SÁNG TẠO...</Box>
                         <Box sx={{ fontWeight: "bold", fontSize: "20px", alignSelf: "end", color: "#fff" }}>...DẪN HƯỚNG ĐAM MÊ</Box>
                     </Box>
                 </Grid>
-                <Grid container spacing={"15px"} direction={"column"} sx={{ alignItems: "center", justifyContent: "center", borderRadius:"10px" , borderTopLeftRadius:{md:0},borderBottomLeftRadius:{md:0},  boxShadow: "0 0 6px #000", background:"#fff" }} size={{ md:3}} padding={"20px"} >
+                <Grid container spacing={"15px"} direction={"column"} sx={{ alignItems: "center", justifyContent: "center", borderRadius: "10px", borderTopLeftRadius: { md: 0 }, borderBottomLeftRadius: { md: 0 }, boxShadow: "0 0 6px #000", background: "#fff" }} size={{ md: 3 }} padding={"20px"} >
                     <img width={100} height={100} src={logo} />
                     <Box sx={{ fontWeight: "bold", fontSize: "26px" }}>Đăng Nhập</Box>
                     <Box sx={{ textAlign: "center" }}>Cung cấp giải pháp toàn diện cho lớp học thông minh</Box>
@@ -76,7 +81,7 @@ const Login: React.FC = () => {
                     <Link sx={{ alignSelf: "end", cursor: "pointer" }}>Quên mật khẩu ?</Link>
                     <FormControlLabel sx={{ alignSelf: "start" }} control={<Checkbox defaultChecked />} label="Ghi nhớ tôi" />
                     <Button onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
-                    <Button onClick={()=> navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
+                    <Button onClick={() => navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
                 </Grid>
                 <Grid size={3} >
                 </Grid>

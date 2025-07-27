@@ -3,8 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { authService } from "../services/authService";
 
-import type { User, LoginCredentials, RegisterData } from "../types/auth.types";
-import { Token } from "@mui/icons-material";
+import type {  LoginCredentials, RegisterData } from "../types/auth.types";
 
 interface AuthState {
   // State
