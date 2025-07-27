@@ -9,7 +9,6 @@ export const api = axios.create({
   withCredentials: false,
 });
 
-
 // export const api = axios.create({
 //   baseURL: baseURL,
 //   headers: {

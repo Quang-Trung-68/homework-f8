@@ -3,6 +3,7 @@ import React from "react";
 import { Add, Logout, PersonAdd, Settings } from "@mui/icons-material"
 import { Home } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useNavigate } from "react-router-dom";
 
 function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -97,6 +98,7 @@ function AccountMenu() {
 }
 
 const Header: React.FC = () => {
+  const navigate = useNavigate(); 
   return (
     <header
     
@@ -108,8 +110,8 @@ const Header: React.FC = () => {
           Test Lop Thu A
         </Box>
         <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"10px"}}>
-          <Button variant="outlined" startIcon={<Add />} >Tạo lớp</Button>
-          <Button startIcon={<Home />} >Trang chủ</Button>
+          <Button variant="outlined" startIcon={<Add />} onClick={()=> navigate("/classes/create")} >Tạo lớp</Button>
+          <Button startIcon={<Home />} onClick={()=> navigate("/classes")} >Trang chủ</Button>
           <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"10px"}}>
             <AccountMenu/>
             <Box sx={{display:"flex",flexDirection:"column", alignItems:"start", justifyContent:"center",gap:"5px"}}>

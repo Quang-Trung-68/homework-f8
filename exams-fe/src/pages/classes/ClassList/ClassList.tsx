@@ -20,7 +20,7 @@ const ClassList: React.FC = () => {
     return (
         <>
 
-            <Grid container spacing={4} sx={{ alignItems: "center", justifyContent: "space-between" }} >
+            <Grid container spacing={4} sx={{ alignItems: "center", justifyContent: "start" }} >
                 <Grid size={8} sx={{ fontWeight: "bold", fontSize: "24px" }} >DANH SÁCH LỚP HỌC</Grid>
                 <Grid size={4} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
                     <TextField InputProps={{
@@ -33,7 +33,7 @@ const ClassList: React.FC = () => {
                     <Button startIcon={<Add />} >Thêm lớp học</Button>
                 </Grid>
                 {
-                    examClasses.map(e => {
+                    classes.map(e => {
                         return (<Grid size={4}  ><ClassCard /></Grid>)
                     })
                 }
