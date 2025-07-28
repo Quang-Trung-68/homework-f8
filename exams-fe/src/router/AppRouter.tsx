@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Layout from '../components/common/Layout/Layout';
+import MainLayout from '../components/common/Layout/MainLayout';
 import AuthLayout from '../components/common/Layout/AuthLayout';
 import LandingPage from '../pages/landing/LandingPage';
 import Login from '../pages/auth/Login/Login';
@@ -32,13 +33,20 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: '/classes', element: <ClassList /> },
-      { path: '/classes/create', element: <CreateClass /> },
       {
         path: '/classes/:id', element: <ClassDetail />
       },
-      { path: '/exams', element: <ExamList /> },
       { path: '/exams/:id', element: <ExamDetail /> },
+
+    ],
+  },
+  {
+    element: <MainLayout />,
+    children: [
+      { path: '/classes', element: <ClassList /> },
+      { path: '/classes/create', element: <CreateClass /> },
+     
+      { path: '/exams', element: <ExamList /> },
       { path: '/exams/create', element: <CreateExam /> },
       { path: '/profile', element: <Profile /> },
       { path: '/members', element: <MemberList /> },

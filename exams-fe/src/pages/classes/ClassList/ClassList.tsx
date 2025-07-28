@@ -6,8 +6,6 @@ import { Outlet } from "react-router-dom";
 import { useClassState } from "../../../stores/classStore";
 import { useEffect } from "react";
 
-const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
 const ClassList: React.FC = () => {
 
     const { classes, getClasses } = useClassState();
@@ -34,7 +32,7 @@ const ClassList: React.FC = () => {
                 </Grid>
                 {
                     classes.map(e => {
-                        return (<Grid size={4}  ><ClassCard /></Grid>)
+                        return (<Grid size={4}  ><ClassCard classElement = {e} /></Grid>)
                     })
                 }
             </Grid>

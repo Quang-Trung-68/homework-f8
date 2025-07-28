@@ -102,7 +102,7 @@ const Header: React.FC = () => {
   return (
     <header
     
-    style={{ background: '#eee', padding: '1rem', paddingLeft: "260px" }}
+    style={{ background: '#eee', padding:"10px 30px" }}
     
     >
       <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>

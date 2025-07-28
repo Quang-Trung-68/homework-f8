@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 import { authService } from "../services/authService";
 
-import type {  LoginCredentials, RegisterData } from "../types/auth.types";
+import type {  LoginCredentials, RefreshToken, RegisterData } from "../types/auth.types";
 
 interface AuthState {
   // State
@@ -19,6 +19,7 @@ interface AuthState {
   //   Action
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
+  getNewToken: (refreshToken: RefreshToken)=> Promise<void>;
   //   logout: () => Promise<void>;
   //   clearError: () => void;
   //   setLoading: (loading: boolean) => void;
@@ -43,6 +44,15 @@ export const useAuthStore = create<AuthState>()(
           console.log(error);
         }
       },
+      getNewToken:async (refreshToken: RefreshToken)=> {
+        try {
+          const response = await authService.getNewToken(refreshToken)
+          set({access: response})
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      ,
       register: async (userData: RegisterData) =>{
         try {
             const response = await authService.register(userData);

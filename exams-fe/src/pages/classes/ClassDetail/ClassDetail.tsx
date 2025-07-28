@@ -5,9 +5,12 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { DataGrid } from '@mui/x-data-grid';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import { useParams } from "react-router-dom";
+import { useClassState } from "../../../stores/classStore";
+import { useEffect } from "react";
 
 const columns = [
-  { field: 'id', headerName: 'NO.', width: 70 },
+  { field: 'no', headerName: 'NO.', width: 70 },
+  { field: 'id', headerName: 'ID.', width: 70 },
   { field: 'name', headerName: 'HỌ TÊN', width: 200 },
   {
     field: 'position',
@@ -21,17 +24,30 @@ const columns = [
   }
 ];
 
-const rows = [
-  { id: 1, name: 'Snow', position: "Giáo viên", role: "Key" },
-  { id: 2, name: 'Snow', position: "Hoc sinh", role: "" },
-  { id: 3, name: 'Snow', position: "Hoc sinh", role: "" },
-  { id: 4, name: 'Snow', position: "Hoc sinh", role: "" },
-  { id: 5, name: 'Snow', position: "Hoc sinh", role: "" },
-];
+// const rows = [
+//   { id: 1, name: 'Snow', position: "Giáo viên", role: "Key" },
+//   { id: 2, name: 'Snow', position: "Hoc sinh", role: "" },
+//   { id: 3, name: 'Snow', position: "Hoc sinh", role: "" },
+//   { id: 4, name: 'Snow', position: "Hoc sinh", role: "" },
+//   { id: 5, name: 'Snow', position: "Hoc sinh", role: "" },
+// ];
+
+
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-function DataTable() {
+function DataTable({users}) {
+
+  const rows = users.map((user,index)=>{
+    return {
+      no: (index+1),
+      id: user.id,
+      name: user.name,
+      position: user.role === "teacher" ? "Giáo viên" : "Học sinh",
+      role: user.role === "teacher" ? "🔑" : "",
+    }
+  })
+
   return (
     <Paper sx={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -60,8 +76,17 @@ function DataTable() {
 
 const ClassDetail: React.FC = () => {
 
-  const { id } = useParams()
+  const { id  } = useParams()
   console.log(id)
+
+  const {classSelecting,getClass} = useClassState()
+
+  useEffect(()=>{
+    getClass(Number(id))
+  },[])
+
+  console.log(classSelecting);
+  
 
   return (
     <>
@@ -92,7 +117,7 @@ const ClassDetail: React.FC = () => {
           <Grid container >
             <Grid size={6} padding={"20px"} sx={{ display: "flex", alignItems: "center", gap: "20px" }} >
               <GroupIcon sx={{ fontSize: "70px" }} color="primary" />
-              <Box sx={{ fontSize: "26px", fontWeight: "bold" }} >1 Thành viên</Box>
+              <Box sx={{ fontSize: "26px", fontWeight: "bold" }} >{classSelecting.users.length} Thành viên</Box>
             </Grid>
             <Grid size={6} padding={"20px"} sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
               <DescriptionIcon sx={{ fontSize: "70px" }} color="primary" />
@@ -101,7 +126,7 @@ const ClassDetail: React.FC = () => {
           </Grid>
           <Grid container>
             <Box>Danh sách thành viên</Box>
-            <DataTable />
+            <DataTable users={classSelecting.users} />
           </Grid>
         </Grid>
         <Grid size={4} fontSize={24} padding={"30px"} sx={{display:"flex",flexDirection:"column" ,gap:"40px", alignItems:"start"}} >

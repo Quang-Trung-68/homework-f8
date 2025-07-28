@@ -19,6 +19,7 @@
     "@mui/x-data-grid": "^8.8.0",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
+    "axios-auth-refresh": "^3.3.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",

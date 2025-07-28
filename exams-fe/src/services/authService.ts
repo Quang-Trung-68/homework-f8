@@ -15,7 +15,8 @@ export const authService = {
       console.log(error);
       return { access: "none", refresh: "none" };
     }
-  },
+  }
+  ,
   register: async (userData: RegisterData): Promise<AuthRegisterResponse> => {
     try {
       const response = await api.post<AuthRegisterResponse>(

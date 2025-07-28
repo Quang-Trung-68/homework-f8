@@ -1,6 +1,9 @@
 import { Box } from "@mui/material"
 import DescriptionIcon from '@mui/icons-material/Description';
-const ExamCard: React.FC = () => {
+const ExamCard: React.FC = ({examE}) => {
+
+    console.log(examE);
+    
 
     return (
         <>
@@ -9,8 +12,8 @@ const ExamCard: React.FC = () => {
                     <DescriptionIcon  sx={{color:"#45b0e1",fontSize:"46px"}}/>
                 </Box>
                 <Box sx={{display:"flex", flexDirection:"column", gap:"5px"}}>
-                    <Box sx={{fontWeight:"bold"}}>Đề thi lần 1</Box>
-                    <Box sx={{fontSize:"14px"}}>Ngày bắt đầu: 04-08-2025</Box>
+                    <Box sx={{fontWeight:"bold"}}>{examE.name}</Box>
+                    <Box sx={{fontSize:"14px"}}> {examE["start_time"]} </Box>
                 </Box>
             </Box>
         </>

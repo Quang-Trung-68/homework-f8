@@ -2,10 +2,29 @@ import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
+import { useExamState } from "../../../stores/examStore";
+import { useEffect } from "react";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const ExamList: React.FC = () => {
+
+    const { examGroupSelecting, getExamGroup } = useExamState();
+    useEffect(() => {
+        getExamGroup(19)
+    }, [])
+
+    console.log(examGroupSelecting);
+
+    const now = new Date();
+
+    const startedOrOngoingExams = examGroupSelecting.filter((e) => {
+        return e.start_time && new Date(e.start_time) <= now;
+    });
+
+    const notStartedYetExams = examGroupSelecting.filter((e) => {
+        return !e.start_time || new Date(e.start_time) > now;
+    });
 
     return (
         <>
@@ -23,19 +42,19 @@ const ExamList: React.FC = () => {
                     <Button variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
                 </Grid>
 
-                <Grid container >
-                    <Grid size={12} >Danh sách lớp đang thi</Grid>
+                <Grid size={12} container >
+                    <Grid size={12} container >Danh sách lớp đang thi</Grid>
                     {
-                        examClasses.map(e => {
-                            return (<Grid size={4}  ><ExamCard /></Grid>)
+                        startedOrOngoingExams.map(e => {
+                            return (<Grid size={4} key={e.id}  ><ExamCard examE={e} /></Grid>)
                         })
                     }
                 </Grid>
-                <Grid container >
-                    <Grid size={12} >Danh sách lớp chưa bắt đầu</Grid>
+                <Grid size={12} container >
+                    <Grid size={12} container >Danh sách lớp chưa bắt đầu</Grid>
                     {
-                        examClasses.map(e => {
-                            return (<Grid size={4}  ><ExamCard /></Grid>)
+                        notStartedYetExams.map(e => {
+                            return (<Grid size={4} key={e.id} ><ExamCard examE={e} /></Grid>)
                         })
                     }
                 </Grid>

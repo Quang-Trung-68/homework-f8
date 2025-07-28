@@ -9,7 +9,11 @@ const Layout: React.FC = () => {
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <Sidebar />
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <Header />
+        <Box
+          sx={{ padding: '1rem', paddingLeft: "260px" }}
+        >
+          <Header />
+        </Box>
         <Box component="main" sx={{
           flexGrow: 1, p: 3, marginLeft: '240px', // Cố định margin left = width của sidebar
           marginTop: '10px',   // Cố định margin top = height của header

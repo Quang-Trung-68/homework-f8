@@ -14,6 +14,11 @@ export interface AuthLoginResponse {
   refresh: string;
 }
 
+export interface RefreshToken {
+  refresh: string
+}
+
+
 export interface RegisterData {
   name: string;
   email: string;

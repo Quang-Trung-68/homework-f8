@@ -6,10 +6,11 @@ import type { ClassI } from "../types/classes.types";
 
 interface ClassState {
   classes: ClassI[];
+  classSelecting: ClassI;
   getClasses: () => Promise<void>;
-  createClass: (formData: ClassI)=> Promise<void>;
+  createClass: (formData: ClassI) => Promise<void>;
+  getClass: (id: number) => Promise<void>;
 }
-
 
 export function decodeToken(token: string) {
   const payload = token.split(".")[1];
@@ -20,28 +21,34 @@ export function decodeToken(token: string) {
 // const info = decodeToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....");
 // console.log(info.id, info.name, info.role);
 
-
 export const useClassState = create<ClassState>((set, get) => ({
   classes: [],
+  classSelecting: {
+    code: "",
+    name: "",
+    users: [],
+  },
   getClasses: async () => {
     try {
-      const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-      const accessToken = authData?.state?.access;
-      console.log(accessToken);
-      const data = await classService.getClasses(accessToken);
+      const data = await classService.getClasses();
       set({ classes: data });
     } catch (error) {
       console.log("Error when loading classes", error);
     }
   },
-  createClass: async (formData: ClassI)=> {
+  createClass: async (formData: ClassI) => {
     try {
-      const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-      const accessToken = authData?.state?.access;
-      const info = decodeToken(accessToken);
-      const data = await classService.createClass(accessToken,formData)
+      const data = await classService.createClass(formData);
     } catch (error) {
-      console.log("Error when create class",error);
+      console.log("Error when create class", error);
+    }
+  },
+  getClass: async (id: number) => {
+    try {
+      const data = await classService.getClass(id);
+      set({ classSelecting: data });
+    } catch (error) {
+      console.log("Error when get a class", error);
     }
   },
 }));
