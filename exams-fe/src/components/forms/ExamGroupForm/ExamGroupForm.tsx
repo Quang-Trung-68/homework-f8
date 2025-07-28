@@ -1,5 +1,7 @@
 import { Button, Modal, Box, Typography, TextField, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { useExamState } from "../../../stores/examStore";
+import { useClassState } from "../../../stores/classStore";
 
 const style = {
     position: 'absolute',
@@ -15,8 +17,31 @@ const style = {
 
 export default function ExamGroupForm({ open, setOpen }) {
 
+    const { createExamGroup,getExamGroup } = useExamState();
+    const { classSelecting } = useClassState()
+    const [formExamGroup, setFormExamGroup] = useState({
+        name: "",
+        start_time: "",
+        await_time: 0,
+        class_id: String(classSelecting.id)
+    });
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const onChange = (e) => {
+        setFormExamGroup({
+            ...formExamGroup,
+            [e.target.name]: e.target.value,
+        })
+        console.log(formExamGroup);
+    }
+
+    const onCreate = async () => {
+        await createExamGroup({ ...formExamGroup, ["await_time"]: Number(formExamGroup.await_time) });
+        await getExamGroup(Number(classSelecting.id))
+        handleClose()
+    }
 
     return (
         <div>
@@ -41,6 +66,8 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 fullWidth
                                 size="small"
                                 placeholder="Nhập tên bài thi"
+                                name="name"
+                                onChange={onChange}
                             />
                         </Box>
 
@@ -54,6 +81,8 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 type="number"
                                 size="small"
                                 placeholder="VD: 10"
+                                name="await_time"
+                                onChange={onChange}
                             />
                         </Box>
 
@@ -66,13 +95,15 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 fullWidth
                                 type="date"
                                 size="small"
+                                name="start_time"
+                                onChange={onChange}
                             />
                         </Box>
-                        <Box sx={{display:"flex", justifyContent:"end", gap:"20px"}}>
-                            <Button  sx={{textTransform:"none", width:100}} variant="contained">Tạo mới</Button>
-                            <Button sx={{textTransform:"none", width:100}}>Hủy</Button>
+                        <Box sx={{ display: "flex", justifyContent: "end", gap: "20px" }}>
+                            <Button sx={{ textTransform: "none", width: 100 }} variant="contained" onClick={onCreate}>Tạo mới</Button>
+                            <Button sx={{ textTransform: "none", width: 100 }} onClick={handleClose}>Hủy</Button>
                         </Box>
-                       
+
                     </Stack>
                 </Box>
             </Modal>
