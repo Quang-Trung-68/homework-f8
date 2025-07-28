@@ -4,11 +4,13 @@ import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
 import { useExamState } from "../../../stores/examStore";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+import { useNavigate, useParams } from "react-router-dom";
+import ExamGroupForm from "../../../components/forms/ExamGroupForm/ExamGroupForm";
+import React from "react";
 
 const ExamList: React.FC = () => {
+    const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate()
 
     const {id} = useParams()
     console.log(id);
@@ -45,7 +47,8 @@ const ExamList: React.FC = () => {
                             </InputAdornment>
                         ),
                     }} placeholder="Tìm kiếm" />
-                    <Button variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
+                    <Button onClick={()=> setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
+                    <ExamGroupForm open={open} setOpen={setOpen} />
                 </Grid>
 
                 <Grid size={12} container >

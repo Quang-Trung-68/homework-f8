@@ -3,6 +3,7 @@ import GoClass from '@mui/icons-material/Login';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
 import type { ClassI } from "../../../types/classes.types";
+import { useClassState } from "../../../stores/classStore";
 
 interface ClassCardProps {
     classElement: ClassI
@@ -11,6 +12,8 @@ interface ClassCardProps {
 const ClassCard: React.FC<ClassCardProps> = ({classElement}) => {
 
     const navigate = useNavigate()
+    const { classSelecting, getClass } = useClassState()
+    
 
     return (
         <>
@@ -19,7 +22,7 @@ const ClassCard: React.FC<ClassCardProps> = ({classElement}) => {
                 <Box>{classElement.name}</Box>
                 <Button onClick={()=> navigate(`/classes/${classElement.id}`)} sx={{fontWeight:"bold"}} color="inherit" startIcon={<GoClass/>}>Vào lớp</Button>
             </Box>
-            <Box sx={{fontSize:"32px",fontWeight:"bold"}}>1</Box>
+            <Box sx={{fontSize:"32px",fontWeight:"bold"}}>{classElement.users.length}</Box>
             <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
             <Box>Thành viên tham gia</Box>
 
