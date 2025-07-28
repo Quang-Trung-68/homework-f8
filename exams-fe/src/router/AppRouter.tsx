@@ -36,8 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/classes/:id', element: <ClassDetail />
       },
-      { path: '/exams/:id', element: <ExamDetail /> },
+      { path: '/classes/:id/exams', element: <ExamList /> },
 
+      { path: '/exams/:id', element: <ExamDetail /> },
+      { path: '/classes/:id/members', element: <MemberList /> },
     ],
   },
   {
@@ -46,10 +48,8 @@ const router = createBrowserRouter([
       { path: '/classes', element: <ClassList /> },
       { path: '/classes/create', element: <CreateClass /> },
      
-      { path: '/exams', element: <ExamList /> },
       { path: '/exams/create', element: <CreateExam /> },
       { path: '/profile', element: <Profile /> },
-      { path: '/members', element: <MemberList /> },
     ],
   },
 ]);

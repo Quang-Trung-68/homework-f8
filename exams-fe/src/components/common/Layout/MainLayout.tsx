@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Header from '../Header/Header';
+import logo from "../../../../public/images/logo.png"
 
 const MainLayout: React.FC = () => {
     return (

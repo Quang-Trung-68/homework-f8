@@ -3,11 +3,13 @@ import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
 import { DataGrid } from "@mui/x-data-grid";
+import { useClassState } from "../../../stores/classStore";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const columns = [
-  { field: 'id', headerName: 'NO.', width: 70 },
+  { field: 'no', headerName: 'NO.', width: 70 },
+  { field: 'id', headerName: 'ID.', width: 70 },
   { field: 'name', headerName: 'HỌ TÊN', width: 200 },
   {
     field: 'position',
@@ -16,17 +18,29 @@ const columns = [
   }
 ];
 
-const rows = [
-  { id: 1, name: 'Snow', position: "Giáo viên" },
-  { id: 2, name: 'Snow', position: "Hoc sinh" },
-  { id: 3, name: 'Snow', position: "Hoc sinh" },
-  { id: 4, name: 'Snow', position: "Hoc sinh" },
-  { id: 5, name: 'Snow', position: "Hoc sinh" },
-];
+// const rows = [
+//   { id: 1, name: 'Snow', position: "Giáo viên" },
+//   { id: 2, name: 'Snow', position: "Hoc sinh" },
+//   { id: 3, name: 'Snow', position: "Hoc sinh" },
+//   { id: 4, name: 'Snow', position: "Hoc sinh" },
+//   { id: 5, name: 'Snow', position: "Hoc sinh" },
+// ];
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-function DataTable() {
+function DataTable({users}) {
+
+  console.log(users);
+
+  const rows = users.map((user,index)=>{
+    return {
+      no: index +1,
+      id: user.id,
+      name: user.name,
+      position: user.role === "teacher" ? "Giáo viên" : "Học sinh"
+    }
+  })
+
   return (
     <Paper sx={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -54,11 +68,12 @@ function DataTable() {
 }
 
 const MemberList: React.FC = () => {
+  const {classSelecting,getClass} = useClassState()
 
     return (
         <>
         <Box sx={{fontSize:"32px", fontWeight:"bold", mb:"30px"}}>Danh sách thành viên</Box>
-        <DataTable/>
+        <DataTable users={classSelecting.users} />
         </>
     )
 }

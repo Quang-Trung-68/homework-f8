@@ -8,8 +8,9 @@ import { useEffect } from "react";
 
 const ClassList: React.FC = () => {
 
-    const { classes, getClasses } = useClassState();
+    const { classes, getClasses, clearClass } = useClassState();
     useEffect(() => {
+        clearClass()
         getClasses();
     }, []);
     console.log(classes);

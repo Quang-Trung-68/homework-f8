@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import AppsIcon from '@mui/icons-material/Apps';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import { useClassState } from "../../../stores/classStore";
 
 const Sidebar = () => {
+  const {classSelecting,getClass} = useClassState()
   return (
     <aside
       style={{
@@ -31,7 +33,7 @@ const Sidebar = () => {
           <Box component={"span"}>BK Classroom</Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: "10px" }}>
-          <Link to={"/dashboard"} >
+          <Link to={`/classes/${classSelecting.id}`} >
             <Button startIcon={<AppsIcon />} fullWidth sx={{
               color: "#000", fontWeight: "bold",
               justifyContent: "flex-start",
@@ -41,7 +43,7 @@ const Sidebar = () => {
               }
             }}>Tổng quan</Button>
           </Link>
-          <Link to={"/classlist"} >
+          <Link to={`/classes/${classSelecting.id}/exams`} >
             <Button startIcon={<NoteAltIcon />} fullWidth sx={{
               color: "#000", fontWeight: "bold",
               justifyContent: "flex-start",
@@ -51,7 +53,7 @@ const Sidebar = () => {
               }
             }}>Bài thi</Button>
           </Link>
-          <Link to={"/classlist"} >
+          <Link to={`/classes/${classSelecting.id}/members`} >
             <Button startIcon={<PeopleAltIcon />} fullWidth sx={{
               color: "#000", fontWeight: "bold",
               justifyContent: "flex-start",

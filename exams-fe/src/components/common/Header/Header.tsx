@@ -2,8 +2,10 @@ import { Avatar, Box, Button, Chip, Divider, IconButton, ListItemIcon, Menu, Men
 import React from "react";
 import { Add, Logout, PersonAdd, Settings } from "@mui/icons-material"
 import { Home } from '@mui/icons-material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from "react-router-dom";
+import { decodeToken, useClassState } from "../../../stores/classStore";
+import { useExamState } from "../../../stores/examStore";
+import logo from "../../../../public/images/logo.png"
 
 function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -98,25 +100,37 @@ function AccountMenu() {
 }
 
 const Header: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { classSelecting, getClass, clearClass } = useClassState()
+  const { clearExamGroup } = useExamState()
+  const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
+  const accessToken = authData?.state?.access;
+  const info = decodeToken(accessToken);
   return (
     <header
-    
-    style={{ background: '#eee', padding:"10px 30px" }}
-    
+
+      style={{ background: '#eee', padding: "10px 30px" }}
+
     >
-      <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
         <Box>
-          Test Lop Thu A
+          {
+            classSelecting.name ||
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "start", gap: "10px" }}>
+              <img width={"10%"} src={logo} />
+              <Box component={"span"}>BK Classroom</Box>
+            </Box>
+          }
         </Box>
-        <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"10px"}}>
-          <Button variant="outlined" startIcon={<Add />} onClick={()=> navigate("/classes/create")} >Tạo lớp</Button>
-          <Button startIcon={<Home />} onClick={()=> navigate("/classes")} >Trang chủ</Button>
-          <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"10px"}}>
-            <AccountMenu/>
-            <Box sx={{display:"flex",flexDirection:"column", alignItems:"start", justifyContent:"center",gap:"5px"}}>
-              <Chip size="small" variant="outlined" sx={{border:"none", fontWeight:"bolder"}} color="primary" label ={"Dang Quang Trung"} />
-              <Chip size="small" variant="outlined" sx={{fontSize:"13px"}} label ={"Giao vien"} />
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+          <Button variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
+          <Button startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+            <AccountMenu />
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: "5px" }}>
+              <Chip size="small" variant="outlined" sx={{ border: "none", fontWeight: "bolder" }} color="primary" label={info.name} />
+              <Chip size="small" variant="outlined" sx={{ fontSize: "13px" }} label={info.role === "teacher" ? "Giáo viên" : "Học sinh"} />
             </Box>
           </Box>
         </Box>

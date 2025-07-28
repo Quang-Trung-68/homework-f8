@@ -10,6 +10,7 @@ interface ClassState {
   getClasses: () => Promise<void>;
   createClass: (formData: ClassI) => Promise<void>;
   getClass: (id: number) => Promise<void>;
+  clearClass:()=> void;
 }
 
 export function decodeToken(token: string) {
@@ -51,4 +52,11 @@ export const useClassState = create<ClassState>((set, get) => ({
       console.log("Error when get a class", error);
     }
   },
+  clearClass : ()=>{
+    set({classSelecting:{
+      code:"",
+      name:"",
+      users:[]
+    }})
+  }
 }));

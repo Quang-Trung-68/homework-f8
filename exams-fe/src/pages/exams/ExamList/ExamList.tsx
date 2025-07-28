@@ -4,14 +4,20 @@ import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
 import { useExamState } from "../../../stores/examStore";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const ExamList: React.FC = () => {
 
-    const { examGroupSelecting, getExamGroup } = useExamState();
+    const {id} = useParams()
+    console.log(id);
+    
+
+    const { examGroupSelecting, getExamGroup,clearExamGroup } = useExamState();
     useEffect(() => {
-        getExamGroup(19)
+        clearExamGroup()
+        getExamGroup(Number(id))
     }, [])
 
     console.log(examGroupSelecting);
