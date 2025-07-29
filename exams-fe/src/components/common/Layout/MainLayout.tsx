@@ -2,10 +2,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Header from '../Header/Header';
+import GlobalLoader from '../GlobalLoader/GlobalLoader';
 
 const MainLayout: React.FC = () => {
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+            <GlobalLoader />
             <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Header - fixed */}
                 <Box

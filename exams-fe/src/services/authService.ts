@@ -5,18 +5,23 @@ import type {
   RegisterData,
   AuthRegisterResponse,
 } from "../types/auth.types";
+import { useLoadingStore } from "../stores/loadingStore";
 
 export const authService = {
   login: async (credentials: LoginCredentials): Promise<AuthLoginResponse> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
+      startLoading();
       const response = await api.post<AuthLoginResponse>("login/", credentials);
       return response.data;
     } catch (error) {
       console.log(error);
       return { access: "none", refresh: "none" };
     }
-  }
-  ,
+    finally{
+      stopLoading()
+    }
+  },
   register: async (userData: RegisterData): Promise<AuthRegisterResponse> => {
     try {
       const response = await api.post<AuthRegisterResponse>(

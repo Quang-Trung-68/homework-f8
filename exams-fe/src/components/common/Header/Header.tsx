@@ -7,7 +7,7 @@ import { decodeToken, useClassState } from "../../../stores/classStore";
 import { useExamState } from "../../../stores/examStore";
 import logo from "@/assets/images/logo.png"
 
-function AccountMenu() {
+function AccountMenu({ onProfile, onLogout }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,11 +69,11 @@ function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => {
+          handleClose();
+          onProfile()
+        }}>
           <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
@@ -88,7 +88,10 @@ function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => {
+          handleClose();
+          onLogout()
+        }}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
@@ -106,6 +109,15 @@ const Header: React.FC = () => {
   const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
   const accessToken = authData?.state?.access;
   const info = decodeToken(accessToken);
+
+  const onProfile = () => {
+    navigate("/profile")
+  }
+
+  const onLogout = () => {
+    navigate("/login");
+    localStorage.removeItem("auth-storage")
+  }
   return (
     <header
 
@@ -114,7 +126,7 @@ const Header: React.FC = () => {
     >
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
-        <Box sx={{fontWeight:"bold", fontSize:"2.4rem"}}>
+        <Box sx={{ fontWeight: "bold", fontSize: "2.4rem" }}>
           {
             classSelecting.name ||
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "start", gap: "10px" }}>
@@ -124,13 +136,13 @@ const Header: React.FC = () => {
           }
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-          <Button sx={{fontSize:"1.4rem"}} variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
-          <Button sx={{fontSize:"1.4rem"}} startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
+          <Button sx={{ fontSize: "1.4rem" }} variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
+          <Button sx={{ fontSize: "1.4rem" }} startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-            <AccountMenu />
+            <AccountMenu onProfile={onProfile} onLogout={onLogout} />
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: "4px" }}>
-              <Chip size="small" variant="outlined" sx={{ border: "none", fontWeight: "bolder", fontSize:"1.5rem" }} color="primary" label={info.name} />
-              <Chip size="small" variant="outlined" sx={{ fontSize: "1.3rem", fontWeight:"bold" }} label={info.role === "teacher" ? "Giáo viên" : "Học sinh"} />
+              <Chip size="small" variant="outlined" sx={{ border: "none", fontWeight: "bolder", fontSize: "1.5rem" }} color="primary" label={info.name} />
+              <Chip size="small" variant="outlined" sx={{ fontSize: "1.3rem", fontWeight: "bold" }} label={info.role === "teacher" ? "Giáo viên" : "Học sinh"} />
             </Box>
           </Box>
         </Box>
