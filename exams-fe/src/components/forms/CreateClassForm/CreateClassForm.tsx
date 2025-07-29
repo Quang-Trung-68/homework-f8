@@ -23,6 +23,16 @@ const CreateClassForm: React.FC<CreateClassFormProps> = ({ formData, setFormData
   return (
     <Box>
       <TextField
+        InputProps={{
+          sx: {
+            fontSize: '1.5rem',
+          },
+        }}
+        InputLabelProps={{
+          sx: {
+            fontSize: '1.5rem',
+          },
+        }}
         name="name"
         label="Nhập tên lớp học"
         value={formData.name}
@@ -32,6 +42,16 @@ const CreateClassForm: React.FC<CreateClassFormProps> = ({ formData, setFormData
         sx={{ mb: "20px" }}
       />
       <TextField
+        InputProps={{
+          sx: {
+            fontSize: '1.5rem',
+          },
+        }}
+        InputLabelProps={{
+          sx: {
+            fontSize: '1.5rem',
+          },
+        }}
         name="code"
         label="Nhập mã lớp"
         value={formData.code}

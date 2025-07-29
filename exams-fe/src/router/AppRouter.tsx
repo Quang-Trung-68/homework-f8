@@ -4,8 +4,7 @@ import {
   RouterProvider,
   Navigate,
 } from 'react-router-dom';
-
-import Layout from '../components/common/Layout/Layout';
+import  Layout  from '../components/common/Layout/Layout';
 import MainLayout from '../components/common/Layout/MainLayout';
 import AuthLayout from '../components/common/Layout/AuthLayout';
 import LandingPage from '../pages/landing/LandingPage';

@@ -1,4 +1,4 @@
-import { Button, Grid, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
@@ -38,7 +38,7 @@ const ExamList: React.FC = () => {
         <>
 
             <Grid container spacing={4} sx={{ alignItems: "center", justifyContent: "space-between" }} >
-                <Grid size={8} sx={{ fontWeight: "bold", fontSize: "24px" }} >DANH SÁCH BÀI THI</Grid>
+                <Grid size={8} sx={{ fontWeight: "bold", fontSize: "2.4rem" }} >DANH SÁCH BÀI THI</Grid>
                 <Grid size={4} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
                     <TextField InputProps={{
                         startAdornment: (
@@ -47,23 +47,59 @@ const ExamList: React.FC = () => {
                             </InputAdornment>
                         ),
                     }} placeholder="Tìm kiếm" />
-                    <Button onClick={() => setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
+                    <Button sx={{ fontSize: "1.4rem" }} onClick={() => setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
                     <ExamGroupForm open={open} setOpen={setOpen} />
                 </Grid>
 
-                <Grid size={12} container >
+                <Grid size={12} container>
                     <Grid size={12} container>Danh sách lớp đang thi</Grid>
                     {
                         startedOrOngoingExams.map(e => {
-                            return (<Grid size={4} key={e.id}  ><div onClick={() => { navigate(`${e.id}`) }}><ExamCard examE={e} /></div></Grid>)
+                            return (
+                                <Grid size={4} key={e.id}>
+                                    <Box
+                                        onClick={() => { navigate(`${e.id}`) }}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            transition: 'all 0.3s ease-in-out',
+                                            borderRadius: 2,
+                                            p: 0.5,
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
+                                                boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+                                            }
+                                        }}
+                                    >
+                                        <ExamCard examE={e} />
+                                    </Box>
+                                </Grid>
+                            )
                         })
                     }
                 </Grid>
-                <Grid size={12} container >
+                <Grid size={12} container>
                     <Grid size={12} container >Danh sách lớp chưa bắt đầu</Grid>
                     {
                         notStartedYetExams.map(e => {
-                            return (<Grid size={4} key={e.id} ><div onClick={() => { navigate(`${e.id}`) }}><ExamCard examE={e} /></div></Grid>)
+                            return (
+                                <Grid size={4} key={e.id}>
+                                    <Box
+                                        onClick={() => { navigate(`${e.id}`) }}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            transition: 'all 0.3s ease-in-out',
+                                            borderRadius: 2,
+                                            p: 0.5,
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
+                                                boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+                                            }
+                                        }}
+                                    >
+                                        <ExamCard examE={e} />
+                                    </Box>
+                                </Grid>
+                            )
                         })
                     }
                 </Grid>

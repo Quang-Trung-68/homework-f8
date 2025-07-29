@@ -33,7 +33,7 @@ const CreateClass: React.FC = () => {
 
     return (
         <>
-            <Box sx={{ fontSize: "32px", fontWeight: "bold", mb: "50px" }} >Thêm lớp học mới</Box>
+            <Box sx={{ fontSize: "3.2rem", fontWeight: "bold", mb: "50px" }} >Thêm lớp học mới</Box>
             <Grid container>
                 <Grid size={4}>
 
@@ -41,8 +41,8 @@ const CreateClass: React.FC = () => {
                 <Grid size={4}>
                     <CreateClassForm formData={formData} setFormData={setFormData} />
                     <Box mt={"40px"} sx={{ display: "flex", justifyContent: "space-evenly" }}>
-                        <Button variant="outlined" color="error" onClick={()=> navigate("/classes")} >HỦY</Button>
-                        <Button variant="contained" onClick={onCreate} >TẠO MỚI</Button>
+                        <Button sx={{fontSize:"1.4rem", width:"100px"}} variant="outlined" color="error" onClick={()=> navigate("/classes")} >HỦY</Button>
+                        <Button sx={{fontSize:"1.4rem", width:"100px"}} variant="contained" onClick={onCreate} >TẠO MỚI</Button>
                     </Box>
 
                 </Grid>

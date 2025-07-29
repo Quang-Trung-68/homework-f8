@@ -1,7 +1,7 @@
 import type React from "react";
 import RegisterForm from "../../../components/forms/RegisterForm/RegisterForm";
 import { Box, Button, Grid } from "@mui/material";
-import image from "../../../../public/images/image-login.jpg"
+import image from "@/assets/images/image-login.jpg"
 import { useAuthStore } from "../../../stores/authStore";
 import { useState } from "react";
 import type { RegisterData } from "../../../types/auth.types";
@@ -93,13 +93,13 @@ const Register: React.FC = () => {
                     }}
                 >
                     <img width={50} height={50} style={{ alignSelf: "center" }} src={image} />
-                    <Box sx={{ fontSize: "26px", fontWeight: "bold", textAlign: "center" }}>
+                    <Box sx={{ fontSize: "2.6rem", fontWeight: "bold", textAlign: "center" }}>
                         ĐĂNG KÝ HỌC VIÊN
                     </Box>
                     <RegisterForm onChange={onChange} formFields={formFields} formErrors={formErrors} />
                     <Box sx={{ display: "flex", gap: "20px" }}>
-                        <Button onClick={()=> navigate("/")} variant="outlined" color="error">HỦY</Button>
-                        <Button onClick={onSubmit} variant="contained">ĐĂNG KÝ</Button>
+                        <Button sx={{fontSize:"1.4rem"}} onClick={()=> navigate("/")} variant="outlined" color="error">HỦY</Button>
+                        <Button sx={{fontSize:"1.4rem"}} onClick={onSubmit} variant="contained">ĐĂNG KÝ</Button>
                     </Box>
                 </Grid>
                 <Grid size={{ md: 4, sm: 2, xs: 2 }}>

@@ -1,11 +1,7 @@
 import { Box, Button, Grid, InputAdornment, Paper, TextField } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import { Search } from "@mui/icons-material";
-import ExamCard from "../../../components/cards/ExamCard/ExamCard";
 import { DataGrid } from "@mui/x-data-grid";
 import { useClassState } from "../../../stores/classStore";
 
-const examClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const columns = [
   { field: 'no', headerName: 'NO.', width: 70 },
@@ -18,23 +14,15 @@ const columns = [
   }
 ];
 
-// const rows = [
-//   { id: 1, name: 'Snow', position: "Giáo viên" },
-//   { id: 2, name: 'Snow', position: "Hoc sinh" },
-//   { id: 3, name: 'Snow', position: "Hoc sinh" },
-//   { id: 4, name: 'Snow', position: "Hoc sinh" },
-//   { id: 5, name: 'Snow', position: "Hoc sinh" },
-// ];
-
 const paginationModel = { page: 0, pageSize: 5 };
 
-function DataTable({users}) {
+function DataTable({ users }) {
 
   console.log(users);
 
-  const rows = users.map((user,index)=>{
+  const rows = users.map((user, index) => {
     return {
-      no: index +1,
+      no: index + 1,
       id: user.id,
       name: user.name,
       position: user.role === "teacher" ? "Giáo viên" : "Học sinh"
@@ -51,7 +39,43 @@ function DataTable({users}) {
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
         }
-        sx={{border:0,
+        sx={{
+          border: 0,
+          // Font size cho cells
+          '& .MuiDataGrid-cell': {
+            fontSize: '1.4rem', // 14px
+            fontWeight: 400,
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0.8rem 1.6rem', // 8px 16px
+          },
+          // Font size cho header
+          '& .MuiDataGrid-columnHeader': {
+            fontSize: '1.5rem', // 15px
+            fontWeight: 600,
+            color: '#333',
+          },
+          // Font size cho footer (pagination)
+          '& .MuiDataGrid-footerContainer': {
+            fontSize: '1.4rem', // 14px
+          },
+          // Chỉnh font size cho "Rows per page"
+          '& .MuiTablePagination-displayedRows': {
+            fontSize: '1.4rem', // 14px
+            fontWeight: 400,
+          },
+          '& .MuiTablePagination-selectLabel': {
+            fontSize: '1.4rem', // 14px
+            fontWeight: 400,
+          },
+          '& .MuiTablePagination-select': {
+            fontSize: '1.4rem', // 14px
+          },
+          // Chỉnh font size cho các nút pagination
+          '& .MuiTablePagination-actions button': {
+            fontSize: '1.4rem', // 14px
+          },
+          // Row styling
           '& .even-row': {
             backgroundColor: '#f9f9f9',
           },
@@ -61,6 +85,10 @@ function DataTable({users}) {
           '& .MuiDataGrid-row:hover': {
             backgroundColor: '#e3f2fd',
           },
+          // Tăng row height để font không bị chật
+          '& .MuiDataGrid-row': {
+            minHeight: '4.8rem !important', // 48px
+          }
         }}
       />
     </Paper>
@@ -68,14 +96,14 @@ function DataTable({users}) {
 }
 
 const MemberList: React.FC = () => {
-  const {classSelecting,getClass} = useClassState()
+  const { classSelecting, getClass } = useClassState()
 
-    return (
-        <>
-        <Box sx={{fontSize:"32px", fontWeight:"bold", mb:"30px"}}>Danh sách thành viên</Box>
-        <DataTable users={classSelecting.users} />
-        </>
-    )
+  return (
+    <>
+      <Box sx={{ fontSize: "32px", fontWeight: "bold", mb: "30px" }}>Danh sách thành viên</Box>
+      <DataTable users={classSelecting.users} />
+    </>
+  )
 }
 
 export default MemberList;

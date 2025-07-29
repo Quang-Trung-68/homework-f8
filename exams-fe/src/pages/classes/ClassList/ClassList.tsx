@@ -20,7 +20,7 @@ const ClassList: React.FC = () => {
         <>
 
             <Grid container spacing={4} sx={{ alignItems: "center", justifyContent: "start" }} >
-                <Grid size={8} sx={{ fontWeight: "bold", fontSize: "24px" }} >DANH SÁCH LỚP HỌC</Grid>
+                <Grid size={8} sx={{ fontWeight: "bold", fontSize: "2.4rem" }} >DANH SÁCH LỚP HỌC</Grid>
                 <Grid size={4} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
                     <TextField InputProps={{
                         startAdornment: (
@@ -28,8 +28,11 @@ const ClassList: React.FC = () => {
                                 <Search />
                             </InputAdornment>
                         ),
+                        sx: {
+                            fontSize:"1.5rem"
+                        }
                     }} placeholder="Tìm kiếm" />
-                    <Button startIcon={<Add />} >Thêm lớp học</Button>
+                    <Button sx={{fontSize:"1.4rem"}} startIcon={<Add />} >Thêm lớp học</Button>
                 </Grid>
                 {
                     classes.map(e => {

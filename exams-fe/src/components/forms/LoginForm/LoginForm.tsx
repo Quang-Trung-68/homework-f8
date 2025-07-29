@@ -15,10 +15,32 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, onChange, formErrors })
     return (
         <>
             <Box>
-                <TextField error={!!formErrors.email}
+                <TextField
+                    InputProps={{
+                        sx: {
+                            fontSize: '1.4rem',
+                        },
+                    }}
+                    InputLabelProps={{
+                        sx: {
+                            fontSize: '1.4rem',
+                        },
+                    }}
+                    error={!!formErrors.email}
                     helperText={formErrors.email}
                     value={formData.email} onChange={onChange} name="email" required type="email" fullWidth label={"Nhập email"} sx={{ mb: "20px" }} />
-                <TextField error={!!formErrors.password}
+                <TextField
+                    InputProps={{
+                        sx: {
+                            fontSize: '1.4rem',
+                        },
+                    }}
+                    InputLabelProps={{
+                        sx: {
+                            fontSize: '1.4rem',
+                        },
+                    }}
+                    error={!!formErrors.password}
                     helperText={formErrors.password}
                     value={formData.password} onChange={onChange} name="password" required type="password" fullWidth label={"Nhập mật khẩu"} />
             </Box>

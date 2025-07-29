@@ -5,7 +5,7 @@ import { Home } from '@mui/icons-material';
 import { useNavigate } from "react-router-dom";
 import { decodeToken, useClassState } from "../../../stores/classStore";
 import { useExamState } from "../../../stores/examStore";
-import logo from "../../../../public/images/logo.png"
+import logo from "@/assets/images/logo.png"
 
 function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
     >
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
-        <Box>
+        <Box sx={{fontWeight:"bold", fontSize:"2.4rem"}}>
           {
             classSelecting.name ||
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "start", gap: "10px" }}>
@@ -124,13 +124,13 @@ const Header: React.FC = () => {
           }
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-          <Button variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
-          <Button startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
+          <Button sx={{fontSize:"1.4rem"}} variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
+          <Button sx={{fontSize:"1.4rem"}} startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
             <AccountMenu />
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: "5px" }}>
-              <Chip size="small" variant="outlined" sx={{ border: "none", fontWeight: "bolder" }} color="primary" label={info.name} />
-              <Chip size="small" variant="outlined" sx={{ fontSize: "13px" }} label={info.role === "teacher" ? "Giáo viên" : "Học sinh"} />
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "center", gap: "4px" }}>
+              <Chip size="small" variant="outlined" sx={{ border: "none", fontWeight: "bolder", fontSize:"1.5rem" }} color="primary" label={info.name} />
+              <Chip size="small" variant="outlined" sx={{ fontSize: "1.3rem", fontWeight:"bold" }} label={info.role === "teacher" ? "Giáo viên" : "Học sinh"} />
             </Box>
           </Box>
         </Box>

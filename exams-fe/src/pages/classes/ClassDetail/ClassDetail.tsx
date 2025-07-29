@@ -34,7 +34,7 @@ const PostExam = ({ time, examName }) => {
     <Box sx={{ display: "flex", gap: "5px" }}>
       <Box><Avatar></Avatar></Box>
       <Box sx={{ fontSize: "14px", display: "flex", alignItems: "start", justifyContent: "space-between", flexDirection: "column", gap: "5px" }}>
-        <Box fontWeight={"bold"}>Bài thi <Box sx={{color:"blue"}} component={"span"}>{examName}</Box> vừa được tải lên</Box>
+        <Box fontWeight={"bold"}>Bài thi <Box sx={{ color: "blue" }} component={"span"}>{examName}</Box> vừa được tải lên</Box>
         <Box>🕒 {formatted}</Box>
       </Box>
     </Box>
@@ -67,6 +67,40 @@ function DataTable({ users }) {
         }
         sx={{
           border: 0,
+          // Font size cho cells
+          '& .MuiDataGrid-cell': {
+            fontSize: '1.4rem',
+            fontWeight: 400,
+            display: 'flex',
+            alignItems: 'center',
+          },
+          // Font size cho header
+          '& .MuiDataGrid-columnHeader': {
+            fontSize: '1.5rem',
+            fontWeight: "bold",
+            color: '#333',
+          },
+          // Font size cho footer (pagination)
+          '& .MuiDataGrid-footerContainer': {
+            fontSize: '1.5rem',
+          },
+          // "Rows per page" 
+          '& .MuiTablePagination-displayedRows': {
+            fontSize: '1.4rem',
+            fontWeight: 400,
+          },
+          '& .MuiTablePagination-selectLabel': {
+            fontSize: '1.4rem',
+            fontWeight: 400,
+          },
+          '& .MuiTablePagination-select': {
+            fontSize: '1.4rem',
+          },
+          //pagination
+          '& .MuiTablePagination-actions button': {
+            fontSize: '1.4rem',
+          },
+          // Row styling
           '& .even-row': {
             backgroundColor: '#f9f9f9',
           },
@@ -76,6 +110,10 @@ function DataTable({ users }) {
           '& .MuiDataGrid-row:hover': {
             backgroundColor: '#e3f2fd',
           },
+          //row height
+          '& .MuiDataGrid-row': {
+            minHeight: '48px !important',
+          }
         }}
       />
     </Paper>
@@ -97,6 +135,8 @@ const ClassDetail: React.FC = () => {
 
   console.log(classSelecting);
 
+  const teacher = classSelecting.users.find(e => e.role === "teacher");
+
 
   return (
     <>
@@ -105,8 +145,8 @@ const ClassDetail: React.FC = () => {
         <Grid size={8} sx={{ p: "30px" }}  >
           <Grid sx={{ background: "#45b0e1", color: "#fff", mb: "20px", p: "30px", borderRadius: "10px" }}>
             <Box sx={{ mb: "20px" }}>
-              <Box sx={{ fontSize: "24px", mb: "10px", fontWeight: "bold" }}>Test thi thu</Box>
-              <Box>Giáo viên: Đặng Quang Trung</Box>
+              <Box sx={{ fontSize: "24px", mb: "10px", fontWeight: "bold" }}>{classSelecting.name}</Box>
+              <Box>Giáo viên: {teacher?.name}</Box>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -148,7 +188,7 @@ const ClassDetail: React.FC = () => {
             <Box sx={{ display: "flex", alignItems: "start", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
               {
                 examGroupSelecting.map((examSelecting => {
-                  return <PostExam time={examSelecting["created_at"]} examName = {examSelecting["name"]} />
+                  return <PostExam time={examSelecting["created_at"]} examName={examSelecting["name"]} />
                 }))
               }
             </Box>
