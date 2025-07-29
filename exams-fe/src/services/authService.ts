@@ -23,7 +23,9 @@ export const authService = {
     }
   },
   register: async (userData: RegisterData): Promise<AuthRegisterResponse> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
+      startLoading()
       const response = await api.post<AuthRegisterResponse>(
         "master/user/",
         userData
@@ -50,6 +52,9 @@ export const authService = {
         parent_phone: "",
         avata: "",
       };
+    }
+    finally{
+      stopLoading()
     }
   },
 };

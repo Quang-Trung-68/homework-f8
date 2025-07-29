@@ -18,16 +18,23 @@ export const classService = {
   },
 
   createClass: async (formData: ClassI): Promise<string> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
+      startLoading()
       const response = await api.post("master/class/", formData);
       return response.data;
     } catch (error) {
       console.log(error);
       return "";
     }
+    finally{
+      stopLoading()
+    }
   },
   getClass: async (id: number): Promise<ClassI> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
+      startLoading();
       const response = await api.get(`master/class/${id}`);
       return response.data;
     } catch (error) {
@@ -37,6 +44,9 @@ export const classService = {
         name: "",
         users: [],
       };
+    }
+    finally{
+      stopLoading()
     }
   },
 };
