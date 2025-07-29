@@ -1,4 +1,4 @@
-import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import ExamCard from "../../../components/cards/ExamCard/ExamCard";
@@ -12,11 +12,11 @@ const ExamList: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate()
 
-    const {id} = useParams()
+    const { id } = useParams()
     console.log(id);
-    
 
-    const { examGroupSelecting, getExamGroup,clearExamGroup } = useExamState();
+
+    const { examGroupSelecting, getExamGroup, clearExamGroup } = useExamState();
     useEffect(() => {
         clearExamGroup()
         getExamGroup(Number(id))
@@ -47,15 +47,15 @@ const ExamList: React.FC = () => {
                             </InputAdornment>
                         ),
                     }} placeholder="Tìm kiếm" />
-                    <Button onClick={()=> setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
+                    <Button onClick={() => setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
                     <ExamGroupForm open={open} setOpen={setOpen} />
                 </Grid>
 
                 <Grid size={12} container >
-                    <Grid size={12} container >Danh sách lớp đang thi</Grid>
+                    <Grid size={12} container>Danh sách lớp đang thi</Grid>
                     {
                         startedOrOngoingExams.map(e => {
-                            return (<Grid size={4} key={e.id}  ><ExamCard examE={e} /></Grid>)
+                            return (<Grid size={4} key={e.id}  ><div onClick={() => { navigate(`${e.id}`) }}><ExamCard examE={e} /></div></Grid>)
                         })
                     }
                 </Grid>
@@ -63,7 +63,7 @@ const ExamList: React.FC = () => {
                     <Grid size={12} container >Danh sách lớp chưa bắt đầu</Grid>
                     {
                         notStartedYetExams.map(e => {
-                            return (<Grid size={4} key={e.id} ><ExamCard examE={e} /></Grid>)
+                            return (<Grid size={4} key={e.id} ><div onClick={() => { navigate(`${e.id}`) }}><ExamCard examE={e} /></div></Grid>)
                         })
                     }
                 </Grid>

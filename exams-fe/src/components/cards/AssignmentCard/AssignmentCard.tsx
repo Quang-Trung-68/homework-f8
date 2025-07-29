@@ -1,6 +1,6 @@
 import { Avatar, Box, Button } from "@mui/material"
 
-const AssignmentCard: React.FC = () => {
+const AssignmentCard: React.FC = ({user}) => {
 
     return (
         <>
@@ -10,14 +10,14 @@ const AssignmentCard: React.FC = () => {
                     <Avatar/>
                 </Box>
                 <Box>
-                    <Box>Phạm Thùy Dương</Box>
-                    <Box>duongduoshawn@gmail.com</Box>
+                    <Box sx={{fontSize:"1.5rem", fontWeight:"bold"}}>{user.name}</Box>
+                    <Box sx={{color:"#666", fontSize:"1.3rem"}}>{user.email}</Box>
                 </Box>
                </Box>
                <Box>
-                <Box>Thời gian làm bài:</Box>
-                <Box>Số đề đã hoàn thành:</Box>
-                <Box>Trạng thái: chờ chấm lại</Box>
+                <Box sx={{color:"#666", fontSize:"1.5rem"}}>Thời gian làm bài:</Box>
+                <Box sx={{color:"#666", fontSize:"1.5rem"}}>Số đề đã hoàn thành:</Box>
+                <Box sx={{color:"#666", fontSize:"1.5rem"}}>Trạng thái: chờ chấm lại</Box>
                </Box>
                <Box sx={{display:"flex", alignSelf:"center"}}>
                 <Button variant="contained" color="success">Chi tiết</Button>
