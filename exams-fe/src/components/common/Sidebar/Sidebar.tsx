@@ -37,7 +37,7 @@ export const Sidebar = () => {
       <Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", mb: "50px" }}>
           <img width={"20%"} src={logo} />
-          <Box component={"span"}>BK Classroom</Box>
+          <Box component={"span"} sx={{fontWeight:"bold", fontSize:"2rem"}}>BK Classroom</Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: "10px" }}>
           

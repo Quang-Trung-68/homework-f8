@@ -20,7 +20,7 @@ const ClassCard: React.FC<ClassCardProps> = ({classElement}) => {
             <Box color={"white"} sx={{background:"#31b5ee", borderRadius:"10px",padding:"20px"}}>
             <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                 <Box sx={{fontWeight:"bold", fontSize:"1.8rem"}}>{classElement.name}</Box>
-                <Button onClick={()=> navigate(`/classes/${classElement.id}`)} sx={{fontWeight:"bold", fontSize:"1.4rem"}} color="inherit" startIcon={<GoClass/>}>Vào lớp</Button>
+                <Button onClick={()=> navigate(`/classes/${classElement.id}`)} sx={{fontWeight:"bold", fontSize:"1.4rem"}} color="inherit" variant="rounded" startIcon={<GoClass/>}>Vào lớp</Button>
             </Box>
             <Box sx={{fontSize:"3.2rem",fontWeight:"bold"}}>{classElement.users.length}</Box>
             <Box sx={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
@@ -28,7 +28,7 @@ const ClassCard: React.FC<ClassCardProps> = ({classElement}) => {
 
             <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"5px"}}>
                 <Box>Mã lớp: {classElement.id}</Box>
-                <Button size="small" variant="outlined" sx={{fontWeight:"bold", fontSize:"1.2rem"}} color="inherit" startIcon ={<ShareIcon/>} >Chia sẻ</Button>
+                <Button size="small" variant="small" sx={{fontWeight:"bold", fontSize:"1.2rem"}} color="inherit"  startIcon ={<ShareIcon/>} >Chia sẻ</Button>
             </Box>
 
             </Box>

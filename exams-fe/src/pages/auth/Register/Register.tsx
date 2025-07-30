@@ -61,7 +61,6 @@ const Register: React.FC = () => {
                 status: "confirming",
             };
 
-            console.log("✅ Dữ liệu gửi:", formDataToSubmit);
             try {
                 const response = await register(formDataToSubmit)
                 console.log("register oke");

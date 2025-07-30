@@ -48,7 +48,6 @@ const Login: React.FC = () => {
 
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
-        const result = loginSchema.safeParse(formData);
         if (isSaveEmail) {
             Cookies.set("email-user", formData.email, {
                 expires: 30, // 30 days
@@ -61,6 +60,7 @@ const Login: React.FC = () => {
             Cookies.remove("email-user")
         }
 
+        const result = loginSchema.safeParse(formData);
         if (!result.success) {
             const fieldErrors: typeof formErrors = {};
             for (const key in result.error.flatten().fieldErrors) {
@@ -70,8 +70,6 @@ const Login: React.FC = () => {
             setFormErrors(fieldErrors);
         } else {
             setFormErrors({});
-            console.log("✅ Dữ liệu hợp lệ:");
-            // Gửi dữ liệu lên server tại đây nếu cần
             try {
                 await login(formData);
                 navigate("/classes")

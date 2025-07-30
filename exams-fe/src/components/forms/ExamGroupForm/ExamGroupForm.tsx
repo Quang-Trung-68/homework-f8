@@ -10,9 +10,9 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    borderRadius: 2
 };
 
 export default function ExamGroupForm({ open, setOpen }) {
@@ -52,14 +52,14 @@ export default function ExamGroupForm({ open, setOpen }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2" mb={2}>
+                    <Typography fontSize={"2.4rem"} fontWeight={800} id="modal-modal-title" variant="h6" component="h2" mb={2}>
                         Tạo bài thi mới
                     </Typography>
 
                     <Stack spacing={3}>
                         {/* Tên bài thi */}
                         <Box>
-                            <Typography fontWeight={500} mb={1}>
+                            <Typography fontSize={"1.5rem"} fontWeight={500} mb={1}>
                                 Tên bài thi *
                             </Typography>
                             <TextField
@@ -73,7 +73,7 @@ export default function ExamGroupForm({ open, setOpen }) {
 
                         {/* Thời gian giữa các bài thi */}
                         <Box>
-                            <Typography fontWeight={500} mb={1}>
+                            <Typography fontSize={"1.5rem"} fontWeight={500} mb={1}>
                                 Thời gian giữa các bài thi (phút) *
                             </Typography>
                             <TextField
@@ -88,7 +88,7 @@ export default function ExamGroupForm({ open, setOpen }) {
 
                         {/* Thời gian bắt đầu */}
                         <Box>
-                            <Typography fontWeight={500} mb={1}>
+                            <Typography fontSize={"1.5rem"} fontWeight={500} mb={1}>
                                 Thời gian bắt đầu *
                             </Typography>
                             <TextField
@@ -99,9 +99,9 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 onChange={onChange}
                             />
                         </Box>
-                        <Box sx={{ display: "flex", justifyContent: "end", gap: "20px" }}>
-                            <Button sx={{ textTransform: "none", width: 100 }} variant="contained" onClick={onCreate}>Tạo mới</Button>
-                            <Button sx={{ textTransform: "none", width: 100 }} onClick={handleClose}>Hủy</Button>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                            <Button sx={{ textTransform: "none", width: 140 }} variant="contained" onClick={onCreate}>Tạo mới</Button>
+                            <Button sx={{ textTransform: "none", width: 140 }} onClick={handleClose}>Hủy</Button>
                         </Box>
 
                     </Stack>

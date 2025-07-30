@@ -30,7 +30,7 @@ const MainLayout: React.FC = () => {
                     sx={{
                         marginLeft: "30px",
                         marginRight: "30px",
-                        marginTop: '74px',   // 64px (header height) + 10px = 74px
+                        marginTop: '100px',   // 64px (header height) + 10px = 74px
                         minHeight: 'calc(100vh - 74px)', // Trừ đi margin top
                         overflow: 'auto',    // Cho phép scroll nếu nội dung quá dài
                         position: 'relative', // Thay đổi từ static sang relative

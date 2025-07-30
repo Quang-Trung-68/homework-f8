@@ -42,12 +42,12 @@ const ExamList: React.FC = () => {
                 <Grid size={4} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
                     <TextField InputProps={{
                         startAdornment: (
-                            <InputAdornment position="start">
+                            <InputAdornment position="end">
                                 <Search />
                             </InputAdornment>
                         ),
                     }} placeholder="Tìm kiếm" />
-                    <Button sx={{ fontSize: "1.4rem" }} onClick={() => setOpen(true)} variant="contained" startIcon={<Add />} >Tạo bài thi</Button>
+                    <Button sx={{ fontSize: "1.4rem", width:"180px" }} onClick={() => setOpen(true)} startIcon={<Add />} >Tạo bài thi</Button>
                     <ExamGroupForm open={open} setOpen={setOpen} />
                 </Grid>
 
