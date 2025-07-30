@@ -1,13 +1,13 @@
 import { Avatar, Box, Button, Grid, TextField } from "@mui/material";
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import { decodeToken } from "../../stores/classStore";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../stores/authStore";
 
 
 const Profile: React.FC = () => {
 
-    const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-    const accessToken = authData?.state?.access;
-    const info = decodeToken(accessToken);
+    const { getAccessToken } = useAuth()
+    const info = jwtDecode(getAccessToken())
 
     return (
         <>
@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
                     <Grid container size={6} sx={{ flexDirection: "column" }}>
                         <Grid size={12}>
                             <Box sx={{ mb: "10px" }}>Email</Box>
-                            <TextField disabled value = {info.email} InputProps={{
+                            <TextField disabled value={info.email} InputProps={{
                                 sx: { height: 40 },
                             }} fullWidth />
                         </Grid>

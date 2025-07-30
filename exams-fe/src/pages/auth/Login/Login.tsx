@@ -5,13 +5,14 @@ import image from "@/assets/images/image-login.jpg"
 import logo from "@/assets/images/logo.png"
 
 import type { LoginCredentials } from "../../../types/auth.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "../../../stores/authStore";
 
 import type { LoginData } from "../../../utils/validation";
 
 import { loginSchema } from "../../../utils/validation";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Login: React.FC = () => {
 
@@ -23,6 +24,9 @@ const Login: React.FC = () => {
         email: "",
         password: ""
     })
+
+    const [isSaveEmail, setIsSaveEmail] = useState(false);
+
     const [formErrors, setFormErrors] = useState<Partial<Record<keyof LoginData, string>>>({});
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,10 +36,30 @@ const Login: React.FC = () => {
         })
     }
 
+    const onChecked = () => {
+        setIsSaveEmail(!isSaveEmail);
+        console.log(isSaveEmail)
+    }
+
+    useEffect(() => {
+        if (Cookies.get("email-user"))
+            setFormData({ ...formData, email: Cookies.get("email-user") })
+    }, [])
+
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
-
         const result = loginSchema.safeParse(formData);
+        if (isSaveEmail) {
+            Cookies.set("email-user", formData.email, {
+                expires: 30, // 30 days
+                secure: process.env.NODE_ENV === "production", // HTTPS trong production
+                sameSite: "strict", // CSRF protection
+                path: "/",
+            });
+        }
+        else {
+            Cookies.remove("email-user")
+        }
 
         if (!result.success) {
             const fieldErrors: typeof formErrors = {};
@@ -46,14 +70,10 @@ const Login: React.FC = () => {
             setFormErrors(fieldErrors);
         } else {
             setFormErrors({});
-            console.log("✅ Dữ liệu hợp lệ:", result.data);
+            console.log("✅ Dữ liệu hợp lệ:");
             // Gửi dữ liệu lên server tại đây nếu cần
             try {
-                const response = await login(formData);
-                const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-                const accessToken = authData?.state?.access;
-                const refreshToken = authData?.state?.refresh;
-                console.log(accessToken);
+                await login(formData);
                 navigate("/classes")
 
             } catch (error) {
@@ -79,12 +99,12 @@ const Login: React.FC = () => {
                     <Box sx={{ fontWeight: "bold", fontSize: "26px" }}>Đăng Nhập</Box>
                     <Box sx={{ textAlign: "center" }}>Cung cấp giải pháp toàn diện cho lớp học thông minh</Box>
                     <LoginForm formData={formData} onChange={onChange} formErrors={formErrors} />
-                    <Box sx={{display:"flex",alignSelf:"stretch", alignItems:"center", justifyContent:"space-between",fontSize:"1.5rem"}}>
-                        <Link sx={{ cursor: "pointer",fontSize:"1.3rem" }}>Quên mật khẩu ?</Link>
-                        <FormControlLabel control={<Checkbox defaultChecked sx={{fontSize:"1.4rem"}}/>} label="Ghi nhớ tôi" />
+                    <Box sx={{ display: "flex", alignSelf: "stretch", alignItems: "center", justifyContent: "space-between", fontSize: "1.5rem" }}>
+                        <Link sx={{ cursor: "pointer", fontSize: "1.3rem" }}>Quên mật khẩu ?</Link>
+                        <FormControlLabel control={<Checkbox checked={isSaveEmail} onChange={onChecked} sx={{ fontSize: "1.4rem" }} />} label="Ghi nhớ tôi" />
                     </Box>
-                    <Button sx={{fontSize:"1.4rem"}} onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
-                    <Button sx={{fontSize:"1.4rem"}} onClick={() => navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
+                    <Button sx={{ fontSize: "1.4rem" }} onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
+                    <Button sx={{ fontSize: "1.4rem" }} onClick={() => navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
                 </Grid>
                 <Grid size={3} >
                 </Grid>

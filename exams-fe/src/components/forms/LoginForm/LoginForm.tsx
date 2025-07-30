@@ -16,6 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, onChange, formErrors })
         <>
             <Box>
                 <TextField
+                    autoComplete="off"
                     InputProps={{
                         sx: {
                             fontSize: '1.4rem',
@@ -30,6 +31,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, onChange, formErrors })
                     helperText={formErrors.email}
                     value={formData.email} onChange={onChange} name="email" required type="email" fullWidth label={"Nhập email"} sx={{ mb: "20px" }} />
                 <TextField
+                    autoComplete="off"
                     InputProps={{
                         sx: {
                             fontSize: '1.4rem',

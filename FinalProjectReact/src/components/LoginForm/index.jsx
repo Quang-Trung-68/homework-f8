@@ -48,21 +48,6 @@ export const LoginForm = () => {
     setFormLogin({ ...formLogin, [name]: value });
   };
 
-  // const postForm = async () => {
-  //   try {
-  //     const data = await postFormLogin(formLogin);
-  //     if (data?.access && data?.refresh) {
-  //       console.log(data);
-  //       localStorage.setItem("accessToken", data.access);
-  //       localStorage.setItem("refreshToken", data.refresh);
-  //       goToClasses();
-  //     }
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };

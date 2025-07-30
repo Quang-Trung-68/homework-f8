@@ -1,45 +1,69 @@
-// import axios from "axios";
-// const baseURL = "https://b1u9y178ok.execute-api.ap-southeast-1.amazonaws.com";
-
-// export const api = axios.create({
-//   baseURL: "/api",
-//   headers: {
-//     Accept: "application/json",
-//   },
-//   withCredentials: false,
-// });
-
-// export const api = axios.create({
-//   baseURL: baseURL,
-//   headers: {
-//     Accept: "application/json",
-//   },
-//   withCredentials: true,
-// });
-
 // src/api.ts
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+import Cookies from "js-cookie";
 
-// Tạo instance axios
+// ===== TẠO INSTANCE AXIOS ===== //
 export const api = axios.create({
-  baseURL: "/api", // hoặc domain thật nếu không dùng proxy
+  baseURL: "/api", // thay đổi nếu cần domain thật
   headers: {
     Accept: "application/json",
   },
+  withCredentials: true, // gửi cookie kèm request
 });
 
-// Hàm lấy access token từ localStorage
-const getAccessToken = () => {
-  return JSON.parse(localStorage.getItem("auth-storage") || "{}")?.state?.access;
+// ===== TOKEN HANDLING ===== //
+
+type AuthStorage = {
+  state: {
+    access: string;
+    refresh: string;
+  };
+  version: number;
 };
 
-// Hàm lấy refresh token
-const getRefreshToken = () => {
-  return JSON.parse(localStorage.getItem("auth-storage") || "{}")?.state?.refresh;
+// Hàm lấy access token từ cookie
+const getAccessToken = (): string | null => {
+  const authStr = Cookies.get("auth-storage");
+  if (!authStr) return null;
+  try {
+    const auth: AuthStorage = JSON.parse(decodeURIComponent(authStr));
+    return auth?.state?.access || null;
+  } catch {
+    return null;
+  }
 };
 
-// Gắn Bearer token cho mỗi request
+// Hàm lấy refresh token từ cookie
+const getRefreshToken = (): string | null => {
+  const authStr = Cookies.get("auth-storage");
+  if (!authStr) return null;
+  try {
+    const auth: AuthStorage = JSON.parse(decodeURIComponent(authStr));
+    return auth?.state?.refresh || null;
+  } catch {
+    return null;
+  }
+};
+
+// Hàm cập nhật lại cookie auth-storage
+const updateAuthStorage = (access: string, refresh: string) => {
+  const auth: AuthStorage = {
+    state: {
+      access,
+      refresh,
+    },
+    version: 0,
+  };
+  Cookies.set("auth-storage", JSON.stringify(auth), {
+    expires: 7,          // Cookie sống 7 ngày
+    secure: true,        // Chỉ qua HTTPS
+    sameSite: "Strict",  // Ngăn CSRF
+    path: "/",           
+  });
+};
+
+// ===== INTERCEPTOR: GẮN TOKEN VÀO HEADER ===== //
 api.interceptors.request.use((config) => {
   const token = getAccessToken();
   if (token) {
@@ -48,32 +72,28 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-
-// Hàm xử lý khi gặp lỗi 401
+// ===== INTERCEPTOR: XỬ LÝ 401 (REFRESH TOKEN) ===== //
 const refreshAuthLogic = async (failedRequest: any) => {
-  const refresh = getRefreshToken();
-  const res = await axios.post("/api/login/get_new_token/", { refresh });
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) {
+    return Promise.reject("No refresh token available");
+  }
 
-  const newAccess = res.data;
+  try {
+    const res = await axios.post("/api/login/get_new_token/", {
+      refresh: refreshToken,
+    });
 
-  // Cập nhật vào localStorage
-  const oldAuth = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-  localStorage.setItem(
-    "auth-storage",
-    JSON.stringify({
-      state: {
-        access: newAccess.access,
-        refresh: oldAuth?.state?.refresh,
-      },
-      version: 0,
-    })
-  );
+    const newAccessToken = res.data.access;
+    updateAuthStorage(newAccessToken, refreshToken);
 
-  // Cập nhật header của request bị fail
-  failedRequest.response.config.headers["Authorization"] = `Bearer ${newAccess}`;
-  return Promise.resolve();
+    failedRequest.response.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+    return Promise.resolve();
+  } catch (err) {
+    // Nếu refresh fail, có thể redirect tới trang login
+    return Promise.reject(err);
+  }
 };
 
-// Cài interceptor cho response
+// Cài đặt auto-refresh
 createAuthRefreshInterceptor(api, refreshAuthLogic);
-

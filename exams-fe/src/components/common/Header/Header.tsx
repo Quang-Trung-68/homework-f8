@@ -3,9 +3,12 @@ import React from "react";
 import { Add, Logout, PersonAdd, Settings } from "@mui/icons-material"
 import { Home } from '@mui/icons-material';
 import { useNavigate } from "react-router-dom";
-import { decodeToken, useClassState } from "../../../stores/classStore";
+import {  useClassState } from "../../../stores/classStore";
 import { useExamState } from "../../../stores/examStore";
 import logo from "@/assets/images/logo.png"
+import { useAuth, useAuthStore } from "../../../stores/authStore";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 function AccountMenu({ onProfile, onLogout }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -106,9 +109,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { classSelecting, getClass, clearClass } = useClassState()
   const { clearExamGroup } = useExamState()
-  const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-  const accessToken = authData?.state?.access;
-  const info = decodeToken(accessToken);
+
+  const { getAccessToken } = useAuth()
+  const info = jwtDecode(getAccessToken())
+  
 
   const onProfile = () => {
     navigate("/profile")
@@ -116,7 +120,7 @@ const Header: React.FC = () => {
 
   const onLogout = () => {
     navigate("/login");
-    localStorage.removeItem("auth-storage")
+    Cookies.remove("auth-storage");
   }
   return (
     <header

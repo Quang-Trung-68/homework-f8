@@ -13,14 +13,6 @@ interface ClassState {
   clearClass:()=> void;
 }
 
-export function decodeToken(token: string) {
-  const payload = token.split(".")[1];
-  const json = atob(payload);
-  return JSON.parse(json);
-}
-
-// const info = decodeToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....");
-// console.log(info.id, info.name, info.role);
 
 export const useClassState = create<ClassState>((set, get) => ({
   classes: [],

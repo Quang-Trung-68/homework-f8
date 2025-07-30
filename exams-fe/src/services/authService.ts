@@ -21,7 +21,8 @@ export const authService = {
     finally{
       stopLoading()
     }
-  },
+  }
+  ,
   register: async (userData: RegisterData): Promise<AuthRegisterResponse> => {
     const { startLoading, stopLoading } = useLoadingStore.getState();
     try {

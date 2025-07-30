@@ -2,9 +2,10 @@ import { Box, Button, Grid } from "@mui/material";
 import CreateClassForm from "../../../components/forms/CreateClassForm/CreateClassForm";
 import { useClassState } from "../../../stores/classStore";
 import { useState } from "react";
-import { decodeToken } from "../../../stores/classStore";
 import { useNavigate } from "react-router-dom";
 import type { FormCreateClassI } from "../../../types/classes.types";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../../stores/authStore";
 
 
 const CreateClass: React.FC = () => {
@@ -17,11 +18,13 @@ const CreateClass: React.FC = () => {
     });
 
     const { createClass } = useClassState()
+    
+    const { getAccessToken } = useAuth()
+    const info = jwtDecode(getAccessToken())
 
     const onCreate = () => {
-        const authData = JSON.parse(localStorage.getItem("auth-storage") || "{}");
-        const accessToken = authData?.state?.access;
-        const info = decodeToken(accessToken);
+
+
         const dataSend = {
             ...formData, users: [
                 info.id
@@ -41,8 +44,8 @@ const CreateClass: React.FC = () => {
                 <Grid size={4}>
                     <CreateClassForm formData={formData} setFormData={setFormData} />
                     <Box mt={"40px"} sx={{ display: "flex", justifyContent: "space-evenly" }}>
-                        <Button sx={{fontSize:"1.4rem", width:"100px"}} variant="outlined" color="error" onClick={()=> navigate("/classes")} >HỦY</Button>
-                        <Button sx={{fontSize:"1.4rem", width:"100px"}} variant="contained" onClick={onCreate} >TẠO MỚI</Button>
+                        <Button sx={{ fontSize: "1.4rem", width: "100px" }} variant="outlined" color="error" onClick={() => navigate("/classes")} >HỦY</Button>
+                        <Button sx={{ fontSize: "1.4rem", width: "100px" }} variant="contained" onClick={onCreate} >TẠO MỚI</Button>
                     </Box>
 
                 </Grid>
