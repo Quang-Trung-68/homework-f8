@@ -25,7 +25,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ exam }) => {
             <Box sx={{ display: "flex", alignSelf: "stretch", alignItems: "start", justifyContent: "space-between" }}>
                 <Box>ĐỀ BÀI: {exam.name}</Box>
                 <Box>
-                    <Button startIcon={<EditingPen />} sx={{ fontSize: "14px" }}>
+                    <Button startIcon={<EditingPen />} variant="small" sx={{ fontSize: "1.2rem" }}>
                         Edit
                     </Button>
                 </Box>

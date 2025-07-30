@@ -14,16 +14,16 @@ const GlobalLoader: React.FC = () => {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 9999, // Cao hơn header
+        zIndex: 9999,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         backdropFilter: 'blur(2px)',
       }}
     >
       <LinearProgress 
         sx={{
-          height: '3px',
+          height: '4px',
           '& .MuiLinearProgress-bar': {
-            backgroundColor: '#1976d2', // Màu xanh
+            backgroundColor: '#1976d2',
           },
         }}
       />

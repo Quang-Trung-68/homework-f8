@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Chip, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import React from "react";
-import { Add, Logout, PersonAdd, Settings } from "@mui/icons-material"
+import { Add, Logout, Person, PersonAdd, Settings } from "@mui/icons-material"
 import { Home } from '@mui/icons-material';
 import { useNavigate } from "react-router-dom";
 import {  useClassState } from "../../../stores/classStore";
@@ -11,100 +11,124 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 
 function AccountMenu({ onProfile, onLogout }) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
-    <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar sx={{ width: 40, height: 40 }}>T</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
+    <>
+      <IconButton
+        onClick={handleClick}
+        size="small"
+        aria-controls={open ? 'account-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        sx={{ 
+          p: 0.5,
+          '&:hover': {
+            backgroundColor: 'action.hover'
+          }
+        }}
+      >
+        <Avatar 
+          sx={{ 
+            width: 36, 
+            height: 36,
+            bgcolor: 'primary.main',
+            fontSize: '1rem',
+            fontWeight: 500
+          }}
+        >
+          T
+        </Avatar>
+      </IconButton>
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        slotProps={{
-          paper: {
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&::before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-          },
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        sx={{
+          '& .MuiPaper-root': {
+            minWidth: 200,
+            borderRadius: 2,
+            mt: 1,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+            border: '1px solid',
+            borderColor: 'divider'
+          }
+        }}
       >
-        <MenuItem onClick={() => {
-          handleClose();
-          onProfile()
-        }}>
-          <Avatar /> Profile
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem 
+          onClick={() => {
+            handleClose();
+            onProfile();
+          }}
+          sx={{ py: 1.5 }}
+        >
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <Person fontSize="large" />
           </ListItemIcon>
-          Add another account
+          <Typography fontSize="1.4rem" variant="body2">Profile</Typography>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        
+        <Divider sx={{ my: 0.5 }} />
+        
+        <MenuItem onClick={handleClose} sx={{ py: 1.5 }}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <PersonAdd fontSize="large"/>
           </ListItemIcon>
-          Settings
+          <Typography fontSize="1.4rem" variant="body2">Add account</Typography>
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleClose();
-          onLogout()
-        }}>
+        
+        <MenuItem onClick={handleClose} sx={{ py: 1.5 }}>
           <ListItemIcon>
-            <Logout fontSize="small" />
+            <Settings fontSize="large" />
           </ListItemIcon>
-          Logout
+          <Typography fontSize="1.4rem" variant="body2">Settings</Typography>
+        </MenuItem>
+        
+        <Divider sx={{ my: 0.5 }} />
+        
+        <MenuItem 
+          onClick={() => {
+            handleClose();
+            onLogout();
+          }}
+          sx={{ 
+            py: 1.5,
+            color: 'error.main',
+            '&:hover': {
+              backgroundColor: 'error.light',
+              color: 'error.contrastText'
+            }
+          }}
+        >
+          <ListItemIcon>
+            <Logout fontSize="large" sx={{ color: 'inherit' }} />
+          </ListItemIcon>
+          <Typography fontSize="1.4rem" variant="body2">Logout</Typography>
         </MenuItem>
       </Menu>
-    </React.Fragment>
+    </>
   );
 }
-
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { classSelecting, getClass, clearClass } = useClassState()

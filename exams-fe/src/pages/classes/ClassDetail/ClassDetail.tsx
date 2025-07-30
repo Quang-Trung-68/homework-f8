@@ -151,7 +151,7 @@ const ClassDetail: React.FC = () => {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <Box>Chia sẻ lớp học:</Box>
-                <Button startIcon={<ContentCopyIcon />} size="small" sx={{ p: "2px", textTransform: "none", color: "#fff" }} variant="outlined">Sao chép liên kết</Button>
+                <Button startIcon={<ContentCopyIcon />} variant="contained" sx={{p:1, color:"#fff", fontSize:"1.2rem"}} >Sao chép liên kết</Button>
               </Box>
               <Box>
                 <AvatarGroup max={4}>
@@ -175,7 +175,7 @@ const ClassDetail: React.FC = () => {
             </Grid>
           </Grid>
           <Grid container>
-            <Box>Danh sách thành viên</Box>
+            <Box sx={{fontWeight:"800", mb:2,mt:3, fontSize:"2.2rem"}}>Danh sách thành viên</Box>
             <DataTable users={classSelecting.users} />
           </Grid>
         </Grid>

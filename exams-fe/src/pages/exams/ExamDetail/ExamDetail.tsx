@@ -25,21 +25,21 @@ const ExamDetail: React.FC = () => {
             
             <Grid size={12} container sx={{ alignItems: "start", justifyContent: "space-between", border: "2px solid #45b0e1", padding: "30px", borderRadius: "10px" }}>
                 <Grid size={9}>
-                    <Box>
+                    <Box sx={{fontWeight:"800", color:"#444", fontSize:"1.8rem"}}>
                         Tên bài thi: {examSelecting.name}
                     </Box>
-                    <Box>
+                    <Box sx={{fontWeight:"700", color:"#444", fontSize:"1.6rem"}}>
                         Ngày bắt đầu: {examSelecting.start_time}
                     </Box>
-                    <Box>
+                    <Box sx={{fontWeight:"700", color:"#444", fontSize:"1.6rem"}}>
                         Thời gian chờ giữa các bài thi: {examSelecting.await_time / 60} phút
                     </Box>
                 </Grid>
                 <Grid size={3} sx={{ display: "flex", justifyContent: "space-between", gap: "20px" }}>
-                    <Button sx={{ width: "120px" }} variant="contained" color="success">
+                    <Button sx={{ minWidth: "140px" }} variant="contained"  color="success">
                         Chỉnh sửa
                     </Button>
-                    <Button sx={{ width: "120px" }} variant="outlined" color="error">
+                    <Button sx={{ minWidth: "120px" }} variant="outlined" color="error">
                         Xóa bỏ
                     </Button>
                 </Grid>

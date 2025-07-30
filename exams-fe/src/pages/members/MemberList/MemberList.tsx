@@ -100,7 +100,7 @@ const MemberList: React.FC = () => {
 
   return (
     <>
-      <Box sx={{ fontSize: "32px", fontWeight: "bold", mb: "30px" }}>Danh sách thành viên</Box>
+      <Box sx={{ fontSize: "2.2rem", fontWeight: "bold", mb: "30px" }}>Danh sách thành viên</Box>
       <DataTable users={classSelecting.users} />
     </>
   )
