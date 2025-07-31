@@ -3,14 +3,17 @@ import AddIcon from '@mui/icons-material/Add';
 import QuestionCard from "../../../components/cards/QuestionCard/QuestionCard";
 import AssignmentCard from "../../../components/cards/AssignmentCard/AssignmentCard";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useExamState } from "../../../stores/examStore";
 import { useClassState } from "../../../stores/classStore";
+import ExamGroupForm from "../../../components/forms/ExamGroupForm/ExamGroupForm";
 
 const ExamDetail: React.FC = () => {
     const { id, exam_id } = useParams();
     const { examSelecting, getExam, getExamDetailList, examDetailList } = useExamState();
     const { classSelecting } = useClassState();
+    const [openForm, setOpenForm] = useState(false);
+    const [action, setAction] = useState();
 
     useEffect(() => {
         getExam(Number(exam_id));
@@ -24,7 +27,7 @@ const ExamDetail: React.FC = () => {
             </Grid>
             
             <Grid size={12} container sx={{ alignItems: "start", justifyContent: "space-between", border: "2px solid #45b0e1", padding: "30px", borderRadius: "10px" }}>
-                <Grid size={9}>
+                <Grid size={8}>
                     <Box sx={{fontWeight:"800", color:"#444", fontSize:"1.8rem"}}>
                         Tên bài thi: {examSelecting.name}
                     </Box>
@@ -35,11 +38,12 @@ const ExamDetail: React.FC = () => {
                         Thời gian chờ giữa các bài thi: {examSelecting.await_time / 60} phút
                     </Box>
                 </Grid>
-                <Grid size={3} sx={{ display: "flex", justifyContent: "space-between", gap: "20px" }}>
-                    <Button sx={{ minWidth: "140px" }} variant="contained"  color="success">
+                <Grid size={4} sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                    <ExamGroupForm open={openForm} setOpen={setOpenForm} action = {action} exam={examSelecting} />
+                    <Button onClick={()=> {setAction("edit");setOpenForm(true)}} sx={{ minWidth: "140px" }} variant="contained"  color="success">
                         Chỉnh sửa
                     </Button>
-                    <Button sx={{ minWidth: "120px" }} variant="outlined" color="error">
+                    <Button onClick={()=> {setAction("delete");setOpenForm(true)}} sx={{ minWidth: "120px" }} variant="outlined" color="error">
                         Xóa bỏ
                     </Button>
                 </Grid>

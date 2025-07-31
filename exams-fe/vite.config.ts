@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import path from 'path';
+import path from "path";
 // export default defineConfig({
 //   plugins: [react()],
 //   server: {
@@ -12,8 +12,12 @@ import path from 'path';
 //       },
 //     },
 //   },
+// resolve: {
+//     alias: {
+//       '@': path.resolve(__dirname, 'src'), // alias "@" trỏ về thư mục src
+//     },
+//   },
 // });
-
 
 // test url a bang
 export default defineConfig({
@@ -29,7 +33,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // alias "@" trỏ về thư mục src
+      "@": path.resolve(__dirname, "src"), // alias "@" trỏ về thư mục src
     },
   },
 });

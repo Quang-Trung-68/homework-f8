@@ -1,5 +1,5 @@
 import { Button, Modal, Box, Typography, TextField, Stack } from "@mui/material";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useExamState } from "../../../stores/examStore";
 import { useClassState } from "../../../stores/classStore";
 
@@ -15,9 +15,9 @@ const style = {
     borderRadius: 2
 };
 
-export default function ExamGroupForm({ open, setOpen }) {
+export default function ExamGroupForm({ open, setOpen, action, exam }) {
 
-    const { createExamGroup,getExamGroup } = useExamState();
+    const { createExamGroup, getExamGroup, updateExamGroup, examSelecting, getExam } = useExamState();
     const { classSelecting } = useClassState()
     const [formExamGroup, setFormExamGroup] = useState({
         name: "",
@@ -25,6 +25,10 @@ export default function ExamGroupForm({ open, setOpen }) {
         await_time: 0,
         class_id: String(classSelecting.id)
     });
+
+    useEffect(() => {
+        setFormExamGroup({ name: examSelecting.name, start_time: examSelecting.start_time, await_time: examSelecting.await_time, class_id: String(classSelecting.id) })
+    }, [examSelecting])
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -34,13 +38,22 @@ export default function ExamGroupForm({ open, setOpen }) {
             ...formExamGroup,
             [e.target.name]: e.target.value,
         })
-        console.log(formExamGroup);
     }
 
     const onCreate = async () => {
         await createExamGroup({ ...formExamGroup, ["await_time"]: Number(formExamGroup.await_time) });
         await getExamGroup(Number(classSelecting.id))
         handleClose()
+    }
+
+    const onEdit = async () => {
+        await updateExamGroup(examSelecting.id, { ...formExamGroup, ["await_time"]: Number(formExamGroup.await_time) })
+        await getExam(Number(examSelecting.id));
+        handleClose()
+    }
+
+    const onDelete = async () => {
+
     }
 
     return (
@@ -53,7 +66,9 @@ export default function ExamGroupForm({ open, setOpen }) {
             >
                 <Box sx={style}>
                     <Typography fontSize={"2.4rem"} fontWeight={800} id="modal-modal-title" variant="h6" component="h2" mb={2}>
-                        Tạo bài thi mới
+                        {
+                            action === "edit" ? "Chỉnh sửa bài thi" : (action === "create" ? "Tạo bài thi mới" : "Xóa bài thi")
+                        }
                     </Typography>
 
                     <Stack spacing={3}>
@@ -68,6 +83,8 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 placeholder="Nhập tên bài thi"
                                 name="name"
                                 onChange={onChange}
+                                value={action === "create" ? "" : formExamGroup.name}
+                                disabled={action === "delete"}
                             />
                         </Box>
 
@@ -83,6 +100,8 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 placeholder="VD: 10"
                                 name="await_time"
                                 onChange={onChange}
+                                value={action === "create" ? null : formExamGroup.await_time}
+                                disabled={action === "delete"}
                             />
                         </Box>
 
@@ -97,10 +116,14 @@ export default function ExamGroupForm({ open, setOpen }) {
                                 size="small"
                                 name="start_time"
                                 onChange={onChange}
+                                value={action === "create" ? "" : formExamGroup.start_time}
+                                disabled={action === "delete"}
                             />
                         </Box>
                         <Box sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-                            <Button sx={{ textTransform: "none", width: 140 }} variant="contained" onClick={onCreate}>Tạo mới</Button>
+                            <Button sx={{ textTransform: "none", width: 140 }} variant="contained" color={action === "delete" ? "error" : "info"} onClick={action === "create" ? onCreate : (action === "edit" ? onEdit : onDelete)}>
+                                {action === "edit" ? "Chỉnh sửa" : (action === "create" ? "Tạo mới" : "Xóa")}
+                            </Button>
                             <Button sx={{ textTransform: "none", width: 140 }} onClick={handleClose}>Hủy</Button>
                         </Box>
 

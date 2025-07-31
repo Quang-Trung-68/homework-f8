@@ -34,7 +34,25 @@ export const examService = {
       return response.data;
     } catch (error) {
       console.log(error);
-      toast.success("Tạo bài thi thất bại!");
+      toast.error("Tạo bài thi thất bại!");
+      throw error;
+    } finally {
+      stopLoading();
+    }
+  },
+  updateExamGroup: async (
+    id: number,
+    formData: ExamGroupCreateI
+  ): Promise<ExamDetailResponseI> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
+    try {
+      startLoading();
+      const response = await api.put(`exam_group/${id}`, formData);
+      toast.success("Chỉnh sửa bài thi thành công!");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      toast.error("Tạo bài thi thất bại!");
       throw error;
     } finally {
       stopLoading();

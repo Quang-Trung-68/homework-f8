@@ -10,6 +10,7 @@ interface ExamState {
   getExamGroup: (id: number) => Promise<void>;
   clearExamGroup: () => void;
   createExamGroup: (examGroup:ExamGroupCreateI)=> Promise<void>;
+  updateExamGroup:(id:number, formData:ExamGroupCreateI )=> Promise<void>;
   getExam : (id: number) => Promise <void>;
   getExamDetailList: (id:number) => Promise<void>;
 }
@@ -40,6 +41,13 @@ export const useExamState = create<ExamState>((set, get) => ({
   createExamGroup: async (examGroup: ExamGroupCreateI)=>{
     try {
       const data = await examService.createExamGroup(examGroup)
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  updateExamGroup: async (id:number, formData: ExamGroupCreateI)=>{
+    try {
+      const data = await examService.updateExamGroup(id, formData);
     } catch (error) {
       console.log(error);
     }

@@ -28,11 +28,11 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: '1.4rem',
+          fontSize: '1.5rem',
           fontWeight: 600,
-          textTransform: 'none', // Không uppercase
+          textTransform: 'none',
           borderRadius: 12,
-          padding: '12px 32px',
+          padding: '8px 5px',
           boxShadow: 'none',
           transition: 'all 0.3s ease',
           '&:hover': {

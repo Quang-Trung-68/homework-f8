@@ -48,7 +48,7 @@ const ExamList: React.FC = () => {
                         ),
                     }} placeholder="Tìm kiếm" />
                     <Button sx={{ fontSize: "1.4rem", width:"180px" }} onClick={() => setOpen(true)} startIcon={<Add />} >Tạo bài thi</Button>
-                    <ExamGroupForm open={open} setOpen={setOpen} />
+                    <ExamGroupForm open={open} setOpen={setOpen} action={"create"} />
                 </Grid>
 
                 <Grid size={12} container>
