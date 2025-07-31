@@ -40,7 +40,7 @@ const Register: React.FC = () => {
     const { register } = useAuthStore();
 
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        // ////
+    
         const result = registerSchema.safeParse(formFields);
 
         if (!result.success) {
@@ -54,7 +54,6 @@ const Register: React.FC = () => {
         } else {
             setFormErrors({});
 
-            // Chỉ lấy name, email, password để gửi về backend
             const { name, email, password } = result.data;
             const formDataToSubmit = {
                 name, email, password, role: "student",
@@ -63,12 +62,8 @@ const Register: React.FC = () => {
 
             try {
                 const response = await register(formDataToSubmit)
-                console.log("register oke");
-                console.log(response);
-
             } catch (error) {
                 console.log(error);
-
             }
         }
 

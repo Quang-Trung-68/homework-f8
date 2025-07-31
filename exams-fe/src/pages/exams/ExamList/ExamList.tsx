@@ -13,8 +13,6 @@ const ExamList: React.FC = () => {
     const navigate = useNavigate()
 
     const { id } = useParams()
-    console.log(id);
-
 
     const { examGroupSelecting, getExamGroup, clearExamGroup } = useExamState();
     useEffect(() => {
@@ -22,7 +20,6 @@ const ExamList: React.FC = () => {
         getExamGroup(Number(id))
     }, [])
 
-    console.log(examGroupSelecting);
 
     const now = new Date();
 

@@ -27,11 +27,20 @@ export default function ExamGroupForm({ open, setOpen, action, exam }) {
     });
 
     useEffect(() => {
-        setFormExamGroup({ name: examSelecting.name, start_time: examSelecting.start_time, await_time: examSelecting.await_time, class_id: String(classSelecting.id) })
-    }, [examSelecting])
+        if (action !== "create")
+            setFormExamGroup({ name: examSelecting.name, start_time: examSelecting.start_time, await_time: examSelecting.await_time, class_id: String(classSelecting.id) })
+    }, [examSelecting, open])
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setFormExamGroup({
+            name: "",
+            start_time: "",
+            await_time: 0,
+            class_id: String(classSelecting.id)
+        })
+    }
 
     const onChange = (e) => {
         setFormExamGroup({
@@ -83,7 +92,8 @@ export default function ExamGroupForm({ open, setOpen, action, exam }) {
                                 placeholder="Nhập tên bài thi"
                                 name="name"
                                 onChange={onChange}
-                                value={action === "create" ? "" : formExamGroup.name}
+                                value={formExamGroup.name}
+
                                 disabled={action === "delete"}
                             />
                         </Box>
@@ -100,7 +110,7 @@ export default function ExamGroupForm({ open, setOpen, action, exam }) {
                                 placeholder="VD: 10"
                                 name="await_time"
                                 onChange={onChange}
-                                value={action === "create" ? null : formExamGroup.await_time}
+                                value={formExamGroup.await_time}
                                 disabled={action === "delete"}
                             />
                         </Box>
@@ -116,7 +126,7 @@ export default function ExamGroupForm({ open, setOpen, action, exam }) {
                                 size="small"
                                 name="start_time"
                                 onChange={onChange}
-                                value={action === "create" ? "" : formExamGroup.start_time}
+                                value={formExamGroup.start_time}
                                 disabled={action === "delete"}
                             />
                         </Box>

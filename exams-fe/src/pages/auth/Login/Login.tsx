@@ -38,7 +38,6 @@ const Login: React.FC = () => {
 
     const onChecked = () => {
         setIsSaveEmail(!isSaveEmail);
-        console.log(isSaveEmail)
     }
 
     useEffect(() => {

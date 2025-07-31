@@ -13,7 +13,6 @@ const ClassList: React.FC = () => {
         clearClass()
         getClasses();
     }, []);
-    console.log(classes);
     
 
     return (

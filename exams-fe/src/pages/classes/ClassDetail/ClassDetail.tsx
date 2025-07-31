@@ -29,7 +29,6 @@ const columns = [
 const PostExam = ({ time, examName }) => {
 
   const formatted = dayjs(time).format("DD-MM-YYYY HH:mm:ss");
-  console.log(formatted);
   return (
     <Box sx={{ display: "flex", gap: "5px" }}>
       <Box><Avatar></Avatar></Box>
@@ -123,8 +122,6 @@ function DataTable({ users }) {
 const ClassDetail: React.FC = () => {
 
   const { id } = useParams()
-  console.log(id)
-
   const { classSelecting, getClass } = useClassState()
   const { examGroupSelecting, getExamGroup } = useExamState();
 
@@ -132,8 +129,6 @@ const ClassDetail: React.FC = () => {
     getClass(Number(id))
     getExamGroup(Number(id))
   }, [])
-
-  console.log(classSelecting);
 
   const teacher = classSelecting.users.find(e => e.role === "teacher");
 

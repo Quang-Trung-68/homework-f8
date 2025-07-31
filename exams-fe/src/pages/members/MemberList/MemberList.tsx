@@ -18,7 +18,6 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 function DataTable({ users }) {
 
-  console.log(users);
 
   const rows = users.map((user, index) => {
     return {

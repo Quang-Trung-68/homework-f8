@@ -2,7 +2,7 @@ import { Box, Button, Grid } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import QuestionCard from "../../../components/cards/QuestionCard/QuestionCard";
 import AssignmentCard from "../../../components/cards/AssignmentCard/AssignmentCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useExamState } from "../../../stores/examStore";
 import { useClassState } from "../../../stores/classStore";
@@ -14,6 +14,7 @@ const ExamDetail: React.FC = () => {
     const { classSelecting } = useClassState();
     const [openForm, setOpenForm] = useState(false);
     const [action, setAction] = useState();
+    const navigate = useNavigate()
 
     useEffect(() => {
         getExam(Number(exam_id));
@@ -55,7 +56,7 @@ const ExamDetail: React.FC = () => {
                         Danh sách đề bài
                     </Grid>
                     <Grid size={2} sx={{ display: "flex", justifyContent: "end" }}>
-                        <Button startIcon={<AddIcon />} sx={{ color: "#fff" }} variant="contained">
+                        <Button startIcon={<AddIcon />} sx={{ color: "#fff" }} variant="contained" onClick={()=> navigate(`create`)}>
                             Thêm đề bài
                         </Button>
                     </Grid>
