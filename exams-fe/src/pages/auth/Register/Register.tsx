@@ -13,14 +13,14 @@ const Register: React.FC = () => {
 
     const navigate = useNavigate()
 
-    // form send to backend
-    const [formData, setFormData] = useState<RegisterData>({
-        name: "",
-        email: "",
-        password: "",
-        role: "student",
-        status: "confirming",
-    })
+    // // form send to backend
+    // const [formData, setFormData] = useState<RegisterData>({
+    //     name: "",
+    //     email: "",
+    //     password: "",
+    //     role: "student",
+    //     status: "confirming",
+    // })
     // form to check validation
     const [formFields, setFormFields] = useState<RegisterFields>({
         name: "",

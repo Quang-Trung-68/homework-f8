@@ -22,8 +22,8 @@ export interface RefreshToken {
 export interface RegisterData {
   name: string;
   email: string;
-  role: "student" | "teacher";
-  status: "confirming" | null | string;
+  role: string;
+  status: string ;
   password: string;
 }
 

@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
 import Cookies from "js-cookie"
-
 import { authService } from "../services/authService";
 import type { LoginCredentials, RegisterData } from "../types/auth.types";
 

@@ -131,20 +131,21 @@ function AccountMenu({ onProfile, onLogout }) {
 }
 const Header: React.FC = () => {
   const navigate = useNavigate();
-  const { classSelecting, getClass, clearClass } = useClassState()
-  const { clearExamGroup } = useExamState()
+  const { classSelecting, clearClass,clearClassState } = useClassState()
+  const { clearExamGroup,clearExamState } = useExamState()
 
   const { getAccessToken } = useAuth()
   const info = jwtDecode(getAccessToken())
   
-
   const onProfile = () => {
     navigate("/profile")
   }
 
   const onLogout = () => {
-    navigate("/login");
+    clearClassState();
+    clearExamState();
     Cookies.remove("auth-storage");
+    navigate("/login");
   }
   return (
     <header

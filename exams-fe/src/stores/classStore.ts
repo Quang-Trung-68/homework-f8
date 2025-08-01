@@ -10,9 +10,9 @@ interface ClassState {
   getClasses: () => Promise<void>;
   createClass: (formData: ClassI) => Promise<void>;
   getClass: (id: number) => Promise<void>;
-  clearClass:()=> void;
+  clearClass: () => void;
+  clearClassState: () => void;
 }
-
 
 export const useClassState = create<ClassState>((set, get) => ({
   classes: [],
@@ -44,11 +44,23 @@ export const useClassState = create<ClassState>((set, get) => ({
       console.log("Error when get a class", error);
     }
   },
-  clearClass : ()=>{
-    set({classSelecting:{
-      code:"",
-      name:"",
-      users:[]
-    }})
-  }
+  clearClass: () => {
+    set({
+      classSelecting: {
+        code: "",
+        name: "",
+        users: [],
+      },
+    });
+  },
+  clearClassState: () => {
+    set({
+      classSelecting: {
+        code: "",
+        name: "",
+        users: [],
+      },
+      classes: [],
+    });
+  },
 }));

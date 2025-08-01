@@ -2,14 +2,15 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 // ===== TẠO INSTANCE AXIOS ===== //
 export const api = axios.create({
-  baseURL: "/api", // thay đổi nếu cần domain thật
+  baseURL: "/api", // thay đổi nếu domain thật
   headers: {
     Accept: "application/json",
   },
-  withCredentials: true, // gửi cookie kèm request
+  // withCredentials: true, // gửi cookie kèm request
 });
 
 // ===== TOKEN HANDLING ===== //
@@ -56,7 +57,7 @@ const updateAuthStorage = (access: string, refresh: string) => {
     version: 0,
   };
   Cookies.set("auth-storage", JSON.stringify(auth), {
-    expires: 7,          // Cookie sống 7 ngày
+    expires: 7,          // Cookie 7 ngày
     secure: true,        // Chỉ qua HTTPS
     sameSite: "Strict",  // Ngăn CSRF
     path: "/",           
@@ -90,7 +91,8 @@ const refreshAuthLogic = async (failedRequest: any) => {
     failedRequest.response.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
     return Promise.resolve();
   } catch (err) {
-    // Nếu refresh fail, có thể redirect tới trang login
+    toast.error("Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại!");
+    window.location.href = "/login";
     return Promise.reject(err);
   }
 };
