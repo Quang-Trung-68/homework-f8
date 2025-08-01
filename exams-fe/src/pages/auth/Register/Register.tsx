@@ -12,15 +12,6 @@ import { useNavigate } from "react-router-dom";
 const Register: React.FC = () => {
 
     const navigate = useNavigate()
-
-    // // form send to backend
-    // const [formData, setFormData] = useState<RegisterData>({
-    //     name: "",
-    //     email: "",
-    //     password: "",
-    //     role: "student",
-    //     status: "confirming",
-    // })
     // form to check validation
     const [formFields, setFormFields] = useState<RegisterFields>({
         name: "",
@@ -61,7 +52,8 @@ const Register: React.FC = () => {
             };
 
             try {
-                const response = await register(formDataToSubmit)
+                await register(formDataToSubmit)
+                navigate("/login")
             } catch (error) {
                 console.log(error);
             }
