@@ -5,6 +5,7 @@ import type {
   ExamGroupResponseI,
   ExamResponseI,
   ExamDetailResponseI,
+  ExamCreatePayloadI,
 } from "../types/exam.types";
 import { useLoadingStore } from "../stores/loadingStore";
 import { toast } from "react-toastify";
@@ -79,6 +80,20 @@ export const examService = {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw new Error();
+    } finally {
+      stopLoading();
+    }
+  },
+  createExam: async (formData: ExamCreatePayloadI): Promise<void> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
+    try {
+      startLoading();
+      await api.post(`exam/`, formData);
+      toast.success("Tạo bài thi thành công!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Tạo bài thi thất bại!");
       throw new Error();
     } finally {
       stopLoading();

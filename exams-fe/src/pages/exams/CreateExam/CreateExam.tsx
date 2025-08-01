@@ -3,6 +3,7 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import AnsweringCard from "../../../components/cards/AnsweringCard/AnsweringCard";
 import { useExamState } from "../../../stores/examStore";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RenderQuestions = memo(({ count, onQuestionsChange }) => {
     return (
@@ -21,7 +22,9 @@ const RenderQuestions = memo(({ count, onQuestionsChange }) => {
 const CreateExam = () => {
     const fileInputRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null);
-    const { examSelecting } = useExamState();
+    const { examSelecting, createExam } = useExamState();
+    const navigate = useNavigate()
+    const { id, exam_id } = useParams();
 
     // State cho form data
     const [examData, setExamData] = useState({
@@ -54,7 +57,7 @@ const CreateExam = () => {
     };
 
     // Hàm chuyển file thành base64
-    const fileToBase64 = (file) => {
+    const fileToBase64 = (file):Promise<string> => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -89,7 +92,7 @@ const CreateExam = () => {
             console.log("Processing file:", file.name);
 
             // Chuyển file thành base64
-            const base64String = await fileToBase64(file);
+            const base64String:string = await fileToBase64(file);
 
             // Tạo blob URL
             const blobUrl = URL.createObjectURL(file);
@@ -98,10 +101,10 @@ const CreateExam = () => {
             setExamData(prev => ({
                 ...prev,
                 file: {
-                    id: null, // Sẽ được cập nhật sau khi upload lên server
-                    payload: base64String, // "data:application/pdf;base64,JVBERi0x..."
+                    id: null, 
+                    payload: base64String,
                     type: file.type, // "application/pdf"
-                    url: blobUrl // "blob:https://..."
+                    url: blobUrl
                 }
             }));
 
@@ -185,34 +188,6 @@ const CreateExam = () => {
 
     const handleCreateExam = async () => {
         console.log("Exam Data:", examData);
-
-        // Validate dữ liệu
-        // if (!examData.name.trim()) {
-        //     alert("Vui lòng nhập tên đề!");
-        //     return;
-        // }
-
-        // if (!examData.code.trim()) {
-        //     alert("Vui lòng nhập mã đề!");
-        //     return;
-        // }
-
-        // if (examData.total_time <= 0) {
-        //     alert("Vui lòng nhập thời gian làm bài!");
-        //     return;
-        // }
-
-        // // Validate câu hỏi
-        // const hasEmptyQuestions = examData.questions.some(q => 
-        //     !q.question.trim() || 
-        //     (q.type !== 'long-response' && !q.correct_answer.trim())
-        // );
-
-        // if (hasEmptyQuestions) {
-        //     alert("Vui lòng điền đầy đủ thông tin cho tất cả câu hỏi!");
-        //     return;
-        // }
-
         try {
             // Log thông tin file để debug
             if (examData.file.payload) {
@@ -224,13 +199,13 @@ const CreateExam = () => {
             }
 
             // TODO: Gửi dữ liệu lên server
-            // const response = await createExamAPI(examData);
-            // console.log("Created exam:", response);
-
-            alert("Tạo đề bài thành công!");
+            await createExam(examData)
         } catch (error) {
             console.error("Error creating exam:", error);
             alert("Có lỗi xảy ra khi tạo đề bài!");
+        }
+        finally {
+            navigate(`/classes/${id}/exams/${exam_id}`)
         }
     };
 
@@ -268,7 +243,10 @@ const CreateExam = () => {
         };
     }, [examData.file.url]);
 
+
     return (
+
+
         <>
             <Grid container spacing={4} sx={{ alignItems: "center", justifyContent: "space-between" }}>
                 <Grid size={12}>

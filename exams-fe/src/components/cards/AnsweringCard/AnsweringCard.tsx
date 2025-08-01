@@ -1,21 +1,31 @@
-import { Avatar, Box, Button, FormControl, FormControlLabel, FormLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material"
-import React, { memo, useState } from "react";
+import { Box, FormControlLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material"
+import { memo, useState } from "react";
 
 const AnsweringCard = memo(({ questionIndex, onQuestionChange }) => {
     const [questionType, setQuestionType] = useState('single-choice');
+    const [questionText, setQuestionText] = useState('');
     const [correctAnswer, setCorrectAnswer] = useState('');
 
     const handleTypeChange = (event) => {
         const newType = event.target.value;
         setQuestionType(newType);
-
-        // Reset correct answer khi đổi loại câu hỏi
         setCorrectAnswer('');
 
-        // Gọi callback để cập nhật parent component
         onQuestionChange(questionIndex, {
             type: newType,
+            question: questionText,
             correct_answer: ''
+        });
+    };
+
+    const handleQuestionTextChange = (event) => {
+        const newText = event.target.value;
+        setQuestionText(newText);
+
+        onQuestionChange(questionIndex, {
+            type: questionType,
+            question: newText,
+            correct_answer: correctAnswer
         });
     };
 
@@ -23,19 +33,15 @@ const AnsweringCard = memo(({ questionIndex, onQuestionChange }) => {
         let newCorrectAnswer;
 
         if (questionType === 'multiple-choice') {
-            // Xử lý multiple choice - có thể chọn nhiều đáp án
             const currentAnswers = correctAnswer.split(',').filter(a => a);
             const selectedValue = event.target.value;
 
             if (currentAnswers.includes(selectedValue)) {
-                // Bỏ chọn nếu đã được chọn
                 newCorrectAnswer = currentAnswers.filter(a => a !== selectedValue).join(',');
             } else {
-                // Thêm vào danh sách chọn
                 newCorrectAnswer = [...currentAnswers, selectedValue].join(',');
             }
         } else {
-            // Single choice hoặc long response
             newCorrectAnswer = event.target.value;
         }
 
@@ -43,115 +49,244 @@ const AnsweringCard = memo(({ questionIndex, onQuestionChange }) => {
 
         onQuestionChange(questionIndex, {
             type: questionType,
+            question: questionText,
             correct_answer: newCorrectAnswer
         });
     };
 
-    const renderAnswerOptions = () => {
-        if (questionType === 'long-response') {
-            return (
-                <Grid size={12}>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        multiline
-                        rows={2}
-                        placeholder="Câu trả lời mẫu (không bắt buộc)"
-                        value={correctAnswer}
-                        onChange={(e) => {
-                            setCorrectAnswer(e.target.value);
-                            onQuestionChange(questionIndex, {
-                                type: questionType,
-                                correct_answer: e.target.value
-                            });
-                        }}
-                    />
-                </Grid>
-            );
-        }
-
-        return (
-            <Grid size={12}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
-                    <FormControl>
-                        <FormLabel component="legend" sx={{ fontSize: '1.0rem', mb: 1 }}>
-                            {questionType === 'single-choice' ? 'Chọn đáp án đúng:' : 'Chọn các đáp án đúng:'}
-                        </FormLabel>
-                        <RadioGroup
-                            row
-                            value={correctAnswer}
-                            onChange={handleCorrectAnswerChange}
-                            sx={{ justifyContent: 'center' }}
-                        >
-                            {['A', 'B', 'C', 'D'].map((option) => (
-                                <FormControlLabel
-                                    key={option}
-                                    value={option}
-                                    control={
-                                        questionType === 'single-choice' ? (
-                                            <Radio size="small" />
-                                        ) : (
-                                            <input
-                                                type="checkbox"
-                                                checked={correctAnswer.split(',').includes(option)}
-                                                onChange={handleCorrectAnswerChange}
-                                                value={option}
-                                                style={{ margin: '9px' }}
-                                            />
-                                        )
-                                    }
-                                    label={option}
-                                    sx={{ mx: 1 }}
-                                />
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
-                </Box>
-            </Grid>
-        );
-    };
-
     return (
-        <Box sx={{ border: '1px solid #e0e0e0', borderRadius: 2, p: 2, mb: 2 }}>
-            <Grid container spacing={2}>
-                {/* Header câu hỏi */}
-                <Grid size={12}>
-                    <Box sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', height: '40px' }}>
-                        Câu {questionIndex + 1}:
-                    </Box>
-                </Grid>
-                {/* Loại câu hỏi */}
-                <Grid size={4}>
-                    <FormControl fullWidth size="small">
-                        <InputLabel>Loại câu hỏi</InputLabel>
-                        <Select
-                            value={questionType}
-                            onChange={handleTypeChange}
-                            label="Loại câu hỏi"
-                        >
-                            <MenuItem value="single-choice">Chọn 1 đáp án</MenuItem>
-                            <MenuItem value="multiple-choice">Chọn nhiều đáp án</MenuItem>
-                            <MenuItem value="long-response">Điền vào chỗ trống</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
+        <Box sx={{
+            border: '1px solid #ddd',
+            borderRadius: 1,
+            p: 1,
+            backgroundColor: '#fafafa',
+            width: "100%"
+        }}>
+            {/* Header row - Question number and type selector */}
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+            }}>
+                <Box sx={{
+                    fontWeight: 'bold',
+                    maxWidth: '50px',
+                    flexShrink: 0,
+                    color: '#495057',
+                }}>
+                    Câu {questionIndex + 1}:
+                </Box>
 
-                <Grid size={8}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', height: '40px', color: '#666', fontSize: '0.875rem' }}>
-                        {questionType === 'single-choice' && 'Chọn 1 đáp án đúng (A, B, C hoặc D)'}
-                        {questionType === 'multiple-choice' && 'Chọn các đáp án đúng (có thể chọn nhiều)'}
-                        {questionType === 'long-response' && 'Nhập câu trả lời mẫu (không bắt buộc)'}
-                    </Box>
-                </Grid>
+                <Select
+                    value={questionType}
+                    onChange={handleTypeChange}
+                    sx={{
+                        maxWidth: 125,
+                        minWidth: 125,                        
+                        flexShrink: 0,
+                        fontSize: "1.3rem",
+                        height: "40px",
+                        '& .MuiSelect-select': {
+                            padding: '6px 10px',
+                            fontSize: "1.3rem",
+                            fontWeight: 500
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#ccc',
+                            borderWidth: '1px'
+                        },
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#1976d2'
+                        },
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#1976d2',
+                            borderWidth: '2px'
+                        }
+                    }}
+                >
+                    <MenuItem
+                        value="single-choice"
+                        sx={{
+                            fontSize: "1.3rem",
+                            padding: '10px 16px'
+                        }}
+                    >
+                        1 đáp án
+                    </MenuItem>
+                    <MenuItem
+                        value="multiple-choice"
+                        sx={{
+                            fontSize: "1.3rem",
+                            padding: '10px 16px'
+                        }}
+                    >
+                        Nhiều đáp án
+                    </MenuItem>
+                    <MenuItem
+                        value="long-response"
+                        sx={{
+                            fontSize: "1.3rem",
+                            padding: '10px 16px'
+                        }}
+                    >
+                        Tự luận
+                    </MenuItem>
+                </Select>
+                {/* Answer section */}
+                <Box sx={{
+                    width: '100%',
+                    backgroundColor: '#f8f9fa',
+                    borderRadius: 1,
+                    p: 1,
+                    border: '1px solid #e9ecef'
+                }}>
+                    {questionType === 'long-response' ? (
+                        <Box>
+                            <Box sx={{
+                                fontSize: '1.4rem',
+                                color: '#495057',
+                                m: 1,
+                                fontWeight: 600
+                            }}>
+                                Đáp án mẫu:
+                            </Box>
+                            <TextField
+                            fullWidth
+                            multiline
+                            rows={2}
+                            placeholder="Nhập đáp án mẫu (không bắt buộc)..."
+                            value={correctAnswer}
+                            onChange={(e) => {
+                                setCorrectAnswer(e.target.value);
+                                onQuestionChange(questionIndex, {
+                                    type: questionType,
+                                    question: questionText,
+                                    correct_answer: e.target.value
+                                });
+                            }}
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    backgroundColor: 'white',
+                                    fontSize: '0.95rem',
+                                    borderRadius: 1,
+                                    '& fieldset': {
+                                        borderColor: '#555'
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: '#1976d2'
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#1976d2',
+                                        borderWidth: '2px'
+                                    },
+                                    '& input::placeholder': {
+                                        fontSize: '1.2rem',
+                                        color: '#555'
+                                    },
+                                    '& textarea::placeholder': {
+                                        fontSize: '1.2rem',
+                                        color: '#555'
+                                    }
+                                }
+                            }}
+                        />
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Box sx={{
+                                fontSize: '1.4rem',
+                                color: '#495057',
+                                mb: 1,
+                                fontWeight: 600
+                            }}>
+                                Chọn đáp án đúng:
+                            </Box>
+                            <Box sx={{
+                                display: 'flex',
+                                gap: 2,
+                                alignItems: 'center'
+                            }}>
+                                {questionType === 'single-choice' ? (
+                                    <RadioGroup
+                                        row
+                                        value={correctAnswer}
+                                        onChange={handleCorrectAnswerChange}
+                                        sx={{
+                                            display: 'flex',
+                                            gap: 2
+                                        }}
+                                    >
+                                        {['A', 'B', 'C', 'D'].map((option) => (
+                                            <FormControlLabel
+                                                key={option}
+                                                value={option}
+                                                control={
+                                                    <Radio
+                                                        sx={{
+                                                            '&.Mui-checked': {
+                                                                color: '#1976d2'
+                                                            }
+                                                        }}
+                                                    />
+                                                }
+                                                label={option}
+                                                sx={{
+                                                    margin: 0,
+                                                    '& .MuiFormControlLabel-label': {
+                                                        fontSize: '1.3rem',
+                                                        fontWeight: 500,
+                                                        color: '#495057'
+                                                    },
+                                                    
+                                                }}
+                                            />
+                                        ))}
+                                    </RadioGroup>
+                                ) : (
+                                    <Box sx={{
+                                        display: 'flex',
+                                        gap: 2
+                                    }}>
+                                        {['A', 'B', 'C', 'D'].map((option) => (
+                                            <FormControlLabel
+                                                key={option}
+                                                control={
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={correctAnswer.split(',').includes(option)}
+                                                        onChange={handleCorrectAnswerChange}
+                                                        value={option}
+                                                        style={{
+                                                            margin: '0 8px 0 0',
+                                                            transform: 'scale(1.1)',
+                                                            accentColor: '#1976d2'
+                                                        }}
+                                                    />
+                                                }
+                                                label={option}
+                                                sx={{
+                                                    margin: 0,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    '& .MuiFormControlLabel-label': {
+                                                        fontSize: '1.3rem',
+                                                        fontWeight: 500,
+                                                        color: '#495057'
+                                                    }
+                                                }}
+                                            />
+                                        ))}
+                                    </Box>
+                                )}
+                            </Box>
+                        </Box>
+                    )}
+                </Box>
+            </Box>
 
-                {/* Các đáp án */}
-                <Grid size={12}>
-                    {renderAnswerOptions()}
-                </Grid>
-            </Grid>
+
         </Box>
     );
 });
 
-
-export default AnsweringCard
+export default AnsweringCard;

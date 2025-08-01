@@ -80,7 +80,7 @@ export interface ExamResponseI {
 
 interface QuestionI {
   correct_answer: string | null;
-  id: number;
+  id?: number;
   index: number;
   type: string;
 }
@@ -96,6 +96,22 @@ export interface ExamDetailResponseI {
     url: string;
   };
   id: number;
+  name: string;
+  number_of_question: number;
+  questions: QuestionI[];
+  total_time: number;
+}
+
+export interface ExamCreatePayloadI {
+  code: string;
+  description: string;
+  exam_group: string;
+  file: {
+    id: null;
+    payload: string;
+    type: string;
+    url: string;
+  };
   name: string;
   number_of_question: number;
   questions: QuestionI[];

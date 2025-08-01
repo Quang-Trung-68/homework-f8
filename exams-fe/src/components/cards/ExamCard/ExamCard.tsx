@@ -1,22 +1,6 @@
 import { Box } from "@mui/material"
 import DescriptionIcon from '@mui/icons-material/Description';
-import { useNavigate } from "react-router-dom";
-import { useExamState } from "../../../stores/examStore";
-import { useClassState } from "../../../stores/classStore";
-import { useEffect } from "react";
 const ExamCard: React.FC = ({ examE }) => {
-
-    // console.log(examE);
-
-    const navigate = useNavigate();
-    // const { examSelecting, getExam, examGroupSelecting } = useExamState();
-    // const { classSelecting } = useClassState();
-
-
-    // useEffect(() => {
-    //     getExam(examE.id);
-    //     console.log(examSelecting);
-    // }, [])
 
 
     return (
