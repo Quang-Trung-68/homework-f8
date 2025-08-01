@@ -5,10 +5,14 @@ import { Search } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import { useClassState } from "../../../stores/classStore";
 import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../../stores/authStore";
 
 const ClassList: React.FC = () => {
     const { classes, getClasses, clearClass } = useClassState();
-    
+    const {getAccessToken} = useAuth()
+    const info = jwtDecode(getAccessToken())
+
     useEffect(() => {
         clearClass()
         getClasses();
@@ -17,16 +21,16 @@ const ClassList: React.FC = () => {
     return (
         <Box sx={{ p: 3 }}>
             {/* Header Section */}
-            <Box sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'space-between',
                 mb: 4,
                 flexWrap: 'wrap',
                 gap: 2
             }}>
-                <Box sx={{ 
-                    fontWeight: "bold", 
+                <Box sx={{
+                    fontWeight: "bold",
                     fontSize: "2.4rem",
                     color: "#1a1a1a",
                     flex: 1,
@@ -34,20 +38,20 @@ const ClassList: React.FC = () => {
                 }}>
                     DANH SÁCH LỚP HỌC
                 </Box>
-                
-                <Box sx={{ 
-                    display: "flex", 
-                    alignItems: "center", 
+
+                <Box sx={{
+                    display: "flex",
+                    alignItems: "center",
                     gap: 2,
                     flex: 1,
                     justifyContent: 'flex-end',
                     minWidth: '400px'
                 }}>
-                    <TextField 
-                        placeholder="Tìm kiếm lớp học..." 
+                    <TextField
+                        placeholder="Tìm kiếm lớp học..."
                         variant="outlined"
                         size="medium"
-                        sx={{ 
+                        sx={{
                             minWidth: '250px',
                             '& .MuiOutlinedInput-root': {
                                 borderRadius: 2,
@@ -69,10 +73,10 @@ const ClassList: React.FC = () => {
                                     <Search sx={{ color: '#666' }} />
                                 </InputAdornment>
                             ),
-                        }} 
+                        }}
                     />
-                    
-                    <Button 
+
+                    {info.role === "teacher" && <Button
                         variant="contained"
                         startIcon={<Add />}
                         sx={{
@@ -89,7 +93,7 @@ const ClassList: React.FC = () => {
                         }}
                     >
                         Thêm lớp học
-                    </Button>
+                    </Button>}
                 </Box>
             </Box>
 

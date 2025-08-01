@@ -165,7 +165,7 @@ const Header: React.FC = () => {
           }
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-          <Button sx={{ fontSize: "1.4rem" }} variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>
+         {info.role === "teacher" && <Button sx={{ fontSize: "1.4rem" }} variant="outlined" startIcon={<Add />} onClick={() => navigate("/classes/create")} >Tạo lớp</Button>}
           <Button sx={{ fontSize: "1.4rem" }} startIcon={<Home />} onClick={() => { clearClass(); clearExamGroup(); navigate("/classes") }} >Trang chủ</Button>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
             <AccountMenu onProfile={onProfile} onLogout={onLogout} />
