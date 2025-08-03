@@ -133,7 +133,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { classSelecting, clearClass,clearClassState } = useClassState()
   const { clearExamGroup,clearExamState } = useExamState()
-
+  const {logout} = useAuthStore()
   const { getAccessToken } = useAuth()
   const info = jwtDecode(getAccessToken())
   
@@ -144,8 +144,8 @@ const Header: React.FC = () => {
   const onLogout = () => {
     clearClassState();
     clearExamState();
-    Cookies.remove("auth-storage");
     navigate("/login");
+    logout();
   }
   return (
     <header
