@@ -41,8 +41,10 @@ const Login: React.FC = () => {
     }
 
     useEffect(() => {
-        if (Cookies.get("email-user"))
+        if (Cookies.get("email-user")) {
+            setIsSaveEmail(true)
             setFormData({ ...formData, email: Cookies.get("email-user") })
+        }
     }, [])
 
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,11 +99,29 @@ const Login: React.FC = () => {
                     <Box sx={{ textAlign: "center" }}>Cung cấp giải pháp toàn diện cho lớp học thông minh</Box>
                     <LoginForm formData={formData} onChange={onChange} formErrors={formErrors} />
                     <Box sx={{ display: "flex", alignSelf: "stretch", alignItems: "center", justifyContent: "space-between", fontSize: "1.5rem" }}>
-                        <Link sx={{ cursor: "pointer", fontSize: "1.3rem" }}>Quên mật khẩu ?</Link>
-                        <FormControlLabel control={<Checkbox checked={isSaveEmail} onChange={onChecked} sx={{ fontSize: "1.4rem" }} />} label="Ghi nhớ tôi" />
-                    </Box>
-                    <Button sx={{ fontSize: "1.4rem" }} onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
-                    <Button sx={{ fontSize: "1.4rem" }} onClick={() => navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
+                        <Link sx={{ cursor: "pointer", fontSize: "1.4rem" }}>Quên mật khẩu ?</Link>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={isSaveEmail}
+                                    onChange={onChecked}
+                                    sx={{
+                                        fontSize: "1.8rem",
+                                        '& .MuiSvgIcon-root': {
+                                            fontSize: '1.8rem'
+                                        }
+                                    }}
+                                />
+                            }
+                            label="Ghi nhớ tôi"
+                            sx={{
+                                '& .MuiFormControlLabel-label': {
+                                    fontSize: '1.4rem'
+                                }
+                            }}
+                        />                    </Box>
+                    <Button sx={{ fontSize: "1.6rem" }} onClick={onSubmit} fullWidth variant="contained">Đăng nhập</Button>
+                    <Button sx={{ fontSize: "1.6rem" }} onClick={() => navigate("/register")} fullWidth variant="text">Đăng ký tài khoản học viên</Button>
                 </Grid>
                 <Grid size={3} >
                 </Grid>
