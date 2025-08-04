@@ -44,12 +44,12 @@ const ExamList: React.FC = () => {
                             </InputAdornment>
                         ),
                     }} placeholder="Tìm kiếm" />
-                    <Button sx={{ fontSize: "1.4rem", width:"180px" }} onClick={() => setOpen(true)} startIcon={<Add />} >Tạo bài thi</Button>
+                    <Button sx={{ fontSize: "1.4rem", width: "180px" }} onClick={() => setOpen(true)} startIcon={<Add />} >Tạo bài thi</Button>
                     <ExamGroupForm open={open} setOpen={setOpen} action={"create"} />
                 </Grid>
 
                 <Grid size={12} container>
-                    <Grid size={12} container sx={{fontWeight:"800", fontSize:"1.8rem"}} >Danh sách lớp đang thi</Grid>
+                    <Grid size={12} container sx={{ fontWeight: "800", fontSize: "1.8rem" }} >Danh sách lớp đang thi</Grid>
                     {
                         startedOrOngoingExams.map(e => {
                             return (
@@ -75,7 +75,7 @@ const ExamList: React.FC = () => {
                     }
                 </Grid>
                 <Grid size={12} container>
-                    <Grid size={12} container sx={{fontWeight:"800", fontSize:"1.8rem"}} >Danh sách lớp chưa bắt đầu</Grid>
+                    <Grid size={12} container sx={{ fontWeight: "800", fontSize: "1.8rem" }} >Danh sách lớp chưa bắt đầu</Grid>
                     {
                         notStartedYetExams.map(e => {
                             return (

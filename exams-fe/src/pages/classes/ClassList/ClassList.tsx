@@ -10,7 +10,7 @@ import { useAuth } from "../../../stores/authStore";
 
 const ClassList: React.FC = () => {
     const { classes, getClasses, clearClass } = useClassState();
-    const {getAccessToken} = useAuth()
+    const { getAccessToken } = useAuth()
     const info = jwtDecode(getAccessToken())
 
     useEffect(() => {
@@ -99,11 +99,11 @@ const ClassList: React.FC = () => {
 
             {/* Classes Grid */}
             <Grid container spacing={3}>
-                {classes.map((classElement) => (
+                {classes.length > 0 ? classes.map((classElement) => (
                     <Grid size={{ xs: 12, sm: 6, md: 4 }} key={classElement.id}>
                         <ClassCard classElement={classElement} />
                     </Grid>
-                ))}
+                )) : "Bạn chưa có lớp học nào."}
             </Grid>
 
             <Outlet />
