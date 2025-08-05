@@ -4,7 +4,7 @@ import { Box, Button, Checkbox, FormControlLabel, Grid, Link } from "@mui/materi
 import image from "@/assets/images/image-login.jpg"
 import logo from "@/assets/images/logo.png"
 
-import type { LoginCredentials } from "../../../types/auth.types";
+import type { LoginRequestI } from "../../../types/auth.types";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../../stores/authStore";
 
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
 
     const { login } = useAuthStore()
 
-    const [formData, setFormData] = useState<LoginCredentials>({
+    const [formData, setFormData] = useState<LoginRequestI>({
         email: "",
         password: ""
     })

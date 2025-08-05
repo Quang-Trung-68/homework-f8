@@ -1,8 +1,8 @@
 import { api } from "./api";
 import type {
-  LoginCredentials,
-  AuthLoginResponse,
-  RegisterData,
+  LoginRequestI,
+  LoginResponseI,
+  UserCreateRequestI,
   AuthRegisterResponse,
 } from "../types/auth.types";
 import { useLoadingStore } from "../stores/loadingStore";
@@ -10,11 +10,11 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 export const authService = {
-  login: async (credentials: LoginCredentials): Promise<AuthLoginResponse> => {
+  login: async (credentials: LoginRequestI): Promise<LoginResponseI> => {
     const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
       startLoading();
-      const response = await api.post<AuthLoginResponse>("login/", credentials);
+      const response = await api.post<LoginResponseI>("login/", credentials);
       toast.success("Đăng nhập thành công!");
       return response.data;
     } catch (error: any) {
@@ -41,7 +41,9 @@ export const authService = {
       stopLoading();
     }
   },
-  register: async (userData: RegisterData): Promise<AuthRegisterResponse> => {
+  register: async (
+    userData: UserCreateRequestI
+  ): Promise<AuthRegisterResponse> => {
     const { startLoading, stopLoading } = useLoadingStore.getState();
     try {
       startLoading();

@@ -1,11 +1,11 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { TextField } from "@mui/material";
-import type { LoginCredentials } from "../../../types/auth.types";
+import type { LoginRequestI } from "../../../types/auth.types";
 import type { LoginData } from "../../../utils/validation";
 
 interface LoginFormProps {
-    formData: LoginCredentials,
+    formData: LoginRequestI,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     formErrors: Partial<Record<keyof LoginData, string>>
 }

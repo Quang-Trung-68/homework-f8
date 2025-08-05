@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { authService } from "../services/authService";
-import type { LoginCredentials, RegisterData } from "../types/auth.types";
+import type { LoginRequestI, UserCreateRequestI } from "../types/auth.types";
 
 // Định nghĩa type cho auth storage (giống api.ts)
 type AuthStorage = {
@@ -21,7 +21,7 @@ const cookieStorage = {
   },
   setItem: (name: string, value: string): void => {
     const parsedValue = JSON.parse(value);
-    
+
     // Lưu access token riêng với thời hạn 15 phút
     if (parsedValue.access) {
       Cookies.set("access_token", parsedValue.access, {
@@ -32,7 +32,7 @@ const cookieStorage = {
         path: "/",
       });
     }
-    
+
     // Lưu refresh token riêng với thời hạn 7 ngày
     if (parsedValue.refresh) {
       Cookies.set("refresh_token", parsedValue.refresh, {
@@ -43,7 +43,7 @@ const cookieStorage = {
         path: "/",
       });
     }
-    
+
     // Tạo auth storage object cho zustand persist
     const authStorage: AuthStorage = {
       state: {
@@ -52,7 +52,7 @@ const cookieStorage = {
       },
       version: 0,
     };
-    
+
     // Lưu auth-storage cookie (cho compatibility với api.ts)
     Cookies.set(name, JSON.stringify(authStorage), {
       expires: 7, // 7 ngày
@@ -73,7 +73,7 @@ const getAccessTokenFromCookie = (): string | null => {
   // Ưu tiên lấy từ cookie riêng (có thời hạn 15p)
   const directToken = Cookies.get("access_token");
   if (directToken) return directToken;
-  
+
   // Fallback: lấy từ auth-storage
   const authStr = Cookies.get("auth-storage");
   if (!authStr) return null;
@@ -85,11 +85,11 @@ const getAccessTokenFromCookie = (): string | null => {
   }
 };
 
-const getRefreshTokenFromCookie = (): string | null => {
+const getRefreshRequestIFromCookie = (): string | null => {
   // Ưu tiên lấy từ cookie riêng (có thời hạn 7 ngày)
   const directToken = Cookies.get("refresh_token");
   if (directToken) return directToken;
-  
+
   // Fallback: lấy từ auth-storage
   const authStr = Cookies.get("auth-storage");
   if (!authStr) return null;
@@ -110,7 +110,7 @@ const updateAuthStorage = (access: string, refresh: string) => {
     sameSite: "strict",
     path: "/",
   });
-  
+
   // Lưu refresh token với thời hạn 7 ngày
   Cookies.set("refresh_token", refresh, {
     expires: 7, // 7 ngày
@@ -118,7 +118,7 @@ const updateAuthStorage = (access: string, refresh: string) => {
     sameSite: "strict",
     path: "/",
   });
-  
+
   // Lưu auth-storage cho compatibility
   const auth: AuthStorage = {
     state: {
@@ -138,13 +138,13 @@ const updateAuthStorage = (access: string, refresh: string) => {
 interface AuthState {
   access: string | null;
   refresh: string | null;
-  
+
   // Actions
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (userData: RegisterData) => Promise<void>;
+  login: (credentials: LoginRequestI) => Promise<void>;
+  register: (userData: UserCreateRequestI) => Promise<void>;
   logout: () => void;
   getAccessToken: () => string | null;
-  getRefreshToken: () => string | null;
+  getRefreshRequestI: () => string | null;
   updateTokens: (access: string, refresh: string) => void;
 }
 
@@ -154,8 +154,8 @@ export const useAuthStore = create<AuthState>()(
       // Initial state
       access: null,
       refresh: null,
-      
-      login: async (credentials: LoginCredentials) => {
+
+      login: async (credentials: LoginRequestI) => {
         try {
           const response = await authService.login(credentials);
           set({
@@ -169,8 +169,8 @@ export const useAuthStore = create<AuthState>()(
           throw error;
         }
       },
-      
-      register: async (userData: RegisterData) => {
+
+      register: async (userData: UserCreateRequestI) => {
         try {
           await authService.register(userData);
           // Có thể auto login sau khi register thành công
@@ -179,7 +179,7 @@ export const useAuthStore = create<AuthState>()(
           throw error;
         }
       },
-      
+
       logout: () => {
         set({ access: null, refresh: null });
         // Xóa tất cả cookie liên quan
@@ -187,20 +187,20 @@ export const useAuthStore = create<AuthState>()(
         Cookies.remove("access_token", { path: "/" });
         Cookies.remove("refresh_token", { path: "/" });
       },
-      
+
       // Method để cập nhật token (dùng khi refresh token)
       updateTokens: (access: string, refresh: string) => {
         set({ access, refresh });
         updateAuthStorage(access, refresh);
       },
-      
+
       // Utility methods để lấy token từ cookie (ưu tiên cookie)
       getAccessToken: () => {
         return getAccessTokenFromCookie() || get().access;
       },
-      
-      getRefreshToken: () => {
-        return getRefreshTokenFromCookie() || get().refresh;
+
+      getRefreshRequestI: () => {
+        return getRefreshRequestIFromCookie() || get().refresh;
       },
     }),
     {
@@ -216,25 +216,26 @@ export const useAuthStore = create<AuthState>()(
 
 // Hook để check authentication status
 export const useAuth = () => {
-  const { access, refresh, getAccessToken, getRefreshToken } = useAuthStore();
-  
+  const { access, refresh, getAccessToken, getRefreshRequestI } =
+    useAuthStore();
+
   const isAuthenticated = () => {
     const accessToken = getAccessToken();
     return !!accessToken;
   };
-  
+
   const hasValidTokens = () => {
     const accessToken = getAccessToken();
-    const refreshToken = getRefreshToken();
-    return !!(accessToken || refreshToken);
+    const RefreshRequestI = getRefreshRequestI();
+    return !!(accessToken || RefreshRequestI);
   };
-  
+
   return {
     access,
     refresh,
     isAuthenticated: isAuthenticated(),
     hasValidTokens: hasValidTokens(),
     getAccessToken,
-    getRefreshToken,
+    getRefreshRequestI,
   };
 };

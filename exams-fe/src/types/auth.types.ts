@@ -4,22 +4,22 @@ export interface User {
   email: string;
 }
 
-export interface LoginCredentials {
+export interface LoginRequestI {
   email: string ;
   password: string;
 }
 
-export interface AuthLoginResponse {
+export interface LoginResponseI {
   access: string;
   refresh: string;
 }
 
-export interface RefreshToken {
+export interface RefreshRequestI {
   refresh: string
 }
 
 
-export interface RegisterData {
+export interface UserCreateRequestI {
   name: string;
   email: string;
   role: string;

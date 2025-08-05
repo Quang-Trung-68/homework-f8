@@ -3,6 +3,7 @@
 ## 1. Cài đặt và Setup
 
 ### 1.1 Cài đặt Zustand
+
 ```bash
 npm install zustand
 # hoặc
@@ -10,6 +11,7 @@ yarn add zustand
 ```
 
 ### 1.2 Cấu trúc thư mục mới
+
 ```
 src/
 ├── stores/
@@ -31,11 +33,12 @@ src/
 ## 2. Tạo Auth Store
 
 ### 2.1 Auth Store - authStore.ts
+
 ```typescript
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { User, LoginCredentials, RegisterData } from '../types/auth.types';
-import { authService } from '../services/authService';
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { User, LoginRequestI, UserCreateRequestI } from "../types/auth.types";
+import { authService } from "../services/authService";
 
 interface AuthState {
   // State
@@ -44,10 +47,10 @@ interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
-  
+
   // Actions
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (userData: RegisterData) => Promise<void>;
+  login: (credentials: LoginRequestI) => Promise<void>;
+  register: (userData: UserCreateRequestI) => Promise<void>;
   logout: () => void;
   clearError: () => void;
   setLoading: (loading: boolean) => void;
@@ -77,7 +80,7 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error) {
           set({
-            error: error.message || 'Đăng nhập thất bại',
+            error: error.message || "Đăng nhập thất bại",
             loading: false,
           });
           throw error;
@@ -96,7 +99,7 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error) {
           set({
-            error: error.message || 'Đăng ký thất bại',
+            error: error.message || "Đăng ký thất bại",
             loading: false,
           });
           throw error;
@@ -119,23 +122,23 @@ export const useAuthStore = create<AuthState>()(
       getCurrentUser: async () => {
         const { token } = get();
         if (!token) return;
-        
+
         set({ loading: true });
         try {
           const user = await authService.getCurrentUser();
           set({ user, loading: false });
         } catch (error) {
-          set({ 
-            user: null, 
-            token: null, 
-            isAuthenticated: false, 
-            loading: false 
+          set({
+            user: null,
+            token: null,
+            isAuthenticated: false,
+            loading: false,
           });
         }
       },
     }),
     {
-      name: 'auth-storage',
+      name: "auth-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         token: state.token,
@@ -150,10 +153,11 @@ export const useAuthStore = create<AuthState>()(
 ## 3. Tạo Class Store
 
 ### 3.1 Class Store - classStore.ts
+
 ```typescript
-import { create } from 'zustand';
-import { Class, CreateClassData } from '../types/class.types';
-import { classService } from '../services/classService';
+import { create } from "zustand";
+import { Class, CreateClassData } from "../types/class.types";
+import { classService } from "../services/classService";
 
 interface ClassState {
   // State
@@ -161,7 +165,7 @@ interface ClassState {
   currentClass: Class | null;
   loading: boolean;
   error: string | null;
-  
+
   // Actions
   fetchClasses: () => Promise<void>;
   fetchClassById: (id: string) => Promise<void>;
@@ -223,7 +227,8 @@ export const useClassStore = create<ClassState>((set, get) => ({
         classes: state.classes.map((cls) =>
           cls.id === id ? updatedClass : cls
         ),
-        currentClass: state.currentClass?.id === id ? updatedClass : state.currentClass,
+        currentClass:
+          state.currentClass?.id === id ? updatedClass : state.currentClass,
         loading: false,
       }));
     } catch (error) {
@@ -282,10 +287,11 @@ export const useClassStore = create<ClassState>((set, get) => ({
 ## 4. Tạo Exam Store
 
 ### 4.1 Exam Store - examStore.ts
+
 ```typescript
-import { create } from 'zustand';
-import { Exam, CreateExamData, ExamSubmission } from '../types/exam.types';
-import { examService } from '../services/examService';
+import { create } from "zustand";
+import { Exam, CreateExamData, ExamSubmission } from "../types/exam.types";
+import { examService } from "../services/examService";
 
 interface ExamState {
   // State
@@ -294,20 +300,20 @@ interface ExamState {
   examResults: ExamSubmission[];
   loading: boolean;
   error: string | null;
-  
+
   // Exam taking state
   isExamActive: boolean;
   currentQuestionIndex: number;
   answers: Record<string, any>;
   timeRemaining: number;
-  
+
   // Actions
   fetchExams: () => Promise<void>;
   fetchExamById: (id: string) => Promise<void>;
   createExam: (data: CreateExamData) => Promise<void>;
   updateExam: (id: string, data: Partial<Exam>) => Promise<void>;
   deleteExam: (id: string) => Promise<void>;
-  
+
   // Exam taking actions
   startExam: (examId: string) => Promise<void>;
   submitExam: (examId: string, answers: Record<string, any>) => Promise<void>;
@@ -315,7 +321,7 @@ interface ExamState {
   setCurrentQuestion: (index: number) => void;
   setTimeRemaining: (time: number) => void;
   endExam: () => void;
-  
+
   clearError: () => void;
 }
 
@@ -326,7 +332,7 @@ export const useExamStore = create<ExamState>((set, get) => ({
   examResults: [],
   loading: false,
   error: null,
-  
+
   // Exam taking state
   isExamActive: false,
   currentQuestionIndex: 0,
@@ -373,10 +379,9 @@ export const useExamStore = create<ExamState>((set, get) => ({
     try {
       const updatedExam = await examService.updateExam(id, data);
       set((state) => ({
-        exams: state.exams.map((exam) =>
-          exam.id === id ? updatedExam : exam
-        ),
-        currentExam: state.currentExam?.id === id ? updatedExam : state.currentExam,
+        exams: state.exams.map((exam) => (exam.id === id ? updatedExam : exam)),
+        currentExam:
+          state.currentExam?.id === id ? updatedExam : state.currentExam,
         loading: false,
       }));
     } catch (error) {
@@ -470,18 +475,19 @@ export const useExamStore = create<ExamState>((set, get) => ({
 ## 5. Sử dụng Zustand trong Components
 
 ### 5.1 Login Component
+
 ```typescript
 // src/pages/auth/Login/Login.tsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../../stores/authStore';
-import { Button, TextField, Box, Alert } from '@mui/material';
-import { ROUTES } from '../../../router/routes';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../../stores/authStore";
+import { Button, TextField, Box, Alert } from "@mui/material";
+import { ROUTES } from "../../../router/routes";
 
 const Login: React.FC = () => {
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const { login, loading, error, clearError } = useAuthStore();
@@ -504,7 +510,7 @@ const Login: React.FC = () => {
           {error}
         </Alert>
       )}
-      
+
       <TextField
         margin="normal"
         required
@@ -515,9 +521,11 @@ const Login: React.FC = () => {
         autoComplete="email"
         autoFocus
         value={credentials.email}
-        onChange={(e) => setCredentials(prev => ({ ...prev, email: e.target.value }))}
+        onChange={(e) =>
+          setCredentials((prev) => ({ ...prev, email: e.target.value }))
+        }
       />
-      
+
       <TextField
         margin="normal"
         required
@@ -528,9 +536,11 @@ const Login: React.FC = () => {
         id="password"
         autoComplete="current-password"
         value={credentials.password}
-        onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+        onChange={(e) =>
+          setCredentials((prev) => ({ ...prev, password: e.target.value }))
+        }
       />
-      
+
       <Button
         type="submit"
         fullWidth
@@ -538,7 +548,7 @@ const Login: React.FC = () => {
         sx={{ mt: 3, mb: 2 }}
         disabled={loading}
       >
-        {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+        {loading ? "Đang đăng nhập..." : "Đăng nhập"}
       </Button>
     </Box>
   );
@@ -548,11 +558,12 @@ export default Login;
 ```
 
 ### 5.2 Class List Component
+
 ```typescript
 // src/pages/classes/ClassList/ClassList.tsx
-import React, { useEffect } from 'react';
-import { useClassStore } from '../../../stores/classStore';
-import { useAuthStore } from '../../../stores/authStore';
+import React, { useEffect } from "react";
+import { useClassStore } from "../../../stores/classStore";
+import { useAuthStore } from "../../../stores/authStore";
 import {
   Container,
   Typography,
@@ -561,19 +572,13 @@ import {
   Box,
   Alert,
   CircularProgress,
-} from '@mui/material';
-import { Add } from '@mui/icons-material';
-import ClassCard from '../../../components/cards/ClassCard/ClassCard';
+} from "@mui/material";
+import { Add } from "@mui/icons-material";
+import ClassCard from "../../../components/cards/ClassCard/ClassCard";
 
 const ClassList: React.FC = () => {
-  const { 
-    classes, 
-    loading, 
-    error, 
-    fetchClasses, 
-    clearError 
-  } = useClassStore();
-  
+  const { classes, loading, error, fetchClasses, clearError } = useClassStore();
+
   const { user } = useAuthStore();
 
   useEffect(() => {
@@ -594,11 +599,16 @@ const ClassList: React.FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
         <Typography variant="h4" component="h1">
           Lớp học của tôi
         </Typography>
-        {user?.role === 'teacher' && (
+        {user?.role === "teacher" && (
           <Button
             variant="contained"
             startIcon={<Add />}
@@ -638,11 +648,12 @@ export default ClassList;
 ```
 
 ### 5.3 Take Exam Component
+
 ```typescript
 // src/pages/exams/TakeExam/TakeExam.tsx
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useExamStore } from '../../../stores/examStore';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useExamStore } from "../../../stores/examStore";
 import {
   Container,
   Paper,
@@ -651,13 +662,13 @@ import {
   Box,
   LinearProgress,
   Alert,
-} from '@mui/material';
-import QuestionCard from '../../../components/cards/QuestionCard/QuestionCard';
+} from "@mui/material";
+import QuestionCard from "../../../components/cards/QuestionCard/QuestionCard";
 
 const TakeExam: React.FC = () => {
   const { examId } = useParams<{ examId: string }>();
   const navigate = useNavigate();
-  
+
   const {
     currentExam,
     isExamActive,
@@ -697,7 +708,7 @@ const TakeExam: React.FC = () => {
     if (examId) {
       try {
         await submitExam(examId, answers);
-        navigate('/exams');
+        navigate("/exams");
       } catch (error) {
         // Error handled in store
       }
@@ -711,7 +722,9 @@ const TakeExam: React.FC = () => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   if (loading) {
@@ -721,7 +734,7 @@ const TakeExam: React.FC = () => {
   if (!isExamActive) {
     return (
       <Container maxWidth="md">
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
+        <Paper sx={{ p: 4, textAlign: "center" }}>
           <Typography variant="h4" gutterBottom>
             {currentExam?.title}
           </Typography>
@@ -756,9 +769,14 @@ const TakeExam: React.FC = () => {
           {error}
         </Alert>
       )}
-      
+
       <Paper sx={{ p: 3 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+        >
           <Typography variant="h5">
             Câu {currentQuestionIndex + 1} / {currentExam?.questions?.length}
           </Typography>
@@ -771,7 +789,9 @@ const TakeExam: React.FC = () => {
           <QuestionCard
             question={currentQuestion}
             answer={answers[currentQuestion.id]}
-            onAnswerChange={(answer) => handleAnswerChange(currentQuestion.id, answer)}
+            onAnswerChange={(answer) =>
+              handleAnswerChange(currentQuestion.id, answer)
+            }
           />
         )}
 
@@ -783,17 +803,16 @@ const TakeExam: React.FC = () => {
           >
             Câu trước
           </Button>
-          
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-          >
+
+          <Button variant="contained" onClick={handleSubmit}>
             Nộp bài
           </Button>
-          
+
           <Button
             variant="outlined"
-            disabled={currentQuestionIndex === (currentExam?.questions?.length || 0) - 1}
+            disabled={
+              currentQuestionIndex === (currentExam?.questions?.length || 0) - 1
+            }
             onClick={() => setCurrentQuestion(currentQuestionIndex + 1)}
           >
             Câu tiếp
@@ -810,21 +829,17 @@ export default TakeExam;
 ## 6. Protected Route với Zustand
 
 ### 6.1 Updated Protected Route
+
 ```typescript
 // src/components/common/ProtectedRoute/ProtectedRoute.tsx
-import React, { useEffect } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthStore } from '../../../stores/authStore';
-import { ROUTES } from '../../../router/routes';
-import Loading from '../Loading/Loading';
+import React, { useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuthStore } from "../../../stores/authStore";
+import { ROUTES } from "../../../router/routes";
+import Loading from "../Loading/Loading";
 
 const ProtectedRoute: React.FC = () => {
-  const { 
-    isAuthenticated, 
-    loading, 
-    token, 
-    getCurrentUser 
-  } = useAuthStore();
+  const { isAuthenticated, loading, token, getCurrentUser } = useAuthStore();
 
   useEffect(() => {
     if (token && !isAuthenticated) {
@@ -845,13 +860,14 @@ export default ProtectedRoute;
 ## 7. Custom Hooks (Optional)
 
 ### 7.1 useAuth Hook
+
 ```typescript
 // src/hooks/useAuth.ts
-import { useAuthStore } from '../stores/authStore';
+import { useAuthStore } from "../stores/authStore";
 
 export const useAuth = () => {
   const auth = useAuthStore();
-  
+
   return {
     user: auth.user,
     isAuthenticated: auth.isAuthenticated,
@@ -868,10 +884,11 @@ export const useAuth = () => {
 ## 8. Middleware và Devtools
 
 ### 8.1 Thêm Devtools
+
 ```typescript
 // src/stores/authStore.ts
-import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 export const useAuthStore = create<AuthState>()(
   devtools(
@@ -880,34 +897,35 @@ export const useAuthStore = create<AuthState>()(
         // ... store implementation
       }),
       {
-        name: 'auth-storage',
+        name: "auth-storage",
       }
     ),
     {
-      name: 'auth-store',
+      name: "auth-store",
     }
   )
 );
 ```
 
 ### 8.2 Immer Middleware (cho complex state updates)
+
 ```bash
 npm install immer
 ```
 
 ```typescript
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
 export const useExamStore = create<ExamState>()(
   immer((set, get) => ({
     // Initial state
     exams: [],
-    
+
     // Action với immer
     updateExam: async (id, data) => {
       set((state) => {
-        const index = state.exams.findIndex(exam => exam.id === id);
+        const index = state.exams.findIndex((exam) => exam.id === id);
         if (index !== -1) {
           state.exams[index] = { ...state.exams[index], ...data };
         }
@@ -920,6 +938,7 @@ export const useExamStore = create<ExamState>()(
 ## 9. Migration từ Redux
 
 ### 9.1 Các bước migrate
+
 1. Cài đặt Zustand
 2. Tạo stores mới theo pattern trên
 3. Thay thế useSelector bằng store hooks
@@ -928,7 +947,9 @@ export const useExamStore = create<ExamState>()(
 6. Test thoroughly
 
 ### 9.2 So sánh code
+
 **Trước (Redux):**
+
 ```typescript
 // Component
 const { user, loading } = useSelector((state: RootState) => state.auth);
@@ -940,6 +961,7 @@ const handleLogin = async (credentials) => {
 ```
 
 **Sau (Zustand):**
+
 ```typescript
 // Component
 const { user, loading, login } = useAuthStore();
@@ -952,33 +974,36 @@ const handleLogin = async (credentials) => {
 ## 10. Best Practices
 
 ### 10.1 Tổ chức stores
+
 - Tách biệt concerns (auth, classes, exams)
 - Sử dụng TypeScript đầy đủ
 - Persist chỉ data cần thiết
 - Handle errors trong stores
 
 ### 10.2 Performance
+
 - Sử dụng selectors cho complex computations
 - Avoid unnecessary re-renders
 - Use shallow comparison khi cần
 
 ### 10.3 Testing
+
 ```typescript
 // src/stores/__tests__/authStore.test.ts
-import { renderHook, act } from '@testing-library/react';
-import { useAuthStore } from '../authStore';
+import { renderHook, act } from "@testing-library/react";
+import { useAuthStore } from "../authStore";
 
-describe('Auth Store', () => {
-  it('should login successfully', async () => {
+describe("Auth Store", () => {
+  it("should login successfully", async () => {
     const { result } = renderHook(() => useAuthStore());
-    
+
     await act(async () => {
       await result.current.login({
-        email: 'test@example.com',
-        password: 'password'
+        email: "test@example.com",
+        password: "password",
       });
     });
-    
+
     expect(result.current.isAuthenticated).toBe(true);
   });
 });

@@ -1,7 +1,12 @@
+enum RoleI  {
+    "teacher",
+    "student"
+}
+
 export interface UserI {
     id: number
     name: string
-    role: "teacher" | "student"
+    role: RoleI
     status: "confirming" | null | string;
 }
 

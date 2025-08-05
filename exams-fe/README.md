@@ -403,7 +403,11 @@ export type AppDispatch = typeof store.dispatch;
 ```typescript
 // src/store/slices/authSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { User, LoginCredentials, RegisterData } from "../../types/auth.types";
+import {
+  User,
+  LoginRequestI,
+  UserCreateRequestI,
+} from "../../types/auth.types";
 import { authService } from "../../services/authService";
 
 interface AuthState {
@@ -424,7 +428,7 @@ const initialState: AuthState = {
 
 export const loginAsync = createAsyncThunk(
   "auth/login",
-  async (credentials: LoginCredentials) => {
+  async (credentials: LoginRequestI) => {
     const response = await authService.login(credentials);
     return response.data;
   }
@@ -432,7 +436,7 @@ export const loginAsync = createAsyncThunk(
 
 export const registerAsync = createAsyncThunk(
   "auth/register",
-  async (userData: RegisterData) => {
+  async (userData: UserCreateRequestI) => {
     const response = await authService.register(userData);
     return response.data;
   }

@@ -28,7 +28,7 @@ const getAccessToken = (): string | null => {
   // Ưu tiên lấy từ cookie riêng (có thời hạn 15p)
   const directToken = Cookies.get("access_token");
   if (directToken) return directToken;
-  
+
   // Fallback: lấy từ auth-storage
   const authStr = Cookies.get("auth-storage");
   if (!authStr) return null;
@@ -41,11 +41,11 @@ const getAccessToken = (): string | null => {
 };
 
 // Hàm lấy refresh token từ cookie (ưu tiên cookie riêng)
-const getRefreshToken = (): string | null => {
+const getRefreshRequestI = (): string | null => {
   // Ưu tiên lấy từ cookie riêng (có thời hạn 7 ngày)
   const directToken = Cookies.get("refresh_token");
   if (directToken) return directToken;
-  
+
   // Fallback: lấy từ auth-storage
   const authStr = Cookies.get("auth-storage");
   if (!authStr) return null;
@@ -66,7 +66,7 @@ const updateAuthStorage = (access: string, refresh: string) => {
     sameSite: "strict",
     path: "/",
   });
-  
+
   // Lưu refresh token với thời hạn 7 ngày
   Cookies.set("refresh_token", refresh, {
     expires: 7, // 7 ngày
@@ -74,7 +74,7 @@ const updateAuthStorage = (access: string, refresh: string) => {
     sameSite: "strict",
     path: "/",
   });
-  
+
   // Lưu auth-storage cho compatibility
   const auth: AuthStorage = {
     state: {
@@ -100,7 +100,9 @@ const clearAuthData = () => {
 };
 
 // Hàm redirect về login với thông báo
-const redirectToLogin = (message: string = "Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại!") => {
+const redirectToLogin = (
+  message: string = "Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại!"
+) => {
   toast.error(message);
   // Delay nhỏ để toast hiện trước khi redirect
   setTimeout(() => {
@@ -119,41 +121,45 @@ api.interceptors.request.use((config) => {
 
 // ===== INTERCEPTOR: XỬ LÝ 401/403 (REFRESH TOKEN) ===== //
 const refreshAuthLogic = async (failedRequest: any) => {
-  const refreshToken = getRefreshToken();
-  
-  if (!refreshToken) {
+  const RefreshRequestI = getRefreshRequestI();
+
+  if (!RefreshRequestI) {
     console.warn("No refresh token available");
     clearAuthData();
-    redirectToLogin("Không tìm thấy thông tin đăng nhập. Vui lòng đăng nhập lại!");
+    redirectToLogin(
+      "Không tìm thấy thông tin đăng nhập. Vui lòng đăng nhập lại!"
+    );
     return Promise.reject("No refresh token available");
   }
 
   try {
     console.log("Attempting to refresh token...");
-    
+
     const res = await axios.post("/api/login/get_new_token/", {
-      refresh: refreshToken,
+      refresh: RefreshRequestI,
     });
 
     const newAccessToken = res.data.access;
-    const newRefreshToken = res.data.refresh || refreshToken; // Sử dụng refresh mới nếu có
-    
+    const newRefreshRequestI = res.data.refresh || RefreshRequestI; // Sử dụng refresh mới nếu có
+
     // Cập nhật token mới
-    updateAuthStorage(newAccessToken, newRefreshToken);
-    
+    updateAuthStorage(newAccessToken, newRefreshRequestI);
+
     // Cập nhật header cho request đã fail
-    failedRequest.response.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-    
+    failedRequest.response.config.headers[
+      "Authorization"
+    ] = `Bearer ${newAccessToken}`;
+
     console.log("Token refreshed successfully");
     return Promise.resolve();
-    
   } catch (refreshError: any) {
     console.error("Refresh token failed:", refreshError);
-    
+
     // Xử lý các loại lỗi refresh
     const status = refreshError?.response?.status;
-    const errorMessage = refreshError?.response?.data?.message || refreshError?.message;
-    
+    const errorMessage =
+      refreshError?.response?.data?.message || refreshError?.message;
+
     if (status === 401) {
       // Refresh token hết hạn hoặc không hợp lệ
       clearAuthData();
@@ -161,20 +167,28 @@ const refreshAuthLogic = async (failedRequest: any) => {
     } else if (status === 403) {
       // Refresh token bị cấm (có thể user bị khóa)
       clearAuthData();
-      redirectToLogin("Tài khoản của bạn không có quyền truy cập. Vui lòng liên hệ quản trị viên!");
+      redirectToLogin(
+        "Tài khoản của bạn không có quyền truy cập. Vui lòng liên hệ quản trị viên!"
+      );
     } else if (status === 400) {
       // Refresh token không đúng định dạng
       clearAuthData();
-      redirectToLogin("Thông tin đăng nhập không hợp lệ. Vui lòng đăng nhập lại!");
+      redirectToLogin(
+        "Thông tin đăng nhập không hợp lệ. Vui lòng đăng nhập lại!"
+      );
     } else if (!status) {
       // Lỗi network
-      toast.error("Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!");
+      toast.error(
+        "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng!"
+      );
     } else {
       // Lỗi khác
       clearAuthData();
-      redirectToLogin(`Có lỗi xảy ra: ${errorMessage || "Vui lòng đăng nhập lại!"}`);
+      redirectToLogin(
+        `Có lỗi xảy ra: ${errorMessage || "Vui lòng đăng nhập lại!"}`
+      );
     }
-    
+
     return Promise.reject(refreshError);
   }
 };
@@ -190,13 +204,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error?.response?.status;
-    
+
     // Xử lý lỗi 403 không liên quan đến auth (không cần refresh)
     if (status === 403 && error?.response?.data?.code === "PERMISSION_DENIED") {
       toast.error("Bạn không có quyền thực hiện thao tác này!");
       return Promise.reject(error);
     }
-    
+
     // Xử lý các lỗi server khác
     if (status >= 500) {
       toast.error("Lỗi server. Vui lòng thử lại sau!");
@@ -206,16 +220,16 @@ api.interceptors.response.use(
       const message = error?.response?.data?.message || "Dữ liệu không hợp lệ!";
       toast.error(message);
     }
-    
+
     return Promise.reject(error);
   }
 );
 
 // ===== EXPORT UTILITY FUNCTIONS ===== //
-export { 
-  getAccessToken, 
-  getRefreshToken, 
-  updateAuthStorage, 
+export {
+  getAccessToken,
+  getRefreshRequestI,
+  updateAuthStorage,
   clearAuthData,
-  redirectToLogin 
+  redirectToLogin,
 };

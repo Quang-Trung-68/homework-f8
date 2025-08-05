@@ -179,7 +179,7 @@ const ClassDetail: React.FC = () => {
             <NoteAltIcon />
             <Box>Hoạt động gần đây</Box>
           </Box>
-          <Box>
+          <Box sx={{height:"500px", overflow:"auto"}}>
             <Box sx={{ display: "flex", alignItems: "start", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
               {
                 examGroupSelecting.map((examSelecting => {
