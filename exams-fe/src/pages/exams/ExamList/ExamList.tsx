@@ -66,7 +66,7 @@ const ExamList: React.FC = () => {
                             startIcon={<Add />}
                             onClick={() => setOpen(true)}
                             sx={{ 
-                                fontSize: "1rem",
+                                fontSize: "1.5rem",
                                 px: 3,
                                 py: 1
                             }}
