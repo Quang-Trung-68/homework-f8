@@ -539,14 +539,34 @@ CREATE index idx_product_price on product (price)
 
 --answer 13:
 
-EXPLAIN ANALYSE
-select category, price
-from product
-    -- Seq Scan on product  (cost=0.00..26154.00 rows=1000000 width=12) (actual time=0.052..260.445 rows=1000000 loops=1)
+EXPLAIN (ANALYZE, FORMAT TEXT)
+SELECT category, price
+FROM product
+WHERE category = 'Clothing'
+;
+-- Seq Scan on product  (cost=0.00..28654.00 rows=125267 width=13) (actual time=0.027..279.783 rows=125000 loops=1)
+DROP INDEX IF EXISTS idx_product_category_price;
 
-drop index idx_product_category_price
+CREATE INDEX idx_product_category_price ON product (category, price);
 
-create index idx_product_category_price on product (category, price)
+-- Index Only Scan using idx_product_category_price on product  (cost=0.42..4196.60 rows=125267 width=13) (actual time=0.099..46.638 rows=125000 loops=1)
+
+-- | Tiêu chí            | Trước (Seq Scan) | Sau (Index Only Scan) |
+-- | ------------------- | ---------------- | --------------------- |
+-- | Dạng quét           | Seq Scan         | Index Only Scan       |
+-- | Thời gian thực thi  | \~280 ms         | \~46 ms               |
+-- | Truy cập bảng chính | Có               | Không                 |
+-- | Hiệu suất           | Thấp             | Cao                   |
+
+-- Kết luận
+-- Việc tạo index phù hợp với điều kiện lọc (category) và cột cần lấy (price) đã giúp PostgreSQL:
+
+-- Tránh quét toàn bộ bảng
+
+-- Giảm đáng kể thời gian truy vấn
+
+-- Tận dụng tốt cơ chế Index Only Scan (khi đủ thông tin trong index)
+
 
 -- answer 14:
 
@@ -648,3 +668,131 @@ create index idx_order_status_payment_method_total_amount on "order" (
 -- Dữ liệu ít phải đọc hơn → giảm I/O.
 
 -- Cost tối đa (135k) thấp hơn 141k → PostgreSQL đánh giá nó tối ưu hơn.
+
+-- answer 16:
+
+CREATE index idx_product_category on product(category)
+
+EXPLAIN ANALYSE
+select * from product where category = 'Electronics' or category = 'Clothing'
+
+-- | Loại scan             | Mô tả                                                                                   | Khi nào dùng                             |
+-- | --------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------- |
+-- | **Bitmap Index Scan** | Xây dựng bitmap (mảng bit) của các vị trí phù hợp từ index.                             | Khi truy vấn lọc nhiều dòng.             |
+-- | **Bitmap Heap Scan**  | Dùng sau Bitmap Index Scan để lấy dữ liệu thực tế từ heap (bảng chính) dựa trên bitmap. | Tối ưu khi đọc nhiều dòng từ bảng.       |
+
+-- | Tiêu chí                     | Bitmap Index Scan                       | Bitmap Heap Scan                              |
+-- | ---------------------------- | --------------------------------------- | --------------------------------------------- |
+-- | Chức năng                    | Truy vấn index để lấy TID (vị trí dòng) | Truy cập bảng chính để lấy dữ liệu từ TID     |
+-- | Truy cập heap (bảng chính)   | ❌ Không                                 | ✅ Có                                          |
+-- | Đọc dữ liệu thực tế          | ❌ Chưa có                               | ✅ Có                                          |
+-- | Tốc độ (trong ví dụ của bạn) | Rất nhanh (\~23 ms cho 2 scan)          | Chậm hơn (\~255 ms để đọc heap)               |
+-- | Khi nào xảy ra               | Trước Heap Scan                         | Sau khi đã có bitmap                          |
+-- | Ưu điểm                      | Nhanh, ít I/O, xử lý điều kiện OR tốt   | Truy xuất dữ liệu thực, theo batch, ít random |
+-- | Điểm nghẽn                   | Không                                   | Có thể tốn I/O nhiều nếu dữ liệu rải rác      |
+
+
+-- answer 17:
+
+EXPLAIN ANALYSE
+select * from "order" order by (order_date) DESC LIMIT 20
+-- Limit  (cost=161734.10..161736.43 rows=20 width=102) (actual time=433.767..436.800 rows=20 loops=1)
+
+-- 1. Parallel Seq Scan on "order" – quét bảng song song
+-- PostgreSQL chia bảng "order" ra làm 3 phần, mỗi worker quét một phần (loops=3).
+
+-- Mỗi phần có khoảng 1.666.667 rows.
+
+-- Tổng cộng là ~5 triệu dòng (đúng với rows=2083333 * 2 trong gather).
+
+-- Đây là cách nhanh nhất để lấy toàn bộ dữ liệu khi không có index hỗ trợ sắp xếp.
+
+-- 2. Sort – sắp xếp kết quả từ từng worker
+-- Sau khi quét xong, mỗi worker tự sắp xếp phần của mình.
+
+-- Thời gian sắp xếp mỗi phần: ~0.002 ms (nhưng đã mất ~392 ms để sẵn sàng sắp xếp, chủ yếu là do đọc hết dữ liệu).
+
+-- Mỗi sort chỉ trả về 20 rows là kết quả đầu tiên trong phần của nó.
+
+-- 3. Gather Merge – hợp nhất kết quả từ các worker
+-- Gather Merge nhận kết quả đã sắp xếp từ mỗi worker rồi gộp lại theo thứ tự tăng/giảm giống như merge trong merge sort.
+
+-- Thay vì lấy tất cả kết quả, nó dừng lại sau khi đã thu được LIMIT 20.
+
+-- Thời gian:
+
+-- Bắt đầu merge: 431.628 ms
+
+-- Kết thúc lấy đủ 20 dòng: 434.641 ms (~3 ms cho merge)
+
+-- 4. Limit – cắt kết quả về đúng số lượng yêu cầu
+-- Limit ở cấp cao nhất chỉ đơn giản là ngăn không cho trả về nhiều hơn 20 dòng.
+
+-- Bản thân nó không thực hiện xử lý gì nhiều – chỉ là bước "chặn lại".
+
+-- Thời gian cho limit: 433.767..436.800 ms → khoảng 3 ms
+
+CREATE INDEX idx_order_order_date ON "order" (order_date DESC);
+-- Limit  (cost=0.43..2.15 rows=20 width=102) (actual time=0.086..0.390 rows=20 loops=1)
+
+-- | Tiêu chí                              | Truy vấn chậm                                 | Truy vấn nhanh                  |
+-- | ------------------------------------- | --------------------------------------------- | ------------------------------- |
+-- | **Chi phí ước lượng**                 | `161734.10`                                   | `0.43`                          |
+-- | **Thời gian thực tế**                 | `~437 ms`                                     | `~0.4 ms`                       |
+-- | **Cách đọc dữ liệu**                  | `Parallel Seq Scan` + `Sort` + `Gather Merge` | `Index Scan`                    |
+-- | **Có dùng chỉ mục không?**            | ❌ Không                                       | ✅ Có                            |
+-- | **Có dừng sớm khi đủ 20 dòng không?** | ❌ Không (phải sort toàn bộ)                   | ✅ Có (dừng ngay sau khi đọc đủ) |
+-- | **Tổng số dòng cần xử lý**            | \~5 triệu (dù chỉ lấy 20)                     | 20 (chính xác)                  |
+
+
+-- answer 18:
+
+EXPLAIN ANALYSE
+SELECT c.customer_id, c.first_name, c.last_name, o.total_amount
+FROM customer c
+JOIN "order" o ON c.customer_id = o.customer_id
+WHERE o.total_amount = (
+    SELECT MAX(total_amount)
+    FROM "order"
+) LIMIT 1
+;
+-- Limit  (cost=112506.31..122556.18 rows=1 width=39) (actual time=625.901..756.568 rows=1 loops=1)
+-- PostgreSQL cần sắp xếp toàn bộ bảng order theo total_amount DESC, rồi lấy dòng đầu tiên → Tốn thời gian khi bảng có hàng triệu dòng.
+
+-- CÁCH POSTGRESQL THỰC HIỆN SCALAR SUBQUERY:
+
+-- 1. INITPLAN: PostgreSQL thực hiện subquery trước
+--    - Scan toàn bộ bảng order để tìm MAX(total_amount)
+--    - Kết quả được cache trong memory (chỉ thực hiện 1 lần)
+--    - Giá trị này trở thành constant trong query chính
+
+-- 2. MAIN QUERY: Sử dụng kết quả của InitPlan
+--    - Join customer và order
+--    - Filter với giá trị constant từ InitPlan
+
+-- EXECUTION PLAN PATTERN:
+-- InitPlan 1 (returns $0)
+--   -> Aggregate (Scan order table)
+-- Hash Join
+--   -> Seq Scan on customer
+--   -> Hash (Seq Scan on order với filter total_amount = $0)
+
+DROP index idx_order_total_amount_customer_id
+
+create index idx_order_total_amount_customer_id on "order"(total_amount DESC, customer_id)
+-- Limit  (cost=1.33..10.11 rows=1 width=39) (actual time=0.210..0.214 rows=1 loops=1)
+-- COST ANALYSIS:
+-- ┌─────────────────┬──────────────┬──────────────┬─────────────┐
+-- │     Metric      │   Plan 1     │   Plan 2     │ Improvement │
+-- ├─────────────────┼──────────────┼──────────────┼─────────────┤
+-- │ Startup Cost    │ 112,506.31   │ 1.33         │ 99.999%     │
+-- │ Total Cost      │ 122,556.18   │ 10.11        │ 99.992%     │
+-- │ Startup Time    │ 625.901 ms   │ 0.210 ms     │ 99.967%     │
+-- │ Total Time      │ 756.568 ms   │ 0.214 ms     │ 99.972%     │
+-- │ Performance     │ SLOW         │ FAST         │ 3,536x      │
+-- └─────────────────┴──────────────┴──────────────┴─────────────┘
+
+-- IMPROVEMENT SUMMARY:
+-- - Thời gian thực thi: Nhanh hơn 3,536 lần (756ms → 0.214ms)
+-- - Chi phí startup: Giảm 84,632 lần (112,506 → 1.33)
+-- - Chi phí total: Giảm 12,120 lần (122,556 → 10.11)
