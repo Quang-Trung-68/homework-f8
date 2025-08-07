@@ -28,6 +28,7 @@ export default defineConfig({
         target: "https://api.bkstarstudy.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+        secure: true, // nếu API dùng HTTPS tự ký
       },
     },
   },

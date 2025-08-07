@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
     "axios-auth-refresh": "^3.3.6",
+    "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",

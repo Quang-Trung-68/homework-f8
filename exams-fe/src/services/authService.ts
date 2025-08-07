@@ -4,6 +4,8 @@ import type {
   LoginResponseI,
   UserCreateRequestI,
   AuthRegisterResponse,
+  ChangePasswordRequestI,
+  ChangeUserRequestI,
 } from "../types/auth.types";
 import { useLoadingStore } from "../stores/loadingStore";
 import { toast } from "react-toastify";
@@ -78,4 +80,34 @@ export const authService = {
       stopLoading();
     }
   },
+  changePassword: async (formData: ChangePasswordRequestI): Promise<void> => {
+    const { startLoading, stopLoading } = useLoadingStore.getState();
+    try {
+      startLoading();
+      const response = await api.post("master/user/change_password", formData);
+      toast.success("Đổi mật khẩu thành công!");
+      return response.data;
+    } catch (error) {
+      toast.error("Đổi mật khẩu thất bại!");
+      console.log(error);
+      throw error;
+    } finally {
+      stopLoading();
+    }
+  },
+  changeUser : async (id:number,formData: ChangeUserRequestI): Promise<void> =>{
+    const { startLoading, stopLoading } = useLoadingStore.getState();
+    try {
+      startLoading();
+      const response = await api.put(`master/user/${id}`, formData);
+      toast.success("Đổi thong tin thành công!");
+      return response.data;
+    } catch (error) {
+      toast.error("Đổi thong tin thất bại!");
+      console.log(error);
+      throw error;
+    } finally {
+      stopLoading();
+    }
+  }
 };

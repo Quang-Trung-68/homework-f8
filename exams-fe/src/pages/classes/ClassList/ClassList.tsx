@@ -1,10 +1,10 @@
-import { Button, Grid, InputAdornment, TextField, Box } from "@mui/material";
+import { Button, Grid, InputAdornment, TextField, Box, Typography } from "@mui/material";
 import ClassCard from "../../../components/cards/ClassCard/ClassCard";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import { useClassState } from "../../../stores/classStore";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../stores/authStore";
 
@@ -12,11 +12,37 @@ const ClassList: React.FC = () => {
     const { classes, getClasses, clearClass } = useClassState();
     const { getAccessToken } = useAuth()
     const info = jwtDecode(getAccessToken())
+    
+    // State cho search
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    
+    // Debounce search term với delay 400ms
+    const debouncedSearchTerm = useDebounce(searchTerm, 400);
 
     useEffect(() => {
         clearClass()
         getClasses();
     }, []);
+
+    // Lọc classes dựa trên search term
+    const filteredClasses = useMemo(() => {
+        if (!debouncedSearchTerm.trim()) {
+            return classes;
+        }
+        
+        const searchLower = debouncedSearchTerm.toLowerCase().trim();
+        return classes.filter((classElement) => 
+            classElement.name?.toLowerCase().includes(searchLower) ||
+            classElement.subject?.toLowerCase().includes(searchLower) ||
+            classElement.description?.toLowerCase().includes(searchLower) ||
+            classElement.code?.toLowerCase().includes(searchLower)
+        );
+    }, [classes, debouncedSearchTerm]);
+
+    // Handle search input change
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
 
     return (
         <Box sx={{ p: 3 }}>
@@ -50,9 +76,11 @@ const ClassList: React.FC = () => {
                     <TextField
                         placeholder="Tìm kiếm lớp học..."
                         variant="outlined"
-                        size="medium"
+                        size="small"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
                         sx={{
-                            minWidth: '250px',
+                            minWidth: '200px',
                             '& .MuiOutlinedInput-root': {
                                 borderRadius: 2,
                                 backgroundColor: '#f8f9fa',
@@ -97,18 +125,69 @@ const ClassList: React.FC = () => {
                 </Box>
             </Box>
 
+            {/* Search Results Info */}
+            {debouncedSearchTerm && (
+                <Box sx={{ mb: 2 }}>
+                    <Typography fontSize={"1.5rem"} variant="body2" color="text.secondary">
+                        {filteredClasses.length > 0 
+                            ? `Tìm thấy ${filteredClasses.length} lớp học cho "${debouncedSearchTerm}"`
+                            : `Không tìm thấy kết quả cho "${debouncedSearchTerm}"`
+                        }
+                    </Typography>
+                </Box>
+            )}
+
             {/* Classes Grid */}
             <Grid container spacing={3}>
-                {classes.length > 0 ? classes.map((classElement) => (
-                    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={classElement.id}>
-                        <ClassCard classElement={classElement} />
+                {filteredClasses.length > 0 ? (
+                    filteredClasses.map((classElement) => (
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={classElement.id}>
+                            <ClassCard classElement={classElement} />
+                        </Grid>
+                    ))
+                ) : (
+                    <Grid size={12}>
+                        <Box sx={{ 
+                            textAlign: 'center', 
+                            py: 8,
+                            color: '#666'
+                        }}>
+                            <Typography variant="h6" fontSize={"1.4rem"} sx={{ mb: 1 }}>
+                                {debouncedSearchTerm 
+                                    ? "Không tìm thấy lớp học nào" 
+                                    : "Bạn chưa có lớp học nào."
+                                }
+                            </Typography>
+                            {debouncedSearchTerm && (
+                                <Typography variant="body2" fontSize={"1.4rem"} color="text.secondary">
+                                    Thử tìm kiếm với từ khóa khác
+                                </Typography>
+                            )}
+                        </Box>
                     </Grid>
-                )) : "Bạn chưa có lớp học nào."}
+                )}
             </Grid>
 
             <Outlet />
         </Box>
     )
+}
+
+
+function useDebounce<T>(value: T, delay: number): T {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
 }
 
 export default ClassList;

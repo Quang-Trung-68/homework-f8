@@ -5,7 +5,7 @@ export interface User {
 }
 
 export interface LoginRequestI {
-  email: string ;
+  email: string;
   password: string;
 }
 
@@ -15,15 +15,14 @@ export interface LoginResponseI {
 }
 
 export interface RefreshRequestI {
-  refresh: string
+  refresh: string;
 }
-
 
 export interface UserCreateRequestI {
   name: string;
   email: string;
   role: string;
-  status: string ;
+  status: string;
   password: string;
 }
 
@@ -31,18 +30,37 @@ export interface AuthRegisterResponse {
   id: number;
   created_at: string;
   created_by: string | null;
-  modified_at:string | null;
-  modified_by:string | null;
-  deleted_at:string | null;
-  deleted_by:string | null;
+  modified_at: string | null;
+  modified_by: string | null;
+  deleted_at: string | null;
+  deleted_by: string | null;
   active: boolean;
   name: string;
   email: string;
   password: string;
   role: string;
   status: string;
-  school:string | null;
-  parent_name:string | null;
-  parent_phone:string | null;
-  avata:string | null;
+  school: string | null;
+  parent_name: string | null;
+  parent_phone: string | null;
+  avata: string | null;
+}
+
+export interface ChangePasswordRequestI {
+  id: number;
+  old_password: string;
+  new_password: string;
+}
+
+export interface ChangeUserRequestI {
+  name: string;
+  email: string;
+  school: string;
+  parent_name: string;
+  parent_phone: string;
+  avata: {
+    id: 0;
+    url: string;
+    payload: string;
+  };
 }

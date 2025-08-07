@@ -4,7 +4,6 @@ import { Box, Button, Grid } from "@mui/material";
 import image from "@/assets/images/image-login.jpg"
 import { useAuthStore } from "../../../stores/authStore";
 import { useState } from "react";
-import type { UserCreateRequestI } from "../../../types/auth.types";
 import { registerSchema } from "../../../utils/validation";
 import type { RegisterFields } from "../../../utils/validation";
 import { useNavigate } from "react-router-dom";

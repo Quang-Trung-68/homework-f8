@@ -2,7 +2,12 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { authService } from "../services/authService";
-import type { LoginRequestI, UserCreateRequestI } from "../types/auth.types";
+import type {
+  LoginRequestI,
+  UserCreateRequestI,
+  ChangePasswordRequestI,
+  ChangeUserRequestI,
+} from "../types/auth.types";
 
 // Định nghĩa type cho auth storage (giống api.ts)
 type AuthStorage = {
@@ -146,6 +151,8 @@ interface AuthState {
   getAccessToken: () => string | null;
   getRefreshRequestI: () => string | null;
   updateTokens: (access: string, refresh: string) => void;
+  changePassword: (formData: ChangePasswordRequestI) => Promise<void>;
+  changeUser: (id: number, formData: ChangeUserRequestI) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -173,7 +180,6 @@ export const useAuthStore = create<AuthState>()(
       register: async (userData: UserCreateRequestI) => {
         try {
           await authService.register(userData);
-          // Có thể auto login sau khi register thành công
         } catch (error) {
           console.log(error);
           throw error;
@@ -187,7 +193,22 @@ export const useAuthStore = create<AuthState>()(
         Cookies.remove("access_token", { path: "/" });
         Cookies.remove("refresh_token", { path: "/" });
       },
-
+      changePassword: async (formData: ChangePasswordRequestI) => {
+        try {
+          await authService.changePassword(formData);
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+      },
+      changeUser: async (id: number, formData: ChangeUserRequestI) => {
+        try {
+          await authService.changeUser(id, formData);
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+      },
       // Method để cập nhật token (dùng khi refresh token)
       updateTokens: (access: string, refresh: string) => {
         set({ access, refresh });
