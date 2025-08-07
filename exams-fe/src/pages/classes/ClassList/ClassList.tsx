@@ -2,7 +2,7 @@ import { Button, Grid, InputAdornment, TextField, Box, Typography } from "@mui/m
 import ClassCard from "../../../components/cards/ClassCard/ClassCard";
 import { Add } from "@mui/icons-material";
 import { Search } from "@mui/icons-material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useClassState } from "../../../stores/classStore";
 import { useEffect, useState, useMemo } from "react";
 import { jwtDecode } from "jwt-decode";
@@ -12,6 +12,7 @@ const ClassList: React.FC = () => {
     const { classes, getClasses, clearClass } = useClassState();
     const { getAccessToken } = useAuth()
     const info = jwtDecode(getAccessToken())
+    const navigate = useNavigate()
     
     // State cho search
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -119,6 +120,7 @@ const ClassList: React.FC = () => {
                                 backgroundColor: '#1565c0'
                             }
                         }}
+                        onClick={()=> navigate("/classes/create")}
                     >
                         Thêm lớp học
                     </Button>}
