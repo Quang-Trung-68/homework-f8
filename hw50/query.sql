@@ -281,6 +281,13 @@ create index idx_order_status on "order" (status)
 -- Khi quá nhiều dòng khớp, quét cả bảng nhanh hơn truy cập index rồi đọc từng dòng.
 -- 📌 Khi đó, index KHÔNG cải thiện hiệu suất đáng kể.
 
+-- 3. PHÂN TÍCH TẠI SAO INDEX KHÔNG HIỆU QUẢ:
+-- 🔴 LOW SELECTIVITY PROBLEM:
+-- - 20% của 5 triệu records = 1 triệu records
+-- - PostgreSQL rule of thumb: nếu query trả về >5-15% total rows, Seq Scan tốt hơn
+-- - Index Scan phải: đọc index → đọc heap → random I/O cho 1M rows
+-- - Sequential Scan: đọc tuần tự toàn bộ table → sequential I/O
+
 -- answer 5:
 
 EXPLAIN ANALYSE
